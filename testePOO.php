@@ -15,9 +15,20 @@
 
 	require_once "autoload.php";
 
+	$serie1 = new Serie;
+	$serie1->setCodigo(1);
+	$serie1->setDescricao("3TECINFO");
+	echo "[Série]".$serie1."<br>";
+	$serie2 = new Serie;
+	$serie2->setCodigo(2);
+	$serie2->setDescricao("2TECINFO");
+	echo "[Série]".$serie2."<br>";
+
 	$escola1 = new Escola;
 	$escola1->setCodigo(1);
 	$escola1->setDescricao("IFC");
+	$escola1->setSerie($serie1);
+	$escola1->setSerie($serie2);
 	echo "[Escola] ".$escola1."<br>";
 
 	$aluno1 = new Aluno;
@@ -42,28 +53,12 @@
 	$prof2->setDataNascimento("03/03/1972");
 	echo "[Professor]".$prof2."<br>";
 
-	$serie1 = new Serie;
-	$serie1->setCodigo(1);
-	$serie1->setDescricao("3TECINFO");
-	echo "[Série]".$serie1."<br><br>";
-
 	$alunocad1 = new AlunoCadastro;
 	$alunocad1->setAluno($aluno1);
 	$alunocad1->setCadastrado(0);
 	$alunocad2 = new AlunoCadastro;
 	$alunocad2->setAluno($aluno2);
 	$alunocad2->setCadastrado(1);
-
-	$disc1 = new Disciplina;
-	$disc1->setCodigo(1);
-	$disc1->setDescricao("Programação");
-	$disc1->setEscola($escola1);
-	$disc1->setSerie($serie1);
-	$disc1->setProfessor($prof1);
-	$disc1->setProfessor($prof2);
-	$disc1->setAluno($alunocad1);
-	$disc1->setAluno($alunocad2);
-	echo $disc1."<br><hr>";
 
 	$tipo1 = new TipoQuestao;
 	$tipo1->setCodigo(1);
@@ -103,7 +98,7 @@
 	$q1alt3->setCorreta(1);
 	echo "[Alternativa] ".$q1alt3."<br><br>";
 
-	$ques1 = new Questao;
+	$ques1 = new QuestaoAlternativa;
 	$ques1->setCodigo(1);
 	$ques1->setTipo($tipo1);
 	$ques1->setTexto("As estruturas de repetição também são conhecidas como laços (loops) e são utilizados para executar, repetidamente, uma instrução ou bloco de instrução enquanto determinada condição estiver sendo satisfeita.");
@@ -132,7 +127,7 @@
 	$q2alt3->setCorreta(0);
 	echo "[Alternativa] ".$q2alt3."<br><br>";
 
-	$ques2 = new Questao;
+	$ques2 = new QuestaoAlternativa;
 	$ques2->setCodigo(2);
 	$ques2->setTipo($tipo2);
 	$ques2->setTexto("O PHP (um acrônimo recursivo para PHP: Hypertext Preprocessor) é uma linguagem de script open source de uso geral, muito utilizada, e especialmente adequada para o desenvolvimento web e que pode ser embutida dentro do HTML.");
@@ -149,10 +144,22 @@
 	$aval1->setConteudo("Laços de repetição e PHP");
 	$aval1->setDataInicio("01/04/2017");
 	$aval1->setDataFim("07/04/2017");
-	$aval1->setDisciplina($disc1);
 	$aval1->setQuestao($ques1);
 	$aval1->setQuestao($ques2);
 	echo $aval1."<br><hr>";
+	
+	$disc1 = new Disciplina;
+	$disc1->setCodigo(1);
+	$disc1->setDescricao("Programação");
+	$disc1->setSerie($serie1);
+	$disc1->setProfessor($prof1);
+	$disc1->setProfessor($prof2);
+	$disc1->setAluno($alunocad1);
+	$disc1->setAluno($alunocad2);
+	$disc1->setAvaliacao($aval1);
+	echo $disc1."<br><hr>";
+
+	
 
 ?>
 </body>

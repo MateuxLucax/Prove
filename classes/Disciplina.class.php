@@ -4,24 +4,21 @@ require_once "autoload.php";
 
 class Disciplina extends AbsCodigoDescricao {
 
-	private $escola;
 	private $serie;
 	private $professores = array();
 	private $alunos = array();
+	private $avaliacoes = array();
 
 	function __construct() {
-		$escola = new Escola;
 		$serie = new Serie;
 		$professor = new Professor;
 		$aluno = new Aluno;
+		$avaliacao = new Avaliacao;
 	}
 
-	public function setSerie($serie){$this->serie=$serie;}
+	public function setSerie($serie){
+		if($serie instanceof Serie) $this->serie=$serie;}
 	public function getSerie(){return $this->serie;}
-
-	public function setEscola($escola){
-		if ($escola instanceof Escola) $this->escola=$escola; }
-	public function getEscola(){return $this->escola;}
 
 	public function setProfessor($professor){
 		if ($professor instanceof Professor) array_push($this->professores, $professor); }
@@ -31,12 +28,15 @@ class Disciplina extends AbsCodigoDescricao {
 		if ($aluno instanceof AlunoCadastro) array_push($this->alunos, $aluno); }
 	public function getAluno(){return $this->aluno;}
 
+	public function setAvaliacao($avaliacao){
+		if ($avaliacao instanceof Avaliacao) array_push($this->avaliacoes, $avaliacao); }
+	public function getAvaliacao(){return $this->avaliacao;}
+
 
 	public function __toString() {
 		$txt = "<div class='disciplina'>[Disciplina]".parent::__toString();
 		$txt .= "<dl>";
 		$txt .= "<dt>{Série}</dt> <dd>".$this->serie."</dd>";
-		$txt .= "<dt>{Escola}</dt> <dd>".$this->escola."</dd>";
 		$txt .= "<dt>{Professores}</dt>";
 		$txt .= "<dd> <dl>"; # Lista dentro de uma lista (lista de professores dentro da lista de atributos da disciplina)
 		for ($i=0; $i < count($this->professores); $i++) { 
@@ -47,7 +47,13 @@ class Disciplina extends AbsCodigoDescricao {
 		$txt .= "<dd> <dl>"; # Lista dentro de uma lista (lista de alunos dentro da lista de atributos da disciplina)
 		for ($i=0; $i < count($this->alunos); $i++) { 
 			$txt .= "<dt>Aluno</dt> <dd>".$this->alunos[$i]."</dd>"; }
-		$txt .= "</dt> </dd>";
+		$txt .= "</dl> </dd>";
+
+		$txt .= "<dt>{Avaliações}</dt>";
+		$txt .= "<dd><dl>";
+		for ($i=0; $i < count($this->avaliacoes); $i++) { 
+			$txt .= "<dt>Avaliação</dt> <dd>".$this->avaliacoes[$i]."</dd>"; }
+		$txt .= "</dl></dd>";
 
 		$txt .= "</div>";
 		return $txt;
