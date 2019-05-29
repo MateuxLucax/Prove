@@ -2,7 +2,7 @@
 
 require_once "autoload.php";
 
-class RespostaAluno extends AbsCodigo {
+class RespostaAlunoAlternativa extends AbsRespostaAluno {
     private $resposta; #Valor binário
 
     public function setResposta($resposta){$this->resposta=$resposta;}

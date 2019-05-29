@@ -21,6 +21,10 @@ class QuestaoAlternativa extends AbsQuestao {
 
         return $txt;
     }
+
+    #### MÉTODOS ###################################################################################
+
+    #embaralhar alternativas
 }
 
 ?>
