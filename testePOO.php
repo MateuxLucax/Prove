@@ -159,7 +159,11 @@
 	$disc1->setAvaliacao($aval1);
 	echo $disc1."<br><hr>";
 
-	
+	$resq1alt1 = new RespostaAlunoAlternativa;	
+
+	# $aluno1->setResposta($resq1alt1);
+	# $aluno1->setResposta($resq1alt2);
+	# etc.
 
 ?>
 </body>
