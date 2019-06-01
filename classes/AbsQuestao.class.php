@@ -6,6 +6,7 @@ abstract class AbsQuestao extends AbsCodigo {
 	private $tipo;
 	private $texto;
 	private $enunciado;
+	private $peso; # Quantos pontos o aluno obterá se acertar essa questão
 	private $tags = array();
 
 	function __construct() {

@@ -160,10 +160,32 @@
 	echo $disc1."<br><hr>";
 
 	$resq1alt1 = new RespostaAlunoAlternativa;	
+	$resq1alt1->setCodigo(1);
+	$resq1alt1->setResposta(0); # Não é a alternativa que ele selecionou como correta
+	$resq1alt2 = new RespostaAlunoAlternativa;	
+	$resq1alt2->setCodigo(2);
+	$resq1alt2->setResposta(0); # Não é a alternativa que ele selecionou como correta
+	$resq1alt3 = new RespostaAlunoAlternativa;	
+	$resq1alt3->setCodigo(3);
+	$resq1alt3->setResposta(1); # É a alternativa selecionada
 
-	# $aluno1->setResposta($resq1alt1);
-	# $aluno1->setResposta($resq1alt2);
-	# etc.
+	$resq2alt1 = new RespostaAlunoAlternativa;
+	$resq2alt1->setCodigo(4);
+	$resq2alt1->setResposta(1); # Marcada com "V"
+	$resq2alt2 = new RespostaAlunoAlternativa;
+	$resq2alt2->setCodigo(5);
+	$resq2alt2->setResposta(0); # Marcada com "F"
+	$resq2alt3 = new RespostaAlunoAlternativa;
+	$resq2alt3->setCodigo(6);
+	$resq2alt3->setResposta(1); # Marcada com "V"
+
+	$aluno1->setResposta($resq1alt1);
+	$aluno1->setResposta($resq1alt2);
+	$aluno1->setResposta($resq1alt3);
+	$aluno1->setResposta($resq2alt1);
+	$aluno1->setResposta($resq2alt2);
+	$aluno1->setResposta($resq2alt3);
+	
 
 ?>
 </body>
