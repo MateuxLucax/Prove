@@ -26,13 +26,17 @@ abstract class AbsQuestao extends AbsCodigo {
 	public function getTexto(){return $this->texto; }
 
 	public function setEnunciado($enunciado){$this->enunciado = $enunciado; }
-    public function getEnunciado(){return $this->enunciado; }
+	public function getEnunciado(){return $this->enunciado; }
+	
+	public function setPeso($peso){$this->peso = $peso; }
+    public function getPeso(){return $this->peso; }
     
 	public function __toString(){
         $txt = parent::__toString();
 		$txt .= " | {Tipo}: ".$this->tipo->getDescricao();
 		$txt .= "<br> | {Tags}: ";
 		for ($i=0; $i < count($this->tags); $i++) { $txt .= $this->tags[$i]->getDescricao().", "; }
+		$txt .= "<br> | Peso: ".$this->peso;
 		$txt .= "<br> | Texto: ".$this->texto;
 		$txt .= "<br> | Enunciado: ".$this->enunciado;
 		return $txt;

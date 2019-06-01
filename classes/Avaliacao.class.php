@@ -7,6 +7,7 @@ class Avaliacao extends AbsCodigo {
 	private $conteudo;
 	private $dataInicio;
 	private $dataFim;
+	private $peso;
 	private $questoes = array();
 
 	public function setConteudo($conteudo){$this->conteudo = $conteudo;}
@@ -23,8 +24,12 @@ class Avaliacao extends AbsCodigo {
 			array_push($this->questoes, $questao); }
 	public function getQuestao(){return $this->questao; }
 
+	public function setPeso($peso){$this->peso = $peso; }
+    public function getPeso(){return $this->peso; }
+
 	public function __toString(){
 		$txt = "<div class='avaliacao'>[Avaliação]".parent::__toString();
+		$txt .= " | Peso: ".$this->peso;
 		$txt .= " | Conteúdo: ".$this->conteudo;
 		$txt .= " | Data início: ".$this->dataInicio;
 		$txt .= " | Data fim: ".$this->dataFim;

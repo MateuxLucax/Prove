@@ -7,6 +7,8 @@
 		.disciplina{ background-color: lightgrey; }
 		.questao { background-color: lightblue; }
 		.avaliacao { background-color: lightgreen; }
+		.resposta { background-color: lightsteelblue; }
+		.avaliacao-aluno { background-color: wheat; }
 	</style>
 </head>
 
@@ -99,6 +101,7 @@
 	echo "[Alternativa] ".$q1alt3."<br><br>";
 
 	$ques1 = new QuestaoAlternativa;
+	$ques1->setPeso(5);
 	$ques1->setCodigo(1);
 	$ques1->setTipo($tipo1);
 	$ques1->setTexto("As estruturas de repetição também são conhecidas como laços (loops) e são utilizados para executar, repetidamente, uma instrução ou bloco de instrução enquanto determinada condição estiver sendo satisfeita.");
@@ -128,6 +131,7 @@
 	echo "[Alternativa] ".$q2alt3."<br><br>";
 
 	$ques2 = new QuestaoAlternativa;
+	$ques2->setPeso(5);
 	$ques2->setCodigo(2);
 	$ques2->setTipo($tipo2);
 	$ques2->setTexto("O PHP (um acrônimo recursivo para PHP: Hypertext Preprocessor) é uma linguagem de script open source de uso geral, muito utilizada, e especialmente adequada para o desenvolvimento web e que pode ser embutida dentro do HTML.");
@@ -146,6 +150,7 @@
 	$aval1->setDataFim("07/04/2017");
 	$aval1->setQuestao($ques1);
 	$aval1->setQuestao($ques2);
+	$aval1->setPeso(6);
 	echo $aval1."<br><hr>";
 	
 	$disc1 = new Disciplina;
@@ -159,32 +164,60 @@
 	$disc1->setAvaliacao($aval1);
 	echo $disc1."<br><hr>";
 
-	$resq1alt1 = new RespostaAlunoAlternativa;	
+	$resq1alt1 = new ResAlunoAlternativa;	
+	$resq1alt1->setAlternativa($q1alt1);
 	$resq1alt1->setCodigo(1);
 	$resq1alt1->setResposta(0); # Não é a alternativa que ele selecionou como correta
-	$resq1alt2 = new RespostaAlunoAlternativa;	
+	echo '[Resposta de um aluno a uma alternativa]'.$resq1alt1."<br>";
+	$resq1alt2 = new ResAlunoAlternativa;	
+	$resq1alt2->setAlternativa($q1alt2);
 	$resq1alt2->setCodigo(2);
 	$resq1alt2->setResposta(0); # Não é a alternativa que ele selecionou como correta
-	$resq1alt3 = new RespostaAlunoAlternativa;	
+	echo '[Resposta de um aluno a uma alternativa]'.$resq1alt2."<br>";
+	$resq1alt3 = new ResAlunoAlternativa;	
+	$resq1alt3->setAlternativa($q1alt3);
 	$resq1alt3->setCodigo(3);
 	$resq1alt3->setResposta(1); # É a alternativa selecionada
+	echo '[Resposta de um aluno a uma alternativa]'.$resq1alt3."<br>";
 
-	$resq2alt1 = new RespostaAlunoAlternativa;
+	$res_q1 = new ResAlunoQuestaoAlt;
+	$res_q1->setCodigo(1);
+	$res_q1->setQuestao($ques1);
+	$res_q1->setAlternativaRes($resq1alt1);
+	$res_q1->setAlternativaRes($resq1alt2);
+	$res_q1->setAlternativaRes($resq1alt3);
+	echo $res_q1."<br>";
+
+	$resq2alt1 = new ResAlunoAlternativa;
+	$resq2alt1->setAlternativa($q2alt1);
 	$resq2alt1->setCodigo(4);
 	$resq2alt1->setResposta(1); # Marcada com "V"
-	$resq2alt2 = new RespostaAlunoAlternativa;
+	echo '[Resposta de um aluno a uma alternativa]'.$resq2alt1."<br>";
+	$resq2alt2 = new ResAlunoAlternativa;
+	$resq2alt2->setAlternativa($q2alt2);
 	$resq2alt2->setCodigo(5);
 	$resq2alt2->setResposta(0); # Marcada com "F"
-	$resq2alt3 = new RespostaAlunoAlternativa;
+	echo '[Resposta de um aluno a uma alternativa]'.$resq2alt2."<br>";
+	$resq2alt3 = new ResAlunoAlternativa;
+	$resq2alt3->setAlternativa($q2alt3);
 	$resq2alt3->setCodigo(6);
 	$resq2alt3->setResposta(1); # Marcada com "V"
+	echo '[Resposta de um aluno a uma alternativa]'.$resq2alt3."<br>";
 
-	$aluno1->setResposta($resq1alt1);
-	$aluno1->setResposta($resq1alt2);
-	$aluno1->setResposta($resq1alt3);
-	$aluno1->setResposta($resq2alt1);
-	$aluno1->setResposta($resq2alt2);
-	$aluno1->setResposta($resq2alt3);
+	$res_q2 = new ResAlunoQuestaoAlt;
+	$res_q2->setCodigo(2);
+	$res_q2->setQuestao($ques2);
+	$res_q2->setAlternativaRes($resq2alt1);
+	$res_q2->setAlternativaRes($resq2alt2);
+	$res_q2->setAlternativaRes($resq2alt3);
+	echo $res_q2."<br><br>";
+
+	$res_aval1 = new ResAlunoAvaliacao;
+	$res_aval1->setCodigo(1);
+	$res_aval1->setAvaliacao($aval1);
+	$res_aval1->setQuestaoRes($res_q1);
+	$res_aval1->setQuestaoRes($res_q2);
+	echo $res_aval1;
 	
 
 ?>
