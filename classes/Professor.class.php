@@ -16,7 +16,7 @@ class Professor extends AbsMatriculaNomeData {
     public function getQuestoes(){return $this->questoes; }
 
     function __toString(){
-        $txt = parent::__toString();
+        $txt = "<div class='professor'>[Professor]".parent::__toString();
         $txt .= "{Avaliações}";
         $txt .= "<ul>";
         for ($i=0; $i < count($this->avaliacoes); $i++) { 
@@ -27,6 +27,7 @@ class Professor extends AbsMatriculaNomeData {
         for ($i=0; $i < count($this->questoes); $i++) { 
             $txt .= "<li>".$this->questoes[$i]."</li>"; }
         $txt .= "</ul>";
+        $txt .= "</div>";
 
         return $txt;
     }

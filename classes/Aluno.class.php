@@ -11,12 +11,13 @@ class Aluno extends AbsMatriculaNomeData {
     public function getRespostas(){return $this->respostas;}
 
     function __toString(){
-        $txt = parent::__toString();
+        $txt = "<div class='aluno'>[Aluno]".parent::__toString();
         $txt .= "<br>{Respostas}";
         $txt .= "<ul>";
         for ($i=0; $i < count($this->respostas); $i++) { 
             $txt .= "<li>".$this->respostas[$i]."</li>"; }
         $txt .= "</ul>";
+        $txt .= "</div>";
 
         return $txt;
     }

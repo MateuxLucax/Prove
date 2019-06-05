@@ -5,12 +5,20 @@
 	<title>Página de teste</title>
 	<style type="text/css">
 		.disciplina{ background-color: lightgrey; }
+
 		.questao { background-color: lightblue; }
+
 		.avaliacao { background-color: lightgreen; }
+
 		.resposta { background-color: lightsteelblue; }
-		.avaliacao-aluno { background-color: wheat; }
+
 		.resposta-1alternativa { background-color: lightpink; }
 		.resposta-questao { background-color: slateblue; }
+
+		.aluno { background-color: grey; }
+
+		.professor { background-color: green; color: white; }
+		.professor div { color:black; }
 	</style>
 </head>
 
@@ -171,14 +179,14 @@
 	$q1alt1_r1->setCodigo(1);
 	$q1alt1_r1->setResposta(0);
 	$q1alt1->setResposta($q1alt1_r1); 
-	echo $q1alt1;
+	#echo $q1alt1;
 	$q1alt2_r1 = new Resposta1Alternativa;
 	$q1alt2_r1->setCodigo(2);
 	$q1alt2_r1->setResposta(1);
 	$q1alt2->setResposta($q1alt2_r1); 
 	$q1alt3_r1 = new Resposta1Alternativa;
 	$q1alt3_r1->setCodigo(3);
-	$q1alt3_r1->setResposta(1);
+	$q1alt3_r1->setResposta(0);
 	$q1alt3->setResposta($q1alt3_r1);
 
 	$q1_r1 = new RespostaQAlternativa;
@@ -187,8 +195,87 @@
 	$q1_r1->setResposta($q1alt2_r1);
 	$q1_r1->setResposta($q1alt3_r1);
 	$ques1->setResposta($q1_r1);
+	#echo $ques1."<br>";
 
-	echo $ques1;
+	$q2alt1_r1 = new Resposta1Alternativa;
+	$q2alt1_r1->setCodigo(4);
+	$q2alt1_r1->setResposta(1);
+	$q2alt1->setResposta($q2alt1_r1); 
+	#echo $q2alt1;
+	$q2alt2_r1 = new Resposta1Alternativa;
+	$q2alt2_r1->setCodigo(5);
+	$q2alt2_r1->setResposta(1);
+	$q2alt2->setResposta($q2alt2_r1); 
+	$q2alt3_r1 = new Resposta1Alternativa;
+	$q2alt3_r1->setCodigo(6);
+	$q2alt3_r1->setResposta(1);
+	$q2alt3->setResposta($q2alt3_r1);
+
+	$q2_r1 = new RespostaQAlternativa;
+	$q2_r1->setCodigo(2);
+	$q2_r1->setResposta($q2alt1_r1);
+	$q2_r1->setResposta($q2alt2_r1);
+	$q2_r1->setResposta($q2alt3_r1);
+	$ques2->setResposta($q2_r1);
+	#echo $ques2."<br>";
+
+	###aluno2###
+
+	$q1alt1_r2 = new Resposta1Alternativa;
+	$q1alt1_r2->setCodigo(7);
+	$q1alt1_r2->setResposta(1);
+	$q1alt1->setResposta($q1alt1_r2); 
+	#echo $q1alt1;
+	$q1alt2_r2 = new Resposta1Alternativa;
+	$q1alt2_r2->setCodigo(8);
+	$q1alt2_r2->setResposta(0);
+	$q1alt2->setResposta($q1alt2_r2); 
+	$q1alt3_r2 = new Resposta1Alternativa;
+	$q1alt3_r2->setCodigo(9);
+	$q1alt3_r2->setResposta(0);
+	$q1alt3->setResposta($q1alt3_r2);
+
+	$q1_r2 = new RespostaQAlternativa;
+	$q1_r2->setCodigo(3);
+	$q1_r2->setResposta($q1alt1_r2);
+	$q1_r2->setResposta($q1alt2_r2);
+	$q1_r2->setResposta($q1alt3_r2);
+	$ques1->setResposta($q1_r2);
+	echo $ques1."<br>";
+
+	$q2alt1_r2 = new Resposta1Alternativa;
+	$q2alt1_r2->setCodigo(10);
+	$q2alt1_r2->setResposta(0);
+	$q2alt1->setResposta($q2alt1_r2); 
+	#echo $q2alt1;
+	$q2alt2_r2 = new Resposta1Alternativa;
+	$q2alt2_r2->setCodigo(11);
+	$q2alt2_r2->setResposta(1);
+	$q2alt2->setResposta($q2alt2_r2); 
+	$q2alt3_r2 = new Resposta1Alternativa;
+	$q2alt3_r2->setCodigo(12);
+	$q2alt3_r2->setResposta(0);
+	$q2alt3->setResposta($q2alt3_r2);
+
+	$q2_r2 = new RespostaQAlternativa;
+	$q2_r2->setCodigo(4);
+	$q2_r2->setResposta($q2alt1_r2);
+	$q2_r2->setResposta($q2alt2_r2);
+	$q2_r2->setResposta($q2alt3_r2);
+	$ques2->setResposta($q2_r2);
+	echo $ques2."<br>";
+
+	$aluno1->setResposta($q1_r1);
+	$aluno1->setResposta($q2_r1);
+	echo $aluno1."<br>";
+	
+	$aluno2->setResposta($q1_r2);
+	$aluno2->setResposta($q2_r2);
+	echo $aluno2."<br><hr>";
+
+	$prof1->setQuestao($ques1);
+	$prof2->setQuestao($ques2);
+	echo $prof1."<br><br>";
 
 ?>
 </body>
