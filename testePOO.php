@@ -9,6 +9,8 @@
 		.avaliacao { background-color: lightgreen; }
 		.resposta { background-color: lightsteelblue; }
 		.avaliacao-aluno { background-color: wheat; }
+		.resposta-1alternativa { background-color: lightpink; }
+		.resposta-questao { background-color: slateblue; }
 	</style>
 </head>
 
@@ -163,6 +165,29 @@
 	$disc1->setAluno($alunocad2);
 	$disc1->setAvaliacao($aval1);
 	echo $disc1."<br><hr>";
+
+	$q1alt1_r1 = new Resposta1Alternativa;
+	$q1alt1_r1->setCodigo(1);
+	$q1alt1_r1->setResposta(0);
+	$q1alt1->setResposta($q1alt1_r1); 
+	echo $q1alt1;
+	$q1alt2_r1 = new Resposta1Alternativa;
+	$q1alt2_r1->setCodigo(2);
+	$q1alt2_r1->setResposta(1);
+	$q1alt2->setResposta($q1alt2_r1); 
+	$q1alt3_r1 = new Resposta1Alternativa;
+	$q1alt3_r1->setCodigo(3);
+	$q1alt3_r1->setResposta(1);
+	$q1alt3->setResposta($q1alt3_r1);
+
+	$q1_r1 = new RespostaQAlternativa;
+	$q1_r1->setCodigo(1);
+	$q1_r1->setResposta($q1alt1_r1);
+	$q1_r1->setResposta($q1alt2_r1);
+	$q1_r1->setResposta($q1alt3_r1);
+	$ques1->setResposta($q1_r1);
+
+	echo $ques1;
 
 ?>
 </body>

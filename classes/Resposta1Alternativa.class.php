@@ -18,7 +18,7 @@ class Resposta1Alternativa extends AbsCodigo {
     public function getResposta(){return $this->resposta;}
 
     function __toString(){
-        return parent::__toString()." | Resposta: ".$this->resposta;
+        return "<div class='resposta-1alternativa'>[Resposta da alternativa] ".parent::__toString()." | Resposta: ".$this->resposta."</div>";
     }
 
 }

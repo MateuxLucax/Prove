@@ -9,14 +9,14 @@ class Alternativa extends AbsCodigoDescricao {
 	public function setCorreta($correta){$this->correta=$correta;}
 	public function getCorreta(){return $this->correta;}
 
-	public functin setResposta($resposta){
-		if($resposta instanceof RespostaAlternativa) array_push($this->respostas, $resposta);}
+	public function setResposta($resposta){
+		if($resposta instanceof Resposta1Alternativa) array_push($this->respostas, $resposta);}
 	public function getRespostas(){return $this->respostas;}
 
 	public function __toString(){
 		$txt = parent::__toString();
 		$txt .= " | Correta: ".$this->correta;
-		$txt .= " | {Respostas} ";
+		$txt .= " <br>| {Respostas} ";
 		$txt .= "<ul>";
 		for ($i=0; $i < count($this->respostas); $i++) { 
 			$txt .= "<li>".$this->respostas[$i]."</li>";

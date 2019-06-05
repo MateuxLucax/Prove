@@ -9,7 +9,7 @@
 require_once "autoload.php";
 
 
-class RespostaQAlternativa extends AbsResposta {
+class RespostaQAlternativa extends AbsCodigo {
     private $respostas = array();
 
     function __construct(){
@@ -21,12 +21,13 @@ class RespostaQAlternativa extends AbsResposta {
     public function getRespostas(){return $this->respostas;}
 
     function __toString() {
-        $txt = parent::__toString()." | {Respostas}";
+        $txt = "<div class='resposta-questao'>".parent::__toString()." <br>| {Respostas}";
         $txt .= "<ul>";
         for ($i=0; $i < count($this->respostas); $i++) { 
             $txt .= "<li>".$this->respostas[$i]."</li>";
         }
         $txt .= "</ul>";
+        $txt .= "</div>";
         return $txt;
     }
 }
