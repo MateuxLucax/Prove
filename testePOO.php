@@ -10,10 +10,8 @@
 
 		.avaliacao { background-color: lightgreen; }
 
-		.resposta { background-color: lightsteelblue; }
-
 		.resposta-1alternativa { background-color: lightpink; }
-		.resposta-questao { background-color: slateblue; }
+		.resposta { background-color: slateblue; }
 
 		.aluno { background-color: grey; }
 
@@ -80,6 +78,10 @@
 	$tipo2->setCodigo(2);
 	$tipo2->setDescricao("Verdadeiro ou falso");
 	echo "[Tipo de questão] ".$tipo2."<br>";
+	$tipo3 = new TipoQuestao;
+	$tipo3->setCodigo(3);
+	$tipo3->setDescricao("Discursiva");
+	echo "[Tipo de questão] ".$tipo3."<br>";
 
 	$tag1 = new TagQuestao;
 	$tag1->setCodigo(1);
@@ -141,7 +143,7 @@
 	echo "[Alternativa] ".$q2alt3."<br><br>";
 
 	$ques2 = new QuestaoAlternativa;
-	$ques2->setPeso(5);
+	$ques2->setPeso(4);
 	$ques2->setCodigo(2);
 	$ques2->setTipo($tipo2);
 	$ques2->setTexto("O PHP (um acrônimo recursivo para PHP: Hypertext Preprocessor) é uma linguagem de script open source de uso geral, muito utilizada, e especialmente adequada para o desenvolvimento web e que pode ser embutida dentro do HTML.");
@@ -153,6 +155,27 @@
 	$ques2->setAlternativa($q2alt3);
 	echo $ques2."<br><br>";
 
+	$ques3 = new QuestaoDiscursiva;
+	$ques3->setPeso(1);
+	$ques3->setCodigo(3);
+	$ques3->setTipo($tipo3);
+	$ques3->setTexto('<?php
+	$variavel = 1;
+	echo $variavel;
+	$variavel++;
+	echo $variavel;
+	if($variavel > 10){
+		echo $variavel."é maior que 10";
+	}
+	else {
+		echo $variavel."é menor que 10";
+	}
+	?>');
+	$ques3->setEnunciado("O que o código PHP acima faz? Descreva em detalhes.");
+	$ques3->setTag($tag1);
+	$ques3->setTag($tag2);	
+	echo $ques3;
+
 	$aval1 = new Avaliacao;
 	$aval1->setCodigo(1);
 	$aval1->setConteudo("Laços de repetição e PHP");
@@ -160,6 +183,7 @@
 	$aval1->setDataFim("07/04/2017");
 	$aval1->setQuestao($ques1);
 	$aval1->setQuestao($ques2);
+	$aval1->setQuestao($ques3);
 	$aval1->setPeso(6);
 	$aval1->setEmbaralhar(1);
 	echo $aval1."<br><hr>";
@@ -219,6 +243,14 @@
 	$ques2->setResposta($q2_r1);
 	#echo $ques2."<br>";
 
+	$q3_r1 = new RespostaDiscursiva;
+	$q3_r1->setCodigo(5);
+	$q3_r1->setResposta("subtrai 10 da variavel #varivavel e conta de 1 a 10 se 1 for maior que 10");
+	$q3_r1->setCorrecao("Não tem nada a ver com o código. O símbolo que precede o nome da variável no PHP é $ não #.");
+	$q3_r1->setPontuacao(0);
+	$ques3->setResposta($q3_r1);
+	#echo $ques3."<br>";
+
 	###aluno2###
 
 	$q1alt1_r2 = new Resposta1Alternativa;
@@ -265,16 +297,27 @@
 	$ques2->setResposta($q2_r2);
 	echo $ques2."<br>";
 
+	$q3_r2 = new RespostaDiscursiva;
+	$q3_r2->setCodigo(6);
+	$q3_r2->setResposta("Declara a variável com valor 1, adiciona 1 a esse valor, verifica se é menor que 10 ou menor e imprime uma mensagem conforme.");
+	$q3_r2->setCorrecao("Está correto, mas a explicação não aborda a lógica if(){}else{} muito bem.");
+	$q3_r2->setPontuacao(0.9);
+	$ques3->setResposta($q3_r2);
+
 	$aluno1->setResposta($q1_r1);
 	$aluno1->setResposta($q2_r1);
+	$aluno1->setResposta($q3_r1);
 	echo $aluno1."<br>";
 	
 	$aluno2->setResposta($q1_r2);
 	$aluno2->setResposta($q2_r2);
+	$aluno2->setResposta($q3_r2);
 	echo $aluno2."<br><hr>";
 
 	$prof1->setQuestao($ques1);
-	$prof2->setQuestao($ques2);
+	$prof1->setQuestao($ques2);
+	$prof1->setQuestao($ques3);
+	$prof1->setAvaliacao($aval1);
 	echo $prof1."<br><br>";
 
 ?>

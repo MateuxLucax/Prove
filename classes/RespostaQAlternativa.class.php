@@ -21,7 +21,7 @@ class RespostaQAlternativa extends AbsCodigo {
     public function getRespostas(){return $this->respostas;}
 
     function __toString() {
-        $txt = "<div class='resposta-questao'>".parent::__toString()." <br>| {Respostas}";
+        $txt = "<div class='resposta'>[Resposta]".parent::__toString()." <br>| {Respostas}";
         $txt .= "<ul>";
         for ($i=0; $i < count($this->respostas); $i++) { 
             $txt .= "<li>".$this->respostas[$i]."</li>";
