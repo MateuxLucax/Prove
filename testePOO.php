@@ -153,6 +153,7 @@
 	$aval1->setQuestao($ques1);
 	$aval1->setQuestao($ques2);
 	$aval1->setPeso(6);
+	$aval1->setEmbaralhar(1);
 	echo $aval1."<br><hr>";
 	
 	$disc1 = new Disciplina;

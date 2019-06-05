@@ -9,6 +9,9 @@ class Avaliacao extends AbsCodigo {
 	private $dataFim;
 	private $peso;
 	private $questoes = array();
+	private $embaralhar; # binário: embaralhar ou não
+	# embaralha não só a ordem das questões
+	# como a ordem das alternativas de cada questão também
 
 	public function setConteudo($conteudo){$this->conteudo = $conteudo;}
 	public function getConteudo(){return $this->conteudo;}
@@ -25,7 +28,10 @@ class Avaliacao extends AbsCodigo {
 	public function getQuestao(){return $this->questao; }
 
 	public function setPeso($peso){$this->peso = $peso; }
-    public function getPeso(){return $this->peso; }
+	public function getPeso(){return $this->peso; }
+	
+	public function setEmbaralhar($embaralhar){$this->embaralhar = $embaralhar; }
+    public function getEmbaralhar(){return $this->embaralhar; }
 
 	public function __toString(){
 		$txt = "<div class='avaliacao'>[Avaliação]".parent::__toString();
@@ -33,6 +39,7 @@ class Avaliacao extends AbsCodigo {
 		$txt .= " | Conteúdo: ".$this->conteudo;
 		$txt .= " | Data início: ".$this->dataInicio;
 		$txt .= " | Data fim: ".$this->dataFim;
+		$txt .= " | Embaralhar: ".$this->embaralhar;
 		$txt .= "<br> | {Questões}: ";
 		$txt .= "<ol>"; # Lista de questões
 		for ($i=0; $i < count($this->questoes); $i++) { 
