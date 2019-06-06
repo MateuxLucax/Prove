@@ -22,9 +22,7 @@
 </head> 
 
 <body>
-    <?php #geraGraficoSetor2($vetor, $titulo, $div); ?>
-    <?php #geraGraficoSetor($eixoX, $linhas, $titulo, $div); ?>
-    <?php geraMatriz($eixoX, $linhas);  ?>
+    <?php geraGraficoSetor($eixoX, $linhas, $titulo, $div); ?>
     
 
 </body>
