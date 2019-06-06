@@ -1,6 +1,6 @@
 <?php
 
-	function geraGraficoSetor($vetor = false, $titulo = false, $div = false) {
+	function geraGraficoSetor2($vetor = false, $titulo = false, $div = false) {
 		if ($vetor != false and $div != false) {
 			echo '<script type="text/javascript" src="loader.js"></script>';
 			echo '<script type="text/javascript">';
@@ -11,13 +11,7 @@
 			echo "function drawChart() {";
   
 			echo "var data = google.visualization.arrayToDataTable([";
-			for ($linhas = 0; $linhas < count($vetor); $linhas++) {
-				if ($linhas != (count($vetor) - 1)) {
-					echo $vetor[$linhas] . ',';
-				} else {
-					echo $vetor[$linhas];
-				}
-			}
+			gerarMatriz2($vetor);
 			echo "]);";
 		  
 			echo "var options = {";
@@ -34,5 +28,38 @@
 			echo '<div id="'.$div.'" style="width: 900px; height: 500px;"></div>';
 		}
 	}
+
+	function gerarMatriz2($vetor) {
+		for ($linhas = 0; $linhas < count($vetor); $linhas++) {
+			if ($linhas != (count($vetor) - 1)) {
+				echo $vetor[$linhas] . ',';
+			} else {
+				echo $vetor[$linhas];
+			}
+		}
+	}
+
+	function geraMatriz($eixoX, $linhas) {
+		$matriz = array();
+		for ($i=0; $i < count($eixoX); $i++) { 
+			$matriz[0][$i] = $eixoX[$i];
+		}
+
+		for ($i=0; $i < count($linhas); $i++) { 
+			for ($j=0; $j < count($linhas[$i]); $j++) { 
+				$matriz[$i+1][$j] = $linhas[$i][$j];
+			}
+		}
+
+		for ($i=0; $i < count($matriz); $i++) { 
+			echo "[ "
+			for ($j=0; $j < count($matriz[$i]); $j++) { 
+				echo $matriz[$i][$j]", ";
+			}
+			echo "], <br>";
+		}
+	}
+
+
 
 ?>

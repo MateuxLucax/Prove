@@ -6,6 +6,11 @@
     $vetor = array("['Notas', 'Aluno', 'Teste']", "['Prova 1', 7, 0]", "['Trabalho 1', 9, 10]", "['Prova 2', 7.5, 9]", "['Trabalho 2', 8, 1]", "['Prova 3', 9.5, 6]");
     $titulo = 'Notas do aluno';
     $div = 'grafico-linhas-notas';
+    $eixoX = array("Notas", "Prova 1", "Prova 2", "Trabalho 1");
+    $linhas = array (
+        array ("Aluno A", 9, 8, 7),
+        array ("Aluno B", 10, 5, 9)
+    );
 ?>
 
 <head>
@@ -17,7 +22,9 @@
 </head> 
 
 <body>
-    <?php geraGraficoSetor($vetor, $titulo, $div); ?>
+    <?php #geraGraficoSetor2($vetor, $titulo, $div); ?>
+    <?php #geraGraficoSetor($eixoX, $linhas, $titulo, $div); ?>
+    <?php geraMatriz($eixoX, $linhas);  ?>
     
 
 </body>
