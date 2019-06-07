@@ -9,7 +9,7 @@
     $eixoX = array("Notas", "Prova 1", "Prova 2", "Trabalho 1");
     $linhas = array (
         array ("Aluno A", 9, 8, 7),
-        array ("Aluno B", 10, 5, 9)
+        array ("Aluno B", 10, 5, 9),
     );
 ?>
 
