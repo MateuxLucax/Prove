@@ -1,6 +1,6 @@
 <?php
 
-	function geraGraficoSetor($eixoX = false, $linhas = false, $titulo = false, $div = false) {
+	function geraGraficoNotas($eixoX = false, $linhas = false, $titulo = false, $div = false) {
 		if ($eixoX != false and $div != false and $linhas != false) {
 			echo '<script type="text/javascript" src="loader.js"></script>';
 			echo '<script type="text/javascript">';

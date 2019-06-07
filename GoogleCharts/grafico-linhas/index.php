@@ -3,13 +3,13 @@
 
 <?php
     include_once 'funcoes.php';
-    $vetor = array("['Notas', 'Aluno', 'Teste']", "['Prova 1', 7, 0]", "['Trabalho 1', 9, 10]", "['Prova 2', 7.5, 9]", "['Trabalho 2', 8, 1]", "['Prova 3', 9.5, 6]");
     $titulo = 'Notas do aluno';
     $div = 'grafico-linhas-notas';
     $eixoX = array("Notas", "Prova 1", "Prova 2", "Trabalho 1");
     $linhas = array (
         array ("Aluno A", 9, 8, 7),
         array ("Aluno B", 10, 5, 9),
+        array ("Aluno C", 2, 3, 6.5),
     );
 ?>
 
@@ -22,7 +22,7 @@
 </head> 
 
 <body>
-    <?php geraGraficoSetor($eixoX, $linhas, $titulo, $div); ?>
+    <?php geraGraficoNotas($eixoX, $linhas, $titulo, $div); ?>
     
 
 </body>
