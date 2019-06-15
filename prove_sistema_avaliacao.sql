@@ -322,5 +322,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 #### Professores:Matricula,Nome,Data_Nascimento,Ultimo_Login,Senha
 INSERT INTO `Professores` VALUES ('2015459988','Professor Teste','2017-12-21','2019-12-21 23:44:34','2e6f9b0d5885b6010f9167787445617f553a735f');
 ## Senha que gera este sha1: teste
+INSERT INTO `Professores` VALUES ('2017459988','Professor Teste 2','2014-12-21','2019-12-21 21:45:34','2e6f9b0d5885b6010f9167787445617f553a735f');
 
 SELECT * FROM Professores WHERE Matricula = '2015459988';
+
+SELECT * FROM Alunos;

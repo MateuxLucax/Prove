@@ -41,19 +41,18 @@ if ($tipo_usuario == $tb_alunos) {
 
 $usuario->setMatricula($matricula);
 $usuario->setSenha($senhaSHA1);
-if ($acao == 'cadastrar') {
-	$usuario->setDataNascimento($data_nascimento);
-	$usuario->setNome($nome);
-} else if ($acao == 'login') {
-	$usuario->setUltimoLogin($ultimo_login);
-}
+$usuario->setDataNascimento($data_nascimento);
+$usuario->setNome($nome);
+$usuario->setUltimoLogin($ultimo_login);
+
 echo "<br>[Usuário] ".$usuario."<br>";
 
 ####################################################################################################
 
 if ($acao == 'cadastrar') {
+	session_start();
 	/*O objeto terá que ser armazenado numa seção para poder ser acessado na página de PDO*/
-	$_SESSION['objeto_pdo'] = $usuario;
+	$_SESSION['objeto_pdo'] = serialize($usuario); /*serialize() transforma o objeto em string -- para transformar de string a objeto usa-se unserialize()*/
 	header('location:pdo.php?acao=insert');
 }
 	
