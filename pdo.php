@@ -9,7 +9,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao;','root','')
 
 /*Os objetos que devem ser transferidos para a página de PDO são armazenados numa seção
 e essa seção é acessada na página de PDO (ex: criaObjetoUsuario)*/
-$usuario = $_SESSION['usuario_pdo'];
+$usuario = $_SESSION['objeto_pdo'];
 
 if ($usuario instanceof Aluno)
 	$tb = $tb_alunos;
@@ -54,7 +54,7 @@ function selectPDO () {
 
 function insertPDO(){
 	$stmt = $GLOBALS['pdo']->prepare('INSERT INTO $tb (Matricula, Senha, Nome, Data_Nascimento) VALUES (:matricula,:senha,:nome,:data_nascimento)');
-	
+
 }
 
 ####################################################################################################
