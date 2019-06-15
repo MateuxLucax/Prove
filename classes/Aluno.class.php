@@ -2,7 +2,7 @@
 
 require_once "autoload.php";
 
-class Aluno extends AbsMatriculaNomeData {
+class Aluno extends AbsUsuario {
     private $respostas = array();
 
     public function setResposta($resposta){

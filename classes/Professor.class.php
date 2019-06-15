@@ -2,7 +2,7 @@
 
 require_once "autoload.php";
 
-class Professor extends AbsMatriculaNomeData {
+class Professor extends AbsUsuario {
     private $avaliacoes = array();
     private $questoes = array();
 
