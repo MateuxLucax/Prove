@@ -6,6 +6,7 @@ abstract class AbsUsuario {
 
 	private $matricula;
 	private $nome;
+	private $senha;
 	private $dataNascimento;
 	private $ultimoLogin;
 
@@ -15,6 +16,9 @@ abstract class AbsUsuario {
 	public function setNome($nome){$this->nome=$nome;}
 	public function getNome(){return $this->nome;}
 
+	public function setSenha($senha){$this->senha=$senha;}
+	public function getSenha(){return $this->senha;}
+
 	public function setDataNascimento($dataNascimento){$this->dataNascimento=$dataNascimento;}
 	public function getDataNascimento(){return $this->dataNascimento;}
 
@@ -22,7 +26,7 @@ abstract class AbsUsuario {
 	public function getUltimoLogin(){return $this->ultimoLogin;}
 
 	public function __toString(){
-		return " Matrícula: ".$this->matricula." | Nome: ".$this->nome." | Data de nascimento: ".$this->dataNascimento." | Último login: ".$this->ultimoLogin;
+		return " Matrícula: ".$this->matricula." | Senha: ".$this->senha." | Nome: ".$this->nome." | Data de nascimento: ".$this->dataNascimento." | Último login: ".$this->ultimoLogin;
 	}
 }
 
