@@ -326,4 +326,4 @@ INSERT INTO `Professores` VALUES ('2017459988','Professor Teste 2','2014-12-21',
 
 SELECT * FROM Professores WHERE Matricula = '2015459988';
 
-SELECT * FROM Alunos;
+SELECT * FROM Professores;

@@ -3,7 +3,6 @@ session_start();
 
 require_once "autoload.php";
 include "conf/conf.inc.php";
-include "funcoes.php";
 
 # OBS: Algumas informações passadas na função PDO deverão ser alteradas quando o site for pra curvello.com/equipe5
 $pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao;','root','');
@@ -40,14 +39,18 @@ for ($i=0; $i < count($registros); $i++) {
 	echo "<hr>";
 }
 
-insertPDO();
+//insertPDO();
+
+if ($acao == 'delete') {
+	deletePDO();
+}
 /**//*** FIM TESTES ***/
 
 
 /*try {
 	switch ($acao) {
 		case 'select':
-			selectPDO();
+			selectPDO('registros');
 			break;
 		case 'insert':
 			insertPDO();
@@ -115,6 +118,40 @@ function insertPDO(){
 	$stmt->execute();
 	echo "Linhas afetadas: ".$stmt->rowCount();
 
+}
+
+function deletePDO() {
+	$nomeColunas = selectPDO('nome_colunas');
+	$valores = $GLOBALS['objeto']->getValoresEmVetorPDO();
+
+	$sql = "DELETE FROM ".$GLOBALS['tb']." WHERE ".$nomeColunas[0]." = :".$nomeColunas[0];
+	$stmt = $GLOBALS['pdo']->prepare($sql);
+	$stmt->bindParam(':'.$nomeColunas[0], $valores[0]);
+	$stmt->execute();
+	echo "Linhas afetadas: ".$stmt->rowCount();
+}
+
+function updatePDO(){
+	$nomeColunas = selectPDO('nome_colunas');
+	$valores = $GLOBALS['objeto']->getValoresEmVetorPDO();
+	$codigo = $valores[0];
+
+	$sql = "UPDATE ".$GLOBALS['tb']." SET ";
+	for ($i=1; $i < count($nomeColunas); $i++) { 
+		#$1=1 porque 0 é o código/chave primária, e esse valor não deve mudar no update
+		$sql .= $nomeColunas[$i]." = :".$nomeColunas[$i];
+		if ($i != (count($nomeColunas)-1) ) {
+			$sql .= ",";
+		}
+	}
+	$sql .= " WHERE ".$nomeColunas[0]." = :".$nomeColunas[0];
+
+	$stmt = $GLOBALS['pdo']->prepare($sql);
+	for ($i=0; $i < count($nomeColunas); $i++) { 
+		$stmt->bindParam(':'.$nomeColunas[$i], $valores[$i]);
+	}
+	$stmt->execute();
+	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
 ####################################################################################################
