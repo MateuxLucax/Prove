@@ -38,7 +38,7 @@
 
 			<input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">
 
-			<button type="submit" name="acao" class="btn black white-text waves-effect waves-light" value="cadastro">Cadastrar</button>
+			<button type="submit" name="acao" class="btn black white-text waves-effect waves-light" value="cadastrar">Cadastrar</button>
 		</form>
 	</div>
 </body>

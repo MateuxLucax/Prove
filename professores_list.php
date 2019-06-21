@@ -15,7 +15,7 @@
 </head>
 <body>
 	<?php
-		printSelectPDOasTable(selectPDO());
+		printSelectPDOAsTable(selectPDO());
 	?>
 </body>
 </html>

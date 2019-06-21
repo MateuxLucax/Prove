@@ -30,10 +30,16 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 try {
 	switch ($acao) {
-		case 'cadastro':
+		case 'cadastrar':
 			insertPDO();
 			break;
-	}
+		case 'editar':
+			updatePDO();
+			break;
+		case 'deletar':
+			deletePDO();
+			break;
+	}	
 } catch (PDOException $e) {
 	echo "Erro: ".$e->getMessage();
 }
@@ -41,12 +47,6 @@ try {
 #### Funções ###############################################
 
 function selectPDO($criterio = 'Nome', $pesquisa = '') {
-	/*$consulta = $GLOBALS['pdo']->query("SELECT * FROM marca;");
-		while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-			echo "Código: {$linha['codigo']} - Descrição: {$linha['descricao']}<br />";
-		}*/
-
-
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['tb_professores']." WHERE ".$criterio." ";
 		if ($criterio == 'Nome' || $criterio = 'Matricula') 
@@ -74,11 +74,12 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function printSelectPDOasTable ($registros) {
+function printSelectPDOAsTable ($registros) {
+	# $registros deve ser o retorno da função selectPDO()
+	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
 	A função printSelectTable imprime os dados da matriz em uma tabela*/
-	# $registros deve ser o retorno da função selectPDO
-
+	
 	echo "<table class='highlight centered responsive-table'>
 	<thead class='black white-text'>
 	<tr>
@@ -103,7 +104,6 @@ function printSelectPDOasTable ($registros) {
 
 }
 
-
 function insertPDO() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_professores']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login)");
 
@@ -124,6 +124,36 @@ function insertPDO() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
+function updatePDO() {
+	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_professores']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login");
 
+	$stmt->bindParam(':Matricula', $matricula);
+	$stmt->bindParam(':Senha', $senha);
+	$stmt->bindParam(':Nome', $nome);
+	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
+	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
+
+	$matricula = $GLOBALS['prof']->getMatricula();
+	$senha = $GLOBALS['prof']->getSenha();
+	$nome = $GLOBALS['prof']->getNome();
+	$data_nascimento = $GLOBALS['prof']->getDataNascimento();
+	$ultimo_login = $GLOBALS['prof']->getUltimoLogin();
+
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();
+}
+
+function deletePDO() {
+	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_professores']." WHERE Matricula = :Matricula");
+
+	$stmt->bindParam(':Matricula', $matricula);
+
+	$matricula = $GLOBALS['prof']->getMatricula();
+
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();
+}
 
 ?>
