@@ -327,12 +327,3 @@ INSERT INTO `Professores` VALUES ('2017459988','Professor Teste 2','2014-12-21',
 SELECT * FROM Professores WHERE Matricula = '2015459988';
 
 SELECT * FROM Professores;
-
-SELECT Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login FROM Professores WHERE Nome like '% %';
-
-SELECT Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login FROM Professores WHERE Nome like '% %';
-
-SELECT * FROM Professores WHERE Nome LIKE '% %';
-
-INSERT INTO `Alunos` (`Matricula`, `Senha`, `Nome`, `Data_Nascimento`, `Ultimo_Login`) VALUES
-('2017305998','e0f68134d29dc326d115de4c8fab8700a3c4b002','Teste 123','2002-03-17','2019-03-12 16:22:32');
