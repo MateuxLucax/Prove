@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
   include 'valida_secao.php';
+  include 'funcoes.php';
 ?>
 <html lang="pt-br">
 
@@ -21,37 +22,7 @@
 </head>
 
 <body>
-  <header>
-
-      <!-- Cabeçalho -->
-      <div class="navbar-fixed">
-        <nav>
-          <div class="nav-wrapper container">
-            <a href="index.php" class="brand-logo"><img src="assets/img/logo.svg" alt="Prove"></a>
-            <a href="#" data-target="sidenav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-              <li><a class="active" href="index.php">Home</a></li>
-              <li><a href="carros.php">Sobre</a></li>
-              <li><a href="ocorrencias.php">Entrar</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-
-      <!-- Dropdown Structure -->
-      <ul id='dropdown1' class='dropdown-content'>
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-      </ul>
-      
-      <ul class="sidenav" id="sidenav-mobile">
-        <li><a class="active" href="index.php">Painel de controle</a></li>
-        <li><a href="clientes.php">Clientes</a></li>
-        <li><a href="carros.php">Carros</a></li>
-        <li><a href="ocorrencias.php">Ocorrências</a></li>
-      </ul>
-
-  </header>
+  <?php printHeader(); ?>
 
   <main>
     <p>

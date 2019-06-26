@@ -19,7 +19,7 @@ if (!$acao == '') {
 	if(isset($_POST['nome'])) $aluno->setNome($_POST['nome']);
 	if(isset($_POST['data_nascimento'])) $aluno->setDataNascimento($_POST['data_nascimento']);
 	if(isset($_POST['ultimo_login'])) $aluno->setUltimoLogin($_POST['ultimo_login']);
-	if(isset($_POST['email'])) $aluno->setUltimoLogin($_POST['email']);
+	if(isset($_POST['email'])) $aluno->setEmail($_POST['email']);
 	echo $aluno;
 	//echo "Senha: ".$_POST['senha'];
 }
@@ -67,6 +67,7 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 			array_push($registros[$i], $linha['Nome']);
 			array_push($registros[$i], $linha['Data_Nascimento']);
 			array_push($registros[$i], $linha['Ultimo_Login']);
+			array_push($registros[$i], $linha['Email']);
 		}
 
 		return $registros;
@@ -75,9 +76,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function printSelectPDOAsTable ($registros) {
+function selectPDOtable($registros) {
 	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
+	# ou seja, poderia-se chamar essa função assim: selectPDOtable(selectPDO());
 	
 	echo "<table class='highlight centered responsive-table'>
 	<thead class='black white-text'>
@@ -87,6 +88,7 @@ function printSelectPDOAsTable ($registros) {
 		<th>Nome</th>
 		<th>Data de nascimento</th>
 		<th>Último login</th>
+		<th>E-mail</th>
 	</tr>
 	</thead>
 	<tdbody>";
@@ -111,6 +113,7 @@ function insertPDO() {
 	$stmt->bindParam(':Nome', $nome);
 	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
 	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
+	$stmt->bindParam(':Email', $email);
 
 	$matricula = $GLOBALS['aluno']->getMatricula();
 	$senha = $GLOBALS['aluno']->getSenha();
@@ -125,19 +128,21 @@ function insertPDO() {
 }
 
 function updatePDO() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_alunos']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login");
+	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_alunos']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login, Email = :Email");
 
 	$stmt->bindParam(':Matricula', $matricula);
 	$stmt->bindParam(':Senha', $senha);
 	$stmt->bindParam(':Nome', $nome);
 	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
 	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
+	$stmt->bindParam(':Email', $email);
 
 	$matricula = $GLOBALS['aluno']->getMatricula();
 	$senha = $GLOBALS['aluno']->getSenha();
 	$nome = $GLOBALS['aluno']->getNome();
 	$data_nascimento = $GLOBALS['aluno']->getDataNascimento();
 	$ultimo_login = $GLOBALS['aluno']->getUltimoLogin();
+	$email = $GLOBALS['aluno']->getEmail();
 
 	$stmt->execute();
 

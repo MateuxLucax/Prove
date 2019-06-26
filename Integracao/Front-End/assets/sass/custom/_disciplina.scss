@@ -1,0 +1,26 @@
+.cad-disc {
+    
+  min-height: 90vh;
+
+  &--img {
+    width: 8rem;
+  }
+  
+  @media #{$small-and-down} {
+
+    &--img {
+      width: 6rem;
+    }
+
+  }  
+
+  &--title {
+    @extend .center;
+    @extend .nunito;
+    color: $primary-color;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase; 
+  }
+
+}

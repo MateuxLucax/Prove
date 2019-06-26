@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+  include 'funcoes.php'; //função usada: printHeader();
   $tipo_usuario = isset($_POST['tipo_usuario']) ? $_POST['tipo_usuario'] : '';
 ?>
 <html lang="pt-br">
@@ -21,31 +22,8 @@
 </head>
 
 <body>
-  <header>
-
-    <!-- Cabeçalho -->
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper container">
-          <a href="index.php" class="brand-logo"><img src="assets/img/logo.svg" alt="Prove"></a>
-          <a href="#" data-target="sidenav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="./">Home</a></li>
-            <li><a href="sobre.html">Sobre</a></li>
-            <li><a href="entrar.html">Entrar</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+  <?php printHeader(); /*include 'funcoes.php'; lá em cima*/ ?>
     
-    <ul class="sidenav" id="sidenav-mobile">
-      <li><a href="./"><i class="material-icons">home</i>Home</a></li>
-      <li><a href="sobre.html"><i class="material-icons">info</i>Sobre</a></li>
-      <li><a href="entrar.html"><i class="material-icons">account_circle</i>Entrar</a></li>
-    </ul>
-  
-  </header>
-  
   <main>
 
     <center>
@@ -103,8 +81,9 @@
               </div>
               <div class="row" style="margin-top: -2rem">
                 <div class="input-field col s12 m6 offset-m3">
-                  <input id="data_nascimento" name="data_nascimento" type="date" class="validate" data-mask="00/00/0000" />
-                  <label for="dataNascimento">Data de Nascimento</label>
+                  <input id="data_nascimento" name="data_nascimento" type="date" class="validate">
+                  <span class="helper-text">Data de nascimento</span>
+                  <!--<label for="dataNascimento">Data de Nascimento</label>-->
                 </div>
               </div>
               <input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">

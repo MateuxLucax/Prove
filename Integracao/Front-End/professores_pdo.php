@@ -19,7 +19,7 @@ if (!$acao == '') {
 	if(isset($_POST['nome'])) $prof->setNome($_POST['nome']);
 	if(isset($_POST['data_nascimento'])) $prof->setDataNascimento($_POST['data_nascimento']);
 	if(isset($_POST['ultimo_login'])) $prof->setUltimoLogin($_POST['ultimo_login']);
-	if(isset($_POST['email'])) $prof->setUltimoLogin($_POST['email']);
+	if(isset($_POST['email'])) $prof->setEmail($_POST['email']);
 	echo $prof;
 	//echo "Senha: ".$_POST['senha'];
 }
@@ -67,6 +67,7 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 			array_push($registros[$i], $linha['Nome']);
 			array_push($registros[$i], $linha['Data_Nascimento']);
 			array_push($registros[$i], $linha['Ultimo_Login']);
+			array_push($registros[$i], $linha['Email']);
 		}
 
 		return $registros;
@@ -75,9 +76,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function printSelectPDOAsTable ($registros) {
+function selectPDOtable ($registros) {
 	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
+	# ou seja, poderia-se chamar essa função assim: selectPDOtable(selectPDO());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
 	A função printSelectTable imprime os dados da matriz em uma tabela*/
 	
@@ -89,6 +90,7 @@ function printSelectPDOAsTable ($registros) {
 		<th>Nome</th>
 		<th>Data de nascimento</th>
 		<th>Último login</th>
+		<th>E-mail</th>
 	</tr>
 	</thead>
 	<tdbody>";
@@ -106,19 +108,21 @@ function printSelectPDOAsTable ($registros) {
 }
 
 function insertPDO() {
-	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_professores']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login)");
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_professores']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login, Email) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login, :Email)");
 
 	$stmt->bindParam(':Matricula', $matricula);
 	$stmt->bindParam(':Senha', $senha);
 	$stmt->bindParam(':Nome', $nome);
 	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
 	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
+	$stmt->bindParam(':Email', $email);
 
 	$matricula = $GLOBALS['prof']->getMatricula();
 	$senha = $GLOBALS['prof']->getSenha();
 	$nome = $GLOBALS['prof']->getNome();
 	$data_nascimento = $GLOBALS['prof']->getDataNascimento();
 	$ultimo_login = $GLOBALS['prof']->getUltimoLogin();
+	$email = $GLOBALS['prof']->getEmail();
 
 	$stmt->execute();
 
@@ -133,12 +137,14 @@ function updatePDO() {
 	$stmt->bindParam(':Nome', $nome);
 	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
 	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
+	$stmt->bindParam(':Email', $email);
 
 	$matricula = $GLOBALS['prof']->getMatricula();
 	$senha = $GLOBALS['prof']->getSenha();
 	$nome = $GLOBALS['prof']->getNome();
 	$data_nascimento = $GLOBALS['prof']->getDataNascimento();
 	$ultimo_login = $GLOBALS['prof']->getUltimoLogin();
+	$email = $GLOBALS['prof']->getEmail();
 
 	$stmt->execute();
 
