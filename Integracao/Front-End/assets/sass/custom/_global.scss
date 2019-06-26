@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap');
+
+// Fontes
+
+.nunito {
+  font-family: 'Nunito', cursive !important;
+}
+
+// Custom gradient background
+
+/*
+.gradient-green {
+    background: linear-gradient(to right, $primary-color-dark, $primary-color);
+}
+
+*/
+
+// Helpers
+
+.logo-navbar {
+  width: 1rem;
+}
+
+.link-negrito {
+  font-weight: 800;
+}
+
+.inline {
+  display: inline;
+}
+
+.margin-right-small {
+  margin-right: 3rem !important;
+}
+
+.margin-bottom-small {
+  margin-bottom: 2rem !important;
+}
+
+.margin-top-small {
+    margin-top: 4rem !important;
+}
+
+.margin-top-small-minus {
+  margin-top: -2rem !important;
+}
