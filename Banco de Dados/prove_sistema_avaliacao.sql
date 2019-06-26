@@ -16,7 +16,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `prove_sistema_avaliacao` DEFAULT CHARACTER SET utf8 ;
 USE `prove_sistema_avaliacao` ;
-
 -- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Escola`
 -- -----------------------------------------------------
@@ -33,7 +32,14 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Serie` (
   `Codigo_Serie` INT NOT NULL,
   `Descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Codigo_Serie`))
+  `Escola_Codigo_Escola` INT NOT NULL,
+  PRIMARY KEY (`Codigo_Serie`),
+  INDEX `fk_Serie_Escola1_idx` (`Escola_Codigo_Escola` ASC),
+  CONSTRAINT `fk_Serie_Escola1`
+    FOREIGN KEY (`Escola_Codigo_Escola`)
+    REFERENCES `prove_sistema_avaliacao`.`Escola` (`Codigo_Escola`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -43,16 +49,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Disciplinas` (
   `Codigo_Disciplina` INT NOT NULL,
   `Nome` VARCHAR(50) NOT NULL,
-  `Escola_Codigo_Escola` INT NOT NULL,
   `Serie_Codigo_Serie` INT NOT NULL,
   PRIMARY KEY (`Codigo_Disciplina`),
-  INDEX `fk_Disciplinas_Escola1_idx` (`Escola_Codigo_Escola` ASC),
   INDEX `fk_Disciplinas_Serie1_idx` (`Serie_Codigo_Serie` ASC),
-  CONSTRAINT `fk_Disciplinas_Escola1`
-    FOREIGN KEY (`Escola_Codigo_Escola`)
-    REFERENCES `prove_sistema_avaliacao`.`Escola` (`Codigo_Escola`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Disciplinas_Serie1`
     FOREIGN KEY (`Serie_Codigo_Serie`)
     REFERENCES `prove_sistema_avaliacao`.`Serie` (`Codigo_Serie`)
@@ -340,3 +339,66 @@ INSERT INTO `Alunos` (`Matricula`, `Senha`, `Nome`, `Data_Nascimento`, `Ultimo_L
 ('2017305998','e0f68134d29dc326d115de4c8fab8700a3c4b002','Teste 123','2002-03-17','2019-03-12 16:22:32');
 
 SELECT * FROM Alunos;
+
+
+
+
+
+
+
+INSERT INTO `Alunos` (`Matricula`, `Email`, `Senha`, `Nome`, `Data_Nascimento`, `Ultimo_Login`) VALUES
+('2017305998','e0f68134d29dc326d115de4c8fab8700a3c4b002','Teste 123','2002-03-17','2019-03-12 16:22:32');
+
+('0001', 'aguydiovana@gmail.com', '65d8c8050a8218df8f057d826af01e332544045a','ÁGUEDA DIOVANA DE SOUZA NETTO','2003-03-17','2019-03-12 16:22:32');# USER: 0001 // SENHA: netto
+
+('0002', 'lanna.roeder@gmail.com', 'b059d286d11b6128637d2efaddf4937e0c56d6b4','ALANA ROEDER','2003-03-17','2019-03-12 16:22:32');# USER: 0002 // SENHA: roeder
+
+('0003', 'aline.cl.stock@gmail.com', 'ed487e1e87c675af89db011b2903f20f99b11c7d','ALINE CAROL STOCK','2003-03-17','2019-03-12 16:22:32');# USER: 0003 // SENHA: stock
+
+('0004', 'arthur.fuechter.schweder@gmail.com', '0f1eed1bc1099b9f64c06bc806cbce430cf27969','ARTHUR FUECHTER SCHWEDER','2003-03-17','2019-03-12 16:22:32');# USER: 0004 // SENHA: schweder
+
+('0005', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','ÁRTHUR PAULO MATTEUSSI','2003-03-17','2019-03-12 16:22:32');# USER: 0005 // SENHA: matteussi
+
+('0006', 'augusto.teixeira8579@gmail.com', '017d9b49ed2255dda4fde229135f24c65747af0d','AUGUSTO LEHMKUHL TEIXEIRA','2003-03-17','2019-03-12 16:22:32');# USER: 0006 // SENHA: teixeira
+
+('0007', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','BARBARA ELLEN DE LARA','2003-03-17','2019-03-12 16:22:32');# USER: 0007 // SENHA: matteussi
+
+('0008', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','ÁRTHUR PAULO MATTEUSSI','2003-03-17','2019-03-12 16:22:32');# USER: 0008 // SENHA: matteussi
+
+('0009', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','ÁRTHUR PAULO MATTEUSSI','2003-03-17','2019-03-12 16:22:32');# USER: 0009 // SENHA: matteussi
+
+
+
+
+/*
+
+
+
+BRUNA LUIZA CORREIA
+BRUNA MAISA SENEM
+CARLOS EDUARDO RIBEIRO DOS SANTOS
+EDUARDA DUMES LAURETT
+EDUARDO SIMONI DE SOUZA
+ELEN CRISTINA PEREIRA BATISTA
+EMANUEL ARY DE OLIVEIRA
+GABRIEL NUNES FERREIRA
+IGOR VINICIUS DOS SANTOS
+ISABELY LAIS RENGEL
+JAEDSON CORREIA DA COSTA
+JÉSSICA GEOVANA DA SILVA BÖLL
+JOÃO VÍTOR PETRY
+JULIA RENKEL DE OLIVEIRA
+KAINAN HENRIQUE CHIQUIO
+LUCAS ANDRINMANUELA CAMARGO
+MARCELO FLAUSINO FILHO
+MARIA EDUARDA MARINHEIRO DELINO
+MATHEUS EYNG MÁXIMO
+MATHEUS TRAVAGLIA GILI
+PEDRO AIRAN CANALE
+PEDRO DANIEL DE OLIVEIRA HOELLER
+PEDRO HENRIQUE SILVA SANTOS
+PEDRO VIEIRA STEINBACH
+SABRINA LAISA MEES
+VICTÓRIA MEIRINHO
+VINÍCIUS KIGIS
+*/
