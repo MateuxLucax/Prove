@@ -76,6 +76,12 @@ nav {
       left: 50%;
       transform: translateX(-50%);
 
+    
+      & img {
+        height: 3rem;
+        margin-top: .5rem;
+      }  
+
       &.left, &.right {
         padding: 0;
         transform: none;
