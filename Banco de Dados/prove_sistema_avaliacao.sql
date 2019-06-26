@@ -16,7 +16,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `prove_sistema_avaliacao` DEFAULT CHARACTER SET utf8 ;
 USE `prove_sistema_avaliacao` ;
-
 -- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Escola`
 -- -----------------------------------------------------
@@ -33,7 +32,14 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Serie` (
   `Codigo_Serie` INT NOT NULL,
   `Descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Codigo_Serie`))
+  `Escola_Codigo_Escola` INT NOT NULL,
+  PRIMARY KEY (`Codigo_Serie`),
+  INDEX `fk_Serie_Escola1_idx` (`Escola_Codigo_Escola` ASC),
+  CONSTRAINT `fk_Serie_Escola1`
+    FOREIGN KEY (`Escola_Codigo_Escola`)
+    REFERENCES `prove_sistema_avaliacao`.`Escola` (`Codigo_Escola`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -43,16 +49,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Disciplinas` (
   `Codigo_Disciplina` INT NOT NULL,
   `Nome` VARCHAR(50) NOT NULL,
-  `Escola_Codigo_Escola` INT NOT NULL,
   `Serie_Codigo_Serie` INT NOT NULL,
   PRIMARY KEY (`Codigo_Disciplina`),
-  INDEX `fk_Disciplinas_Escola1_idx` (`Escola_Codigo_Escola` ASC),
   INDEX `fk_Disciplinas_Serie1_idx` (`Serie_Codigo_Serie` ASC),
-  CONSTRAINT `fk_Disciplinas_Escola1`
-    FOREIGN KEY (`Escola_Codigo_Escola`)
-    REFERENCES `prove_sistema_avaliacao`.`Escola` (`Codigo_Escola`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Disciplinas_Serie1`
     FOREIGN KEY (`Serie_Codigo_Serie`)
     REFERENCES `prove_sistema_avaliacao`.`Serie` (`Codigo_Serie`)
