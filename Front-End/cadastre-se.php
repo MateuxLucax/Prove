@@ -58,7 +58,7 @@
           </div>
         
           <div class="col s12 container">
-            <form action="">
+            <form action="alunos_pdo.php" method="post">
               <div class="row">
                 <div class="input-field col s12 m6">
                   <input id="nome" name="nome" type="text" class="validate" />
@@ -81,18 +81,19 @@
               </div>
               <div class="row" style="margin-top: -2rem">
                 <div class="input-field col s12 m6 offset-m3">
-                  <input id="dataNascimento" name="dataNascimento" type="text" class="validate" data-mask="00/00/0000" />
+                  <input id="data_nascimento" name="data_nascimento" type="date" class="validate" data-mask="00/00/0000" />
                   <label for="dataNascimento">Data de Nascimento</label>
                 </div>
               </div>
+              <input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">
               <div class="row" style="margin-top: -2rem">
                 <div class="col s12">
-                  <p>Já é cadastrado? <a href="">Entre aqui</a></p>
+                  <p>Já é cadastrado? <a href="login.php">Entre aqui</a></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col s12 center">
-                  <button type="submit" class="waves-effect waves-light btn">Cadastrar</a>
+                  <button type="submit" name="acao" value="cadastrar" class="waves-effect waves-light btn">Cadastrar</a>
                 </div>
               </div>
             </form>

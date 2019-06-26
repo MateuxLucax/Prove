@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+  include 'valida_secao.php';
+?>
 <html lang="pt-br">
 
 <head>
@@ -51,6 +54,13 @@
   </header>
 
   <main>
+    <p>
+      <?php
+        echo "Bem vindo ".$_SESSION['nome'].
+         "<br>
+          matrícula: ".$_SESSION['matricula'];
+      ?>
+    </p>
   </main>
 
   <footer class="page-footer">

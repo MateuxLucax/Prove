@@ -63,7 +63,8 @@
 				</div>
 
 				<div class="col s12 m6 offset-m3 container">
-					<form action="">
+					<form action="" method="post">
+						<input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">
 						<div class="row">
 							<div class="input-field col s12">
 								<input id="matricula" name="matricula" type="text" class="validate">
@@ -82,25 +83,53 @@
 								  <input type="radio" class="with-gap tipo_usuario" value="aluno" name="tipo_usuario">
 									<span>Aluno</span>
 								</label>
+							</div>
+							<div class="input-field col s12">
 								<label>
 								  <input type="radio" class="with-gap tipo_usuario" value="professor" name="tipo_usuario">
 									<span>Professor</span>
 								</label>
               </div>
             </div>
+            <br/>
 						<div class="row" style="margin-top: -2rem">
 							<div class="col s12">
 								<p><a href="">Esqueci minha senha</a></p>
-								<p>Ainda não é cadastrado? <a href="cadastre-se.html">Cadastre-se aqui</a></p>
+								<p>Ainda não é cadastrado? <a href="cadastre-se.php">Cadastre-se aqui</a></p>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col s12 center">
-								<button type="submit" class="waves-effect waves-light btn">Entrar</a>
+								<button type="submit" name="acao" value="login" class="waves-effect waves-light btn">Entrar</a>
 							</div>
 						</div>
 					</form>
 				</div>
+
+				<?php
+					if($matricula != '' && $senha != '') {
+						if (isset($_GET['acao'])) $acao = $_GET['acao'];
+						else if (isset($_POST['acao'])) $acao = $_POST['acao'];
+						else $acao = '';
+
+						if ($acao == 'login') {
+							if($tipo_usuario == 'aluno'){ include 'alunos_pdo.php'; }
+							else if($tipo_usuario == 'professor'){ include 'professores_pdo.php'; }
+
+							$linha_usuario = selectPDO('Matricula',$matricula);
+							//var_dump($linha_usuario);
+
+							if ($senha == $linha_usuario[0][1]) {
+								session_start();
+								$_SESSION['matricula'] = $matricula;
+								$_SESSION['nome'] = $linha_usuario[0][2];
+								header("location:index.php");
+							} else {
+								header("location:entrar.php?erro=1");
+							}
+						}
+					}
+				?>
 
 			</div>
 		</div>
