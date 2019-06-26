@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+  $tipo_usuario = isset($_POST['tipo_usuario']) ? $_POST['tipo_usuario'] : '';
+?>
 <html lang="pt-br">
 
 <head>
@@ -58,7 +61,26 @@
           </div>
         
           <div class="col s12 container">
-            <form action="alunos_pdo.php" method="post">
+            <p>Quero me cadastrar como... </p>
+            <form action="" method="post">
+              <button type="submit" class="btn waves-effect waves-light" name="tipo_usuario" value="aluno"
+              <?php if($tipo_usuario == 'aluno') echo 'disabled' ?>
+              >Aluno</button>
+
+              <button type="submit" class="btn waves-effect waves-light" name="tipo_usuario" value="professor"
+              <?php if($tipo_usuario == 'professor') echo 'disabled' ?>
+              >Professor</button>
+            </form>
+          </div>
+          
+          <?php if($tipo_usuario != '') { ?>
+
+          <div class="col s12 container">
+            <?php
+              if($tipo_usuario == 'aluno') echo "<form action='alunos_pdo.php' method='post'>";
+              else echo "<form action='professores_pdo.php' method='post'>";
+            ?>
+              <input type="hidden" name="tipo_usuario" value="<?php echo $tipo_usuario; ?>">
               <div class="row">
                 <div class="input-field col s12 m6">
                   <input id="nome" name="nome" type="text" class="validate" />
@@ -98,6 +120,8 @@
               </div>
             </form>
           </div>
+
+          <?php } ?>
               
         </div>
       </div>
