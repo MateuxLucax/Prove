@@ -67,6 +67,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Alunos` (
   `Matricula` VARCHAR(15) NOT NULL,
   `Nome` VARCHAR(100) NOT NULL,
+  `Email` VARCHAR(100) NOT NULL,
   `Data_Nascimento` DATE NOT NULL,
   `Ultimo_Login` DATETIME NULL,
   `Senha` VARCHAR(255) NOT NULL,
@@ -80,6 +81,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Professores` (
   `Matricula` VARCHAR(20) NOT NULL,
   `Nome` VARCHAR(100) NOT NULL,
+  `Email` VARCHAR(100) NOT NULL,
   `Data_Nascimento` DATE NOT NULL,
   `Ultimo_Login` DATETIME NULL,
   `Senha` VARCHAR(255) NOT NULL,

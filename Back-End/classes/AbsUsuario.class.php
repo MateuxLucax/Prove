@@ -9,6 +9,7 @@ abstract class AbsUsuario {
 	private $senha;
 	private $dataNascimento;
 	private $ultimoLogin;
+	private $email;
 
 	public function setMatricula($matricula){$this->matricula=$matricula;}
 	public function getMatricula(){return $this->matricula;}
@@ -25,8 +26,11 @@ abstract class AbsUsuario {
 	public function setUltimoLogin($ultimoLogin){$this->ultimoLogin=$ultimoLogin;}
 	public function getUltimoLogin(){return $this->ultimoLogin;}
 
+	public function setEmail($email){$this->email=$email;}
+	public function getEmail(){return $this->email;}
+
 	public function __toString(){
-		return " Matrícula: ".$this->matricula." | Senha: ".$this->senha." | Nome: ".$this->nome." | Data de nascimento: ".$this->dataNascimento." | Último login: ".$this->ultimoLogin;
+		return " Matrícula: ".$this->matricula." | Senha: ".$this->senha." | Nome: ".$this->nome." | Data de nascimento: ".$this->dataNascimento." | Último login: ".$this->ultimoLogin." | E-Mail: ".$this->email;
 	}
 }
 

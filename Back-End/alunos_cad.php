@@ -36,6 +36,11 @@
 				<input type="date" name="data_nascimento">
 			</div>
 
+			<div class="input-field col s12">
+				<label>E-mail</label>
+				<input type="date" name="email">
+			</div>
+
 			<input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">
 
 			<button type="submit" name="acao" class="btn black white-text waves-effect waves-light" value="cadastrar">Cadastrar</button>
