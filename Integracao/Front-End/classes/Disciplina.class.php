@@ -3,22 +3,15 @@
 require_once "autoload.php";
 
 class Disciplina extends AbsCodigoDescricao {
-
-	private $serie;
 	private $professores = array();
 	private $alunos = array();
 	private $avaliacoes = array();
 
 	function __construct() {
-		$serie = new Serie;
 		$professor = new Professor;
 		$aluno = new Aluno;
 		$avaliacao = new Avaliacao;
 	}
-
-	public function setSerie($serie){
-		if($serie instanceof Serie) $this->serie=$serie;}
-	public function getSerie(){return $this->serie;}
 
 	public function setProfessor($professor){
 		if ($professor instanceof Professor) array_push($this->professores, $professor); }
@@ -36,7 +29,6 @@ class Disciplina extends AbsCodigoDescricao {
 	public function __toString() {
 		$txt = "<div class='disciplina'>[Disciplina]".parent::__toString();
 		$txt .= "<dl>";
-		$txt .= "<dt>{Série}</dt> <dd>".$this->serie."</dd>";
 		$txt .= "<dt>{Professores}</dt>";
 		$txt .= "<dd> <dl>"; # Lista dentro de uma lista (lista de professores dentro da lista de atributos da disciplina)
 		for ($i=0; $i < count($this->professores); $i++) { 
