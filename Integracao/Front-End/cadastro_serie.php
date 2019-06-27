@@ -19,7 +19,7 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 		<!-- CSS -->
-		<link href="assets/css/login/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<link href="assets/css/materialize.css" type="text/css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -29,8 +29,8 @@
 			<div class="container">
 				<form action="series_pdo.php" method="post">
 					<div class="input-field col s12">
-						<input id="nome" name="nome" type="text" class="validate" />
-						<label for="nome">Nome</label>
+						<input id="nomee" name="nome" type="text" class="validate">
+						<label for="nomee" class="active">Nome</label>
 					</div>
 					<div class="input-field col s12">
 						<button type="submit" name="acao" id="acao" value="cadastrar" class="btn waves-effect waves-light">Cadastrar</button>
@@ -41,5 +41,11 @@
 
 		<footer>
 		</footer>
+
+		<!--  Scripts-->
+		<script src="assets/js/jquery-2.1.1.min.js"></script>
+		<script src="assets/js/materialize.min.js"></script>
+		<script src="assets/js/init.js"></script>
+
 	</body>
 </html>

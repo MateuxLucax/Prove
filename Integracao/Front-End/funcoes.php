@@ -41,7 +41,7 @@ function gerarSelect($tabela, $selectName, $codigo, $value, $texto) {
 		if ($codigo == $row['id']) $selected = " selected";
 		else $selected = " ";
 
-		echo "<option value='".$row["$value"]."' ".$selected.">".$row["$texto"]."</option>";
+		echo "<option value=".$row["$value"]." ".$selected.">".$row["$texto"]."</option>";
 		
 	}
 	echo "</select>";

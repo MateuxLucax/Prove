@@ -33,7 +33,7 @@
 						<input type="text" name="nome" id="nome">
 					</div>
 					<div class="input-field col s12">
-						<?php gerarSelect($tb_series, 'Serie_Codigo_Serie', '1', 'Codigo_Serie', 'Descricao'); //funcoes.php ?> 
+						<?php gerarSelect($tb_series, 'Serie_Codigo_Serie', 1, 'Codigo_Serie', 'Descricao'); //funcoes.php ?> 
 					</div>
 					<div class="input-field col s12">
 						<button type="submit" name="acao" id="acao" value="cadastrar" class="btn waves-effect waves-light">Cadastrar</button>
@@ -45,4 +45,10 @@
 		<footer>
 		</footer>
 	</body>
+
+	<!--  Scripts-->
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
+	<script src="assets/js/materialize.min.js"></script>
+	<script src="assets/js/init.js"></script>
+
 </html>

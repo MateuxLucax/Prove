@@ -8,6 +8,7 @@
 	$tb_professores = "Professores";
 	$tb_disciplinas = "Disciplinas";
 	$tb_series = "Serie";
+	$tb_disc_prof = 'professores_has_disciplina';
 	//...
 
 	// Matriz que relaciona tabelas do banco de dados com as classes
