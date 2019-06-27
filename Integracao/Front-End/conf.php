@@ -6,11 +6,14 @@
 	// Tabelas do Banco de Dados
 	$tb_alunos = "Alunos";
 	$tb_professores = "Professores";
+	$tb_disciplinas = "Disciplinas";
+	//...
 
 	// Matriz que relaciona tabelas do banco de dados com as classes
 	$matrizClassesTb = array(
 		array('Aluno',$tb_alunos),
 		array('Professor',$tb_professores)
-		//faltam outros
+		array('Disciplina',$tb_disciplinas);
+		//...
 	);
 ?>

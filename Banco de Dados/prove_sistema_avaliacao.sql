@@ -316,33 +316,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-############################################################################
-#### Inserção de registros #################################################
-############################################################################
-
-#### Professores:Matricula,Nome,Data_Nascimento,Ultimo_Login,Senha
-INSERT INTO `Professores` VALUES ('2015459988','Professor Teste','2017-12-21','2019-12-21 23:44:34','2e6f9b0d5885b6010f9167787445617f553a735f');
-## Senha que gera este sha1: teste
-INSERT INTO `Professores` VALUES ('2017459988','Professor Teste 2','2014-12-21','2019-12-21 21:45:34','2e6f9b0d5885b6010f9167787445617f553a735f');
-
-SELECT * FROM Professores WHERE Matricula = '2015459988';
-
-SELECT * FROM Professores;
-
-SELECT Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login FROM Professores WHERE Nome like '% %';
-
-SELECT Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login FROM Professores WHERE Nome like '% %';
-
-SELECT * FROM Professores WHERE Nome LIKE '% %';
-
-INSERT INTO `Alunos` (`Matricula`, `Senha`, `Nome`, `Data_Nascimento`, `Ultimo_Login`) VALUES
-('2017305998','e0f68134d29dc326d115de4c8fab8700a3c4b002','Teste 123','2002-03-17','2019-03-12 16:22:32');
-
-SELECT * FROM Alunos;
-
-
-
-
 
 
 

@@ -1,4 +1,6 @@
 <?php
+include 'conf.php';
+
 function printHeader() {
 	?>
 	<header>
@@ -26,5 +28,21 @@ function printHeader() {
 	
 	</header>
 	<?php
+}
+
+function gerarSelect($tabela, $selectName, $codigo, $value, $texto) {
+	$sql = "SELECT * FROM $tabela";
+
+	$result = mysqli_query($GLOBALS['conexao'], $sql);
+
+	echo "<select name='$selectName' class='form-control'>";
+	while ($row = mysqli_fetch_array($result)) {
+		if ($codigo == $row['id']) $selected = " selected";
+		else $selected = " ";
+
+		echo "<option value='".$row["$value"]."' ".$selected.">".$row["$texto"]."</option>";
+		
+	}
+	echo "</select>";
 }
 ?>
