@@ -324,7 +324,7 @@ INSERT INTO `Alunos` (`Matricula`, `Email`, `Senha`, `Nome`, `Data_Nascimento`, 
 
 ('0009', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','ÁRTHUR PAULO MATTEUSSI','2003-03-17','2019-03-12 16:22:32');# USER: 0009 // SENHA: matteussi
 
-
+SELECT * FROM professores_has_disciplina;
 /*
 BRUNA LUIZA CORREIA
 BRUNA MAISA SENEM

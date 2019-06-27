@@ -29,8 +29,8 @@
 			<div class="container">
 				<form action="series_pdo.php" method="post">
 					<div class="input-field col s12">
-						<input id="nomee" name="nome" type="text" class="validate">
-						<label for="nomee" class="active">Nome</label>
+						<input id="nome" name="nome" type="text" class="validate">
+						<label for="nome" class="active">Nome</label>
 					</div>
 					<div class="input-field col s12">
 						<button type="submit" name="acao" id="acao" value="cadastrar" class="btn waves-effect waves-light">Cadastrar</button>

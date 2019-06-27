@@ -1,5 +1,5 @@
 <?php
-session_start();
+if(!isset($_SESSION['matricula'])) { session_start(); }
 
 include 'conf.php';
 
@@ -11,7 +11,7 @@ require_once "autoload.php";
 
 #### Construção do objeto ##########################################################################
 
-if (!$acao == '') {	
+if ($acao != '' && $acao != 'editar_disciplina') {	
 	echo "Ação: ".$acao."<br>";
 	
 	$disc = new Disciplina;
@@ -30,13 +30,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 try {
 	switch ($acao) {
 		case 'cadastrar':
-			insertPDO();
+			insertPDO_disc();
 			break;
 		case 'editar':
-			updatePDO();
+			updatePDO_disc();
 			break;
 		case 'deletar':
-			deletePDO();
+			deletePDO_disc();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -45,7 +45,7 @@ try {
 
 #### Funções ###############################################
 
-function selectPDO($criterio = 'Nome', $pesquisa = '') {
+function selectPDO_disc($criterio = 'Nome', $pesquisa = '') {
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['tb_disciplinas']." WHERE ".$criterio." ";
 		if ($criterio == 'Nome') 
@@ -71,9 +71,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function selectPDOtable ($registros) {
-	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
+function selectPDO_disc_table ($registros) {
+	# $registros deve ser o retorno da função selectPDO_disc()
+	# ou seja, poderia-se chamar essa função assim: prinselectPDO_discasTable(selectPDO_disc());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
 	A função printSelectTable imprime os dados da matriz em uma tabela*/
 	
@@ -98,7 +98,7 @@ function selectPDOtable ($registros) {
 
 }
 
-function insertPDO() {
+function insertPDO_disc() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_disciplinas']." (Nome, Serie_Codigo_Serie) VALUES (:Nome, :Serie_Codigo)");
 
 	$stmt->bindParam(':Nome', $nome);
@@ -114,7 +114,7 @@ function insertPDO() {
 
 	// Quando um professor cria uma disciplina, ele deve ser automaticamente registrado nela
 	
-	echo '..'.$_SESSION['matricula'].'..';
+	//echo '..'.$_SESSION['matricula'].'..';
 
 	$stmt2 = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_disc_prof']." (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES (:Professores_Matricula, :Disciplina_Codigo)");
 	$stmt2->bindParam(':Professores_Matricula', $_SESSION['matricula']);
@@ -126,11 +126,13 @@ function insertPDO() {
 	$stmt2->execute();
 
 	echo "Linhas afetadas: ".$stmt2->rowCount();
+
+	header("location:cadastro_disciplina.php?acao=editar_disciplina&codigo=".$codigo);
 }
 
 function proxCodigo() {
 	// Devido ao fato de que, em seguida do cadastro da disciplina, se cadastra, na tabela n:n, o professor que acabou de criar a disciplina, se torna necessário saber qual será o próximo código que o MySQL geraria pelo auto_increment
-	$registros = selectPDO();
+	$registros = selectPDO_disc();
 	$codigos = array();
 	for ($i=0; $i < count($registros); $i++) { 
 		array_push($codigos, $registros[$i][0]);
@@ -141,8 +143,8 @@ function proxCodigo() {
 
 
 
-function updatePDO() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_disciplinas']." SET Nome = :Nome, Serie_Codigo_Serie = :Serie_Codigo WHERE Codigo = :Codigo");
+function updatePDO_disc() {
+	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_disciplinas']." SET Nome = :Nome, Serie_Codigo_Serie = :Serie_Codigo WHERE Codigo_Disciplina = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Nome', $nome);
@@ -155,9 +157,20 @@ function updatePDO() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	// //////////////////////////////////////////////////////////////////////////////////////////////////
+
+	$stmt2 = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_disc_prof']." (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES (:Professores_Matricula, :Disciplina_Codigo)");
+
+	$stmt2->bindParam(':Professores_Matricula', $_POST['professor']);
+	$stmt2->bindParam(':Disciplina_Codigo', $codigo);
+
+	$stmt2->execute();
+
+	echo "Linhas afetadas: ".$stmt2->rowCount();
 }
 
-function deletePDO() {
+function deletePDO_disc() {
 	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_disciplinas']." WHERE Codigo = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);

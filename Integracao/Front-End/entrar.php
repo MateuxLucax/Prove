@@ -95,7 +95,7 @@
 							if($tipo_usuario == 'aluno'){ include 'alunos_pdo.php'; }
 							else if($tipo_usuario == 'professor'){ include 'professores_pdo.php'; }
 
-							$linha_usuario = selectPDO('Matricula',$matricula);
+							$linha_usuario = selectPDO_prof('Matricula',$matricula);
 							//var_dump($linha_usuario);
 
 							if ($senha == $linha_usuario[0][1]) {

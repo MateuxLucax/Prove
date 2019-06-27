@@ -10,7 +10,7 @@ require_once "autoload.php";
 
 #### Construção do objeto ##########################################################################
 
-if (!$acao == '') {	
+if ($acao != '' && $acao != 'editar_disciplina') {	
 	echo "Ação: ".$acao."<br>";
 	
 	$prof = new Professor;
@@ -32,13 +32,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 try {
 	switch ($acao) {
 		case 'cadastrar':
-			insertPDO();
+			insertPDO_prof();
 			break;
 		case 'editar':
-			updatePDO();
+			updatePDO_prof();
 			break;
 		case 'deletar':
-			deletePDO();
+			deletePDO_prof();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -47,7 +47,7 @@ try {
 
 #### Funções ###############################################
 
-function selectPDO($criterio = 'Nome', $pesquisa = '') {
+function selectPDO_prof($criterio = 'Nome', $pesquisa = '') {
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['tb_professores']." WHERE ".$criterio." ";
 		if ($criterio == 'Nome' || $criterio = 'Matricula') 
@@ -76,9 +76,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function selectPDOtable ($registros) {
-	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: selectPDOtable(selectPDO());
+function selectPDO_prof_table ($registros) {
+	# $registros deve ser o retorno da função selectPDO_prof()
+	# ou seja, poderia-se chamar essa função assim: selectPDO_proftable(selectPDO_prof());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
 	A função printSelectTable imprime os dados da matriz em uma tabela*/
 	
@@ -107,7 +107,7 @@ function selectPDOtable ($registros) {
 
 }
 
-function insertPDO() {
+function insertPDO_prof() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_professores']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login, Email) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login, :Email)");
 
 	$stmt->bindParam(':Matricula', $matricula);
@@ -129,7 +129,7 @@ function insertPDO() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
-function updatePDO() {
+function updatePDO_prof() {
 	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_professores']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login");
 
 	$stmt->bindParam(':Matricula', $matricula);
@@ -151,7 +151,7 @@ function updatePDO() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
-function deletePDO() {
+function deletePDO_prof() {
 	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_professores']." WHERE Matricula = :Matricula");
 
 	$stmt->bindParam(':Matricula', $matricula);

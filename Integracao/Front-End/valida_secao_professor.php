@@ -1,7 +1,7 @@
 <?php
 	include 'valida_secao.php';
 	include 'professores_pdo.php';
-	$registros = selectPDO();
+	$registros = selectPDO_prof();
 
 	// Isola a coluna de matrículas do "SELECT * FROM Professor" em um array
 	$matriculas = array();
