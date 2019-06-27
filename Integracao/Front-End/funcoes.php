@@ -1,5 +1,6 @@
 <?php
 include 'conf.php';
+include 'connect/connect.php';
 
 function printHeader() {
 	?>

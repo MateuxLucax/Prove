@@ -4,7 +4,7 @@
     $('.sidenav').sidenav();
     $('select').formSelect();
     $('.modal').modal();
-    
+    $('select').formSelect();
   });
 })(jQuery);
 

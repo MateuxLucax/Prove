@@ -10,7 +10,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-		<title>Cadastro de disciplina</title>
+		<title>Cadastro de série</title>
 
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="assets/img/favicon.png" />
@@ -27,13 +27,10 @@
 
 		<main>
 			<div class="container">
-				<form action="disciplinas_pdo.php" method="post">
+				<form action="series_pdo.php" method="post">
 					<div class="input-field col s12">
+						<input id="nome" name="nome" type="text" class="validate" />
 						<label for="nome">Nome</label>
-						<input type="text" name="nome" id="nome">
-					</div>
-					<div class="input-field col s12">
-						<?php gerarSelect($tb_series, 'Serie_Codigo_Serie', '1', 'Codigo_Serie', 'Descricao'); //funcoes.php ?> 
 					</div>
 					<div class="input-field col s12">
 						<button type="submit" name="acao" id="acao" value="cadastrar" class="btn waves-effect waves-light">Cadastrar</button>

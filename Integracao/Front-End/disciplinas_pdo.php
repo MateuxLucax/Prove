@@ -13,14 +13,12 @@ require_once "autoload.php";
 if (!$acao == '') {	
 	echo "Ação: ".$acao."<br>";
 	
-	$prof = new Professor;
-	$prof->setMatricula($_POST['matricula']);
-	$prof->setSenha(sha1($_POST['senha']));
-	$prof->setNome($_POST['nome']);
-	$prof->setDataNascimento($_POST['data_nascimento']);
-	$prof->setUltimoLogin($_POST['ultimo_login']);
-	echo $prof;
-	echo "Senha: ".$_POST['senha'];
+	$disc = new Disciplina;
+	if(isset($_POST['codigo'])) $disc->setCodigo($_POST['codigo']);
+	if(isset($_POST['nome'])) $disc->setDescricao($_POST['nome']);
+	if(isset($_POST['Serie_Codigo_Serie'])) $serie_codigo = $_POST['Serie_Codigo_Serie'];
+	echo $disc;
+	//echo "Senha: ".$_POST['senha'];
 }
 
 #### PDO ###########################################################################################
@@ -48,8 +46,8 @@ try {
 
 function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	try {
-		$sql = "SELECT * FROM ".$GLOBALS['tb_professores']." WHERE ".$criterio." ";
-		if ($criterio == 'Nome' || $criterio = 'Matricula') 
+		$sql = "SELECT * FROM ".$GLOBALS['tb_disciplinas']." WHERE ".$criterio." ";
+		if ($criterio == 'Nome') 
 			$sql .= " like '%".$pesquisa."%'";
 		else $sql .= ' = '.$pesquisa;
 		$sql .= ";";
@@ -61,11 +59,7 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 			$registros[$i] = array();
-			array_push($registros[$i], $linha['Matricula']);
-			array_push($registros[$i], $linha['Senha']);
 			array_push($registros[$i], $linha['Nome']);
-			array_push($registros[$i], $linha['Data_Nascimento']);
-			array_push($registros[$i], $linha['Ultimo_Login']);
 		}
 
 		return $registros;
@@ -74,7 +68,7 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function printSelectPDOAsTable ($registros) {
+function selectPDOtable ($registros) {
 	# $registros deve ser o retorno da função selectPDO()
 	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
@@ -83,11 +77,8 @@ function printSelectPDOAsTable ($registros) {
 	echo "<table class='highlight centered responsive-table'>
 	<thead class='black white-text'>
 	<tr>
-		<th>Matrícula</th>
-		<th>Senha</th>
+		<th>Código</th>
 		<th>Nome</th>
-		<th>Data de nascimento</th>
-		<th>Último login</th>
 	</tr>
 	</thead>
 	<tdbody>";
@@ -105,19 +96,13 @@ function printSelectPDOAsTable ($registros) {
 }
 
 function insertPDO() {
-	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_professores']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login)");
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_disciplinas']." (Nome, Serie_Codigo-Serie) VALUES (:Nome, :Serie_Codigo)");
 
-	$stmt->bindParam(':Matricula', $matricula);
-	$stmt->bindParam(':Senha', $senha);
 	$stmt->bindParam(':Nome', $nome);
-	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
-	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
-
-	$matricula = $GLOBALS['prof']->getMatricula();
-	$senha = $GLOBALS['prof']->getSenha();
-	$nome = $GLOBALS['prof']->getNome();
-	$data_nascimento = $GLOBALS['prof']->getDataNascimento();
-	$ultimo_login = $GLOBALS['prof']->getUltimoLogin();
+	$stmt->bindParam(':Serie_Codigo', $serie_cod);
+	
+	$nome = $GLOBALS['disc']->getDescricao();
+	$serie_cod = $GLOBALS['serie_codigo'];
 
 	$stmt->execute();
 
@@ -125,19 +110,15 @@ function insertPDO() {
 }
 
 function updatePDO() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_professores']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login");
+	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_disciplinas']." SET Nome = :Nome, Serie_Codigo_Serie = :Serie_Codigo WHERE Codigo = :Codigo");
 
-	$stmt->bindParam(':Matricula', $matricula);
-	$stmt->bindParam(':Senha', $senha);
+	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Nome', $nome);
-	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
-	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
-
-	$matricula = $GLOBALS['prof']->getMatricula();
-	$senha = $GLOBALS['prof']->getSenha();
-	$nome = $GLOBALS['prof']->getNome();
-	$data_nascimento = $GLOBALS['prof']->getDataNascimento();
-	$ultimo_login = $GLOBALS['prof']->getUltimoLogin();
+	$stmt->bindParam(':Serie_Codigo', $serie_cod);
+	
+	$codigo = $GLOBALS['disc']->getCodigo();
+	$nome = $GLOBALS['disc']->getDescricao();
+	$serie_cod = $GLOBALS['serie_codigo'];
 
 	$stmt->execute();
 
@@ -145,11 +126,11 @@ function updatePDO() {
 }
 
 function deletePDO() {
-	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_professores']." WHERE Matricula = :Matricula");
+	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_disciplinas']." WHERE Codigo = :Codigo");
 
-	$stmt->bindParam(':Matricula', $matricula);
+	$stmt->bindParam(':Codigo', $codigo);
 
-	$matricula = $GLOBALS['prof']->getMatricula();
+	$codigo = $GLOBALS['disc']->getCodigo();
 
 	$stmt->execute();
 
