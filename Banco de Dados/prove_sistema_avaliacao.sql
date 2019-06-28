@@ -82,7 +82,8 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Avaliacoes` (
   `Disciplina_Codigo_Disciplina` INT NOT NULL,
   `Data_Inicio` DATETIME NOT NULL,
   `Data_Fim` DATETIME NOT NULL,
-  `Finalizada` TINYINT NULL,
+  `Peso` VARCHAR(5) NOT NULL,
+  `Embaralhar` TINYINT NULL,
   PRIMARY KEY (`Codigo_Avaliacao`),
   INDEX `fk_Avaliacoes_Disciplina1_idx` (`Disciplina_Codigo_Disciplina` ASC),
   CONSTRAINT `fk_Avaliacoes_Disciplina1`
