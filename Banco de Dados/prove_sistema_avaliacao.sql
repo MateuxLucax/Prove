@@ -78,7 +78,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Avaliacoes` (
   `Codigo_Avaliacao` INT NOT NULL AUTO_INCREMENT,
   `Conteudo` VARCHAR(50) NOT NULL,
-  `Descricao` VARCHAR(50) NOT NULL,
   `Disciplina_Codigo_Disciplina` INT NOT NULL,
   `Data_Inicio` DATETIME NOT NULL,
   `Data_Fim` DATETIME NOT NULL,
