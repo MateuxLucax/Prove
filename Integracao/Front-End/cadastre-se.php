@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php
+  date_default_timezone_set('America/Sao_Paulo');
+
   include 'funcoes.php'; //função usada: printHeader();
   $tipo_usuario = isset($_POST['tipo_usuario']) ? $_POST['tipo_usuario'] : '';
 ?>

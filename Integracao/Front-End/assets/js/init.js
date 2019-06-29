@@ -2,9 +2,10 @@
   $(function(){
 
     $('.sidenav').sidenav();
-    $('select').formSelect();
+    $('select').formSelect({
+      coverTrigger:false
+    });
     $('.modal').modal();
-    //$('select').formSelect();
   });
 })(jQuery);
 
