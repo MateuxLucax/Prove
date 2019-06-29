@@ -133,6 +133,7 @@ function insertPDO() {
 function updatePDO() {
 	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['$tb_avaliacoes']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login, Email = :Email");
 
+
 	$stmt->bindParam(':Matricula', $matricula);
 	$stmt->bindParam(':Senha', $senha);
 	$stmt->bindParam(':Nome', $nome);
