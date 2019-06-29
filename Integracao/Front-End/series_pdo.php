@@ -104,6 +104,8 @@ function insertPDO() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:cadastro_disciplina.php");
 }
 
 function updatePDO() {
@@ -118,6 +120,9 @@ function updatePDO() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:cadastro_disciplina.php");
+	// DEVERÁ SER SERIE.PHP FUTURAMENTE
 }
 
 function deletePDO() {

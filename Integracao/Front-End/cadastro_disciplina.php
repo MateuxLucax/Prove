@@ -2,7 +2,7 @@
 <?php
 	include 'conf.php';
 	include 'funcoes.php';
-	include 'valida_secao_professor.php'; //Deve ser incluído em todas as páginas restritas para usuários do tipo Professor (E não é necessário incluir valida_secao.php também: valida_secao_professor.php já inclui valida_secao.php)
+	include 'valida_secao.php';
 	include 'disciplinas_pdo.php';
 
 	if (isset($_POST['acao'])) $acao = $_POST['acao'];
@@ -35,10 +35,11 @@
 				<form action="disciplinas_pdo.php" method="post">
 					<div class="input-field col s12">
 						<label for="nome">Nome</label>
-						<input type="text" name="nome" id="nome" value="<?php echo $nome; ?>">
+						<input type="text" name="nome" id="nome"?>
 					</div>
+
 					<div class="input-field col s12">
-						<?php gerarSelect($tb_series, 'Serie_Codigo_Serie', $codigo_serie , 'Codigo_Serie', 'Descricao'); //funcoes.php ?> 
+						<?php gerarSelect($tb_series, 'Serie_Codigo_Serie', 0, 'Codigo_Serie', 'Descricao'); //funcoes.php ?> 
 					</div>
 
 					<div class="input-field col s12">

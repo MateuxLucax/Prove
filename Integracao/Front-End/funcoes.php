@@ -15,7 +15,11 @@ function printHeader() {
 				<ul class="right hide-on-med-and-down">
 				<li><a href="./">Home</a></li>
 				<li><a href="sobre.html">Sobre</a></li>
-				<li><a href="entrar.php">Entrar</a></li>
+				<?php if(isset($_SESSION['matricula'])) { ?>
+					<li><a href="logoff.php">Sair</a></li>
+				<?php } else { ?>
+					<li><a href="entrar.php">Entrar</a></li>
+				<?php } ?>
 				</ul>
 			</div>
 			</nav>
@@ -36,13 +40,23 @@ function gerarSelect($tabela, $selectName, $codigo, $value, $texto) {
 
 	$result = mysqli_query($GLOBALS['conexao'], $sql);
 
-	echo "<select name='$selectName' class='form-control'>";
+	echo "<select name='$selectName'>";
 	while ($row = mysqli_fetch_array($result)) {
-		if ($codigo == $row['id']) $selected = " selected";
-		else $selected = " ";
 
-		echo "<option value=".$row["$value"]." ".$selected.">".$row["$texto"]."</option>";
+		echo "<option value=".$row["$value"].">".$row["$texto"]."</option>";
 		
+	}
+	echo "</select>";
+}
+
+function gerarSelectMultiple($tabela, $selectName, $value, $texto) {
+	$sql = "SELECT * FROM $tabela";
+
+	$result = mysqli_query($GLOBALS['conexao'], $sql);
+
+	echo "<select multiple name='".$selectName."[]' class='form-control'>";
+	while ($row = mysqli_fetch_array($result)) {
+		echo "<option value=".$row["$value"]." ".$selected.">".$row["$texto"]." (#".$row["$value"].")</option>";
 	}
 	echo "</select>";
 }

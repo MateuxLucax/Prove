@@ -9,6 +9,8 @@
 	$tb_disciplinas = "Disciplinas";
 	$tb_series = "Serie";
 	$tb_disc_prof = 'professores_has_disciplina';
+	$tb_disc_alun = 'Disciplina_has_Alunos';
+	$tb_avaliacoes = 'Avaliacoes';
 	//...
 
 	// Matriz que relaciona tabelas do banco de dados com as classes
@@ -16,7 +18,8 @@
 		array('Aluno',$tb_alunos),
 		array('Professor',$tb_professores),
 		array('Disciplina',$tb_disciplinas),
-		array('Serie',$tb_series)
+		array('Serie',$tb_series),
+		array('Avaliacao',$tb_avaliacoes)
 		//...
 	);
 ?>

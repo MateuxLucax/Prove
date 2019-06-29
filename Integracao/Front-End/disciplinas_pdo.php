@@ -41,6 +41,16 @@ try {
 		case 'delete_prof':
 			deletePDO_discprof($_GET['matricula'], $_GET['disciplina']);
 			break;
+		case 'add_prof':
+			insertPDO_discprof($_POST['matricula'], $_POST['disciplina']);
+			break;
+		case 'delete_alun':
+			deletePDO_discalun($_GET['matricula'], $_GET['disciplina']);
+			break;
+		case 'add_alun':
+			//var_dump($_POST['matriculas']);
+			insertPDO_discalun($_POST['matriculas'], $_POST['disciplina']);
+			break;
 	}	
 } catch (PDOException $e) {
 	echo "Erro: ".$e->getMessage();
@@ -61,7 +71,7 @@ function selectPDO_disc($criterio = 'Nome', $pesquisa = '') {
 		else $sql .= ' = '.$pesquisa;
 
 		$sql .= ";";
-		var_dump($sql); echo "<br>";
+		//var_dump($sql); echo "<br>";
 
 		$consulta = $GLOBALS['pdo']->query($sql);
 
@@ -110,7 +120,7 @@ function selectPDO_disc_table ($registros) {
 
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Funções com comandos referentes a tabela N:N que conecta Professores e Disciplina (professores_has_disciplina)
 
 
@@ -124,7 +134,7 @@ function selectPDO_discprof($cod_disciplina) {
 		$sql .= ' WHERE dp.Professores_Matricula = p.Matricula'; 
 		$sql .= ' AND dp.Disciplina_Codigo_Disciplina = d.Codigo_Disciplina'; 
 		$sql .= ' AND dp.Disciplina_Codigo_Disciplina = '.$cod_disciplina;
-		var_dump($sql); echo "<br>";
+		//var_dump($sql); echo "<br>";
 
 		$consulta = $GLOBALS['pdo']->query($sql);
 
@@ -145,7 +155,7 @@ function selectPDO_discprof($cod_disciplina) {
 }
 
 function selectPDO_discprof_table ($registros) {
-	echo "<table class='highlight centered responsive-table'>
+	echo "<table class='highlight centered responsive-table' border='5'>
 	<thead class='black white-text'>
 	<tr>
 		<th>Matrícula</th>
@@ -162,7 +172,12 @@ function selectPDO_discprof_table ($registros) {
 		for ($j=0; $j < count($registros[$i]); $j++) { 
 			echo "<td>".$registros[$i][$j]."</td>";
 		}
-		echo "<td><a href='disciplinas_pdo.php?acao=delete_prof&matricula=".$registros[0][0]."&disciplina=".$registros[0][2]."'>X</a></td>";
+		if(count($registros) > 1){
+			echo "<td><a href='disciplinas_pdo.php?acao=delete_prof&matricula=".$registros[$i][0]."&disciplina=".$registros[$i][2]."'>X</a></td>";
+		}else{
+			echo "<td>Adicione outro antes de excluir</td>";
+		}
+
 		echo "<tr>";
 	}
 	echo "</tbody>
@@ -178,10 +193,112 @@ function deletePDO_discprof($matricula, $disciplina) {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:disciplina.php?codigo=$disciplina");
 }
 
+function insertPDO_discprof ($matricula, $disciplina) {
+	$stmt = $GLOBALS['pdo']->prepare('INSERT INTO '.$GLOBALS["tb_disc_prof"].' (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES (:Matricula, :Disciplina)');
+
+	$stmt->bindParam(":Matricula", $matricula);
+	$stmt->bindParam(":Disciplina", $disciplina);
+
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:disciplina.php?codigo=$disciplina");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Funções com comandos referentes a tabela N:N que conecta Alunos e Disciplinas (Disciplina_has_Alunos)
+
+function selectPDO_discalun($cod_disciplina) {
+	try {
+		$sql = 'select a.Matricula as \'Matricula\', a.Nome as \'Aluno\', d.Codigo_Disciplina as \'Codigo_Disciplina\', d.Nome as \'Disciplina\' from ';
+
+		$sql .= $GLOBALS['tb_disc_alun'].' da , ';
+		$sql .= $GLOBALS['tb_alunos'].' a , ';
+		$sql .= $GLOBALS['tb_disciplinas'].' d ';
+		$sql .= ' WHERE da.Alunos_Matricula = a.Matricula'; 
+		$sql .= ' AND da.Disciplina_Codigo_Disciplina = d.Codigo_Disciplina'; 
+		$sql .= ' AND da.Disciplina_Codigo_Disciplina = '.$cod_disciplina;
+		//var_dump($sql); echo "<br>";
+
+		$consulta = $GLOBALS['pdo']->query($sql);
+
+		$registros = array();
+
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			$registros[$i] = array();
+			array_push($registros[$i], $linha['Matricula']);
+			array_push($registros[$i], $linha['Aluno']);
+			array_push($registros[$i], $linha['Codigo_Disciplina']);
+			array_push($registros[$i], $linha['Disciplina']);
+		}
+
+		return $registros;
+	} catch (PDOException $e) {
+		echo "Erro: ".$e->getMessage();
+	}
+}
+
+function selectPDO_discalun_table ($registros) {
+	echo "<table class='highlight centered responsive-table' border='5'>
+	<thead class='black white-text'>
+	<tr>
+		<th>Matrícula</th>
+		<th>Nome</th>
+		<th>Código</th>
+		<th>Disciplina</th>
+		<th>Excluir</th>
+	</tr>
+	</thead>
+	<tdbody>";
+
+	for ($i=0; $i < count($registros); $i++) {
+		echo "<tr>";
+		for ($j=0; $j < count($registros[$i]); $j++) { 
+			echo "<td>".$registros[$i][$j]."</td>";
+		}
+		echo "<td><a href='disciplinas_pdo.php?acao=delete_alun&matricula=".$registros[$i][0]."&disciplina=".$registros[$i][2]."'>X</a></td>";
+
+		echo "<tr>";
+	}
+	echo "</tbody>
+	</table>";
+}
+
+function deletePDO_discalun($matricula, $disciplina) {
+	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_disc_alun']." WHERE Alunos_Matricula = :Matricula AND Disciplina_Codigo_Disciplina = :Disciplina_Codigo");
+
+	$stmt->bindParam(':Matricula', $matricula);
+	$stmt->bindParam(':Disciplina_Codigo', $disciplina);
+	
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:disciplina.php?codigo=$disciplina");
+}
+
+function insertPDO_discalun($matriculas, $disciplina) {
+	for ($i=0; $i < count($matriculas); $i++) { 
+		$stmt = $GLOBALS['pdo']->prepare('INSERT INTO '.$GLOBALS["tb_disc_alun"].' (Alunos_Matricula, Disciplina_Codigo_Disciplina) VALUES (:Matricula, :Disciplina)');
+
+		$stmt->bindParam(":Matricula", $matriculas[$i]);
+		$stmt->bindParam(":Disciplina", $disciplina);
+
+		$stmt->execute();
+
+		echo "Linhas afetadas: ".$stmt->rowCount();
+	}
+	header("location:disciplina.php?codigo=$disciplina");
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function insertPDO_disc() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_disciplinas']." (Nome, Serie_Codigo_Serie) VALUES (:Nome, :Serie_Codigo)");

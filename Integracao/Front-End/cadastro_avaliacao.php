@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	include 'funcoes.php';
 	date_default_timezone_set('America/Sao_Paulo');
 ?>
 <html>
@@ -9,6 +10,10 @@
 
 	<!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<style type="text/css">
+		select { display: block; } /*Tive que colocar, porque por padrão o select estava com display:none por algum motivo*/
+	</style>
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -22,19 +27,23 @@
 			</div>
 
 			<div class="input-field col s12">	
-				<label for="dataInicio">Data Inicio</label>
 				<input type="date" name="dataInicio" id="dataInicio">
+				<span class="helper-text">Data início</span>
 			</div>
 
 			<div class="input-field col s12">	
-				<label for="dataFim">Data Fim</label>
 				<input type="date" name="dataFim" id="dataFim">
+				<span class="helper-text">Data fim</span>
 			</div>
 
 			<div class="input-field col s12">	
 				<label for="peso">Peso</label>
 				<input type="text" name="peso" id="peso">
-			</div>	
+			</div>
+
+			<div class="input-field col s12">
+				<?php gerarSelect($tb_disciplinas, 'Disciplina_Codigo_Disciplina', 0, 'Codigo_Disciplina', 'Nome'); ?>
+			</div>
 			
 			<div class="input-field col s12">	
 				<div class="switch">Embaralhar <br/>

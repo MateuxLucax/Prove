@@ -127,6 +127,8 @@ function insertPDO_prof() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:entrar.php");
 }
 
 function updatePDO_prof() {

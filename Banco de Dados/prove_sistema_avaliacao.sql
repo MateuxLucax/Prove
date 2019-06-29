@@ -121,7 +121,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Disciplina_has_Alunos` (
   `Disciplina_Codigo_Disciplina` INT NOT NULL,
   `Alunos_Matricula` VARCHAR(15) NOT NULL,
-  `Cadastrado` TINYINT NOT NULL,
   PRIMARY KEY (`Disciplina_Codigo_Disciplina`, `Alunos_Matricula`),
   INDEX `fk_Disciplina_has_Alunos_Alunos1_idx` (`Alunos_Matricula` ASC),
   INDEX `fk_Disciplina_has_Alunos_Disciplina1_idx` (`Disciplina_Codigo_Disciplina` ASC),

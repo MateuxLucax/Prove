@@ -92,16 +92,25 @@
 						else $acao = '';
 
 						if ($acao == 'login') {
-							if($tipo_usuario == 'aluno'){ include 'alunos_pdo.php'; }
-							else if($tipo_usuario == 'professor'){ include 'professores_pdo.php'; }
+							if($tipo_usuario == 'aluno'){
+								include 'alunos_pdo.php';
+								$tipo='aluno';
+								$linha_usuario = selectPDO_alun('Matricula',$matricula);
+							}
+							else if($tipo_usuario == 'professor'){
+								include 'professores_pdo.php';
+								$tipo='professor';
+								$linha_usuario = selectPDO_prof('Matricula',$matricula);
+							}
 
-							$linha_usuario = selectPDO_prof('Matricula',$matricula);
+							
 							//var_dump($linha_usuario);
 
 							if ($senha == $linha_usuario[0][1]) {
 								session_start();
 								$_SESSION['matricula'] = $matricula;
 								$_SESSION['nome'] = $linha_usuario[0][2];
+								$_SESSION['tipo'] = $tipo;
 								header("location:index.php");
 							} else {
 								header("location:entrar.php?erro=1");

@@ -109,21 +109,21 @@ function printSelectPDOAsTable ($registros) {
 }
 
 function insertPDO() {
-	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Codigo_Avaliacao, Conteudo, Data_Inicio, Disciplina_Codigo_Disciplina, Data_Inicio, Data_Fim, Peso, Embaralhar) VALUES (:Codigo_Avaliacao, :Conteudo, :Data_Nascimento, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar)");
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Peso, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar, :Disciplina)");
 
-	$stmt->bindParam(':Codigo_Avaliacao', $codigo_avaliacao);
-	$stmt->bindParam(':Senha', $senha);
-	$stmt->bindParam(':Nome', $nome);
-	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
-	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
-	$stmt->bindParam(':Email', $email);
+	$stmt->bindParam(':Conteudo', $conteudo);
+	$stmt->bindParam(':Data_Inicio', $data_inicio);
+	$stmt->bindParam(':Data_Fim', $data_fim);
+	$stmt->bindParam(':Peso', $peso);
+	$stmt->bindParam(':Embaralhar', $embaralhar);
+	$stmt->bindParam(':Disciplina', $disciplina);
 
-	$matricula = $GLOBALS['aluno']->getMatricula();
-	$senha = $GLOBALS['aluno']->getSenha();
-	$nome = $GLOBALS['aluno']->getNome();
-	$data_nascimento = $GLOBALS['aluno']->getDataNascimento();
-	$ultimo_login = $GLOBALS['aluno']->getUltimoLogin();
-	$email = $GLOBALS['aluno']->getEmail();
+	$conteudo = $GLOBALS['avaliacao']->getConteudo();
+	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
+	$data_fim = $GLOBALS['avaliacao']->getDataFim();
+	$peso = $GLOBALS['avaliacao']->getPeso();
+	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
+	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 
 	$stmt->execute();
 

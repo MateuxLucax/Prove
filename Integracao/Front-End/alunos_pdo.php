@@ -32,13 +32,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 try {
 	switch ($acao) {
 		case 'cadastrar':
-			insertPDO();
+			insertPDO_alun();
 			break;
 		case 'editar':
-			updatePDO();
+			updatePDO_alun();
 			break;
 		case 'deletar':
-			deletePDO();
+			deletePDO_alun();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -47,7 +47,7 @@ try {
 
 #### Funções ###############################################
 
-function selectPDO($criterio = 'Nome', $pesquisa = '') {
+function selectPDO_alun($criterio = 'Nome', $pesquisa = '') {
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['tb_alunos']." WHERE ".$criterio." ";
 		if ($criterio == 'Nome' || $criterio = 'Matricula') 
@@ -76,9 +76,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function selectPDOtable($registros) {
-	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: selectPDOtable(selectPDO());
+function selectPDO_alun_table($registros) {
+	# $registros deve ser o retorno da função selectPDO_alun()
+	# ou seja, poderia-se chamar essa função assim: selectPDO_aluntable(selectPDO_alun());
 	
 	echo "<table class='highlight centered responsive-table'>
 	<thead class='black white-text'>
@@ -105,7 +105,7 @@ function selectPDOtable($registros) {
 
 }
 
-function insertPDO() {
+function insertPDO_alun() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_alunos']." (Matricula, Senha, Nome, Data_Nascimento, Ultimo_Login, Email) VALUES (:Matricula, :Senha, :Nome, :Data_Nascimento, :Ultimo_Login, :Email)");
 
 	$stmt->bindParam(':Matricula', $matricula);
@@ -125,9 +125,11 @@ function insertPDO() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:entrar.php");
 }
 
-function updatePDO() {
+function updatePDO_alun() {
 	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_alunos']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login, Email = :Email");
 
 	$stmt->bindParam(':Matricula', $matricula);
@@ -149,7 +151,7 @@ function updatePDO() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
-function deletePDO() {
+function deletePDO_alun() {
 	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_alunos']." WHERE Matricula = :Matricula");
 
 	$stmt->bindParam(':Matricula', $matricula);

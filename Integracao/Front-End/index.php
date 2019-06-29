@@ -29,7 +29,8 @@
       <?php
         echo "Bem vindo ".$_SESSION['nome'].
          "<br>
-          matrícula: ".$_SESSION['matricula'];
+          matrícula: ".$_SESSION['matricula']."
+          Você é ".$_SESSION['tipo'];
       ?>
     </p>
   </main>
