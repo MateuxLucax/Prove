@@ -4,6 +4,7 @@ require_once "autoload.php";
 
 class Avaliacao extends AbsCodigo {
 
+	private $codigo_avaliacao;
 	private $conteudo;
 	private $dataInicio;
 	private $dataFim;
@@ -12,6 +13,9 @@ class Avaliacao extends AbsCodigo {
 	private $embaralhar; # binário: embaralhar ou não
 	# embaralha não só a ordem das questões
 	# como a ordem das alternativas de cada questão também
+	
+	public function setCodigo_Avaliacao($codigo_avaliacao){$this->codigo_avaliacao = $codigo_avaliacao;}
+	public function getCodigo_Avaliacao(){return $this->codigo_avaliacao;}
 
 	public function setConteudo($conteudo){$this->conteudo = $conteudo;}
 	public function getConteudo(){return $this->conteudo;}
