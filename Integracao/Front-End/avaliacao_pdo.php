@@ -35,13 +35,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 try {
 	switch ($acao) {
 		case 'cadastrar':
-			insertPDO();
+			insertPDO_aval();
 			break;
 		case 'editar':
-			updatePDO();
+			updatePDO_aval();
 			break;
 		case 'deletar':
-			deletePDO();
+			deletePDO_aval();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -50,7 +50,7 @@ try {
 
 #### Funções ###############################################
 
-function selectPDO($criterio = 'Conteudo', $pesquisa = '') {
+function selectPDO_aval($criterio = 'Conteudo', $pesquisa = '') {
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['$tb_avaliacoes']." WHERE ".$criterio." ";
 		if ($criterio == 'Conteudo' || $criterio = 'Matricula') 
@@ -79,9 +79,9 @@ function selectPDO($criterio = 'Conteudo', $pesquisa = '') {
 	}
 }
 
-function printSelectPDOAsTable ($registros) {
-	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
+function selectPDO_aval_table ($registros) {
+	# $registros deve ser o retorno da função selectPDO_aval()
+	# ou seja, poderia-se chamar essa função assim: prinselectPDO_avalasTable(selectPDO_aval());
 	
 	echo "<table class='highlight centered responsive-table'>
 	<thead class='black white-text'>
@@ -108,7 +108,7 @@ function printSelectPDOAsTable ($registros) {
 
 }
 
-function insertPDO() {
+function insertPDO_aval() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Peso, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar, :Disciplina)");
 
 	$stmt->bindParam(':Conteudo', $conteudo);
@@ -130,35 +130,35 @@ function insertPDO() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
-function updatePDO() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['$tb_avaliacoes']." SET Matricula = :Matricula, Senha = :Senha, Nome = :Nome, Data_Nascimento = :Data_Nascimento, Ultimo_Login = :Ultimo_Login, Email = :Email");
+function updatePDO_aval() {
+	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['$tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Peso = :Peso, Embaralhar = :Embaralhar, Disciplina = :Disciplina");
 
 
-	$stmt->bindParam(':Matricula', $matricula);
-	$stmt->bindParam(':Senha', $senha);
-	$stmt->bindParam(':Nome', $nome);
-	$stmt->bindParam(':Data_Nascimento', $data_nascimento);
-	$stmt->bindParam(':Ultimo_Login', $ultimo_login);
-	$stmt->bindParam(':Email', $email);
-
-	$matricula = $GLOBALS['aluno']->getMatricula();
-	$senha = $GLOBALS['aluno']->getSenha();
-	$nome = $GLOBALS['aluno']->getNome();
-	$data_nascimento = $GLOBALS['aluno']->getDataNascimento();
-	$ultimo_login = $GLOBALS['aluno']->getUltimoLogin();
-	$email = $GLOBALS['aluno']->getEmail();
+	$stmt->bindParam(':Conteudo', $conteudo);
+	$stmt->bindParam(':Data_Inicio', $data_inicio);
+	$stmt->bindParam(':Data_Fim', $data_fim);
+	$stmt->bindParam(':Peso', $peso);
+	$stmt->bindParam(':Embaralhar', $embaralhar);
+	$stmt->bindParam(':Disciplina', $disciplina);
+	
+	$conteudo = $GLOBALS['avaliacao']->getConteudo();
+	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
+	$data_fim = $GLOBALS['avaliacao']->getDataFim();
+	$peso = $GLOBALS['avaliacao']->getPeso();
+	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
+	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
-function deletePDO() {
-	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['$tb_avaliacoes']." WHERE Matricula = :Matricula");
+function deletePDO_aval() {
+	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['$tb_avaliacoes']." WHERE Codigo_Avaliacao = :Codigo_Avaliacao");
 
-	$stmt->bindParam(':Matricula', $matricula);
+	$stmt->bindParam(':Codigo_Avaliacao', $codigo);
 
-	$matricula = $GLOBALS['aluno']->getMatricula();
+	$codigo = $GLOBALS['aluno']->getCodigo_Avaliacao();
 
 	$stmt->execute();
 
