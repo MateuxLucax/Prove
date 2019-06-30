@@ -42,10 +42,10 @@
 			</form>
 		</div>
 	</div>
-	<br/><br/><hr/><br/><br/>
+	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="alunos">
-		<?php $reg_prof = selectPDO_discalun($codigo);
-			selectPDO_discalun_table($reg_prof); ?> (Substituir essa tabela, gerada por uma função, por uma tabela na própria pagina)
+		<?php $reg_alun = selectPDO_discalun($codigo);
+			selectPDO_discalun_table($reg_alun); ?> (Substituir essa tabela, gerada por uma função, por uma tabela na própria pagina)
 		<button>Adicionar alunos</button> <- deve abrir modal etc. <br/> Abaixo é o que deve estar no modal:</div>
 		<div id="adicao_aluno" style="border:1px solid black; ">
 			<p>Segure o CTRL para selecionar vários alunos</p>
@@ -56,8 +56,11 @@
 			</form>
 		</div>
 	</div>
-
+	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="avaliacoes">
+		<?php $reg_aval = selectPDO_discaval($codigo);
+			selectPDO_discaval_table($reg_aval); ?>
+		<a href="cadastro_avaliacao.php">Adicionar avaliação</a>
 	</div>
 
 	<?php } else { ?>

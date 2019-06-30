@@ -353,3 +353,10 @@ SABRINA LAISA MEES
 VICTÓRIA MEIRINHO
 VINÍCIUS KIGIS
 */
+
+SELECT * FROM avaliacoes;
+
+SELECT d.Codigo_Disciplina as 'ID Disciplina', d.Nome as 'Disciplina', a.Codigo_Avaliacao as 'ID Avaliação', a.Conteudo, a.Data_Inicio, a.Data_Fim, a.Peso, a.Embaralhar
+FROM avaliacoes a, disciplinas d
+WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina
+AND d.Codigo_Disciplina = 1;

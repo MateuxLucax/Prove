@@ -128,6 +128,8 @@ function insertPDO_aval() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	//header("location:avaliacao.php");
 }
 
 function updatePDO_aval() {
