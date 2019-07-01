@@ -28,13 +28,13 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 try {
 	switch ($acao) {
 		case 'cadastrar':
-			insertPDO();
+			insertPDO_serie();
 			break;
 		case 'editar':
-			updatePDO();
+			updatePDO_serie();
 			break;
 		case 'deletar':
-			deletePDO();
+			deletePDO_serie();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -43,10 +43,10 @@ try {
 
 #### Funções ###############################################
 
-function selectPDO($criterio = 'Nome', $pesquisa = '') {
+function selectPDO_serie($criterio = 'Descricao', $pesquisa = '') {
 	try {
 		$sql = "SELECT * FROM ".$GLOBALS['tb_series']." WHERE ".$criterio." ";
-		if ($criterio == 'Nome') 
+		if ($criterio == 'Descricao') 
 			$sql .= " like '%".$pesquisa."%'";
 		else $sql .= ' = '.$pesquisa;
 		$sql .= ";";
@@ -58,7 +58,8 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 			$registros[$i] = array();
-			array_push($registros[$i], $linha['Nome']);
+			array_push($registros[$i], $linha['Codigo_Serie']);
+			array_push($registros[$i], $linha['Descricao']);
 		}
 
 		return $registros;
@@ -67,9 +68,9 @@ function selectPDO($criterio = 'Nome', $pesquisa = '') {
 	}
 }
 
-function selectPDOtable ($registros) {
-	# $registros deve ser o retorno da função selectPDO()
-	# ou seja, poderia-se chamar essa função assim: prinSelectPDOasTable(selectPDO());
+function selectPDO_serie_table ($registros) {
+	# $registros deve ser o retorno da função selectPDO_serie()
+	# ou seja, poderia-se chamar essa função assim: prinselectPDO_serieasTable(selectPDO_serie());
 	/*A função de select do PDO só retorna os valores da tabela em uma matriz
 	A função printSelectTable imprime os dados da matriz em uma tabela*/
 	
@@ -94,7 +95,7 @@ function selectPDOtable ($registros) {
 
 }
 
-function insertPDO() {
+function insertPDO_serie() {
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_series']." (Descricao) VALUES (:Nome)");
 
 	$stmt->bindParam(':Nome', $nome);
@@ -108,7 +109,7 @@ function insertPDO() {
 	header("location:cadastro_disciplina.php");
 }
 
-function updatePDO() {
+function updatePDO_serie() {
 	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_series']." SET Descricao = :Nome WHERE Codigo_Serie = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);
@@ -125,7 +126,7 @@ function updatePDO() {
 	// DEVERÁ SER SERIE.PHP FUTURAMENTE
 }
 
-function deletePDO() {
+function deletePDO_serie() {
 	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_series']." WHERE Codigo_Serie = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);
@@ -135,6 +136,59 @@ function deletePDO() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Funções relacionadas a comandos que tratam da relação entre as tabelas série e disciplina (1:N)
+
+function selectPDO_seriedisc($codigo) {
+try {	
+
+		$sql = 'select s.Codigo_Serie, s.Descricao as "Serie", d.Codigo_Disciplina, d.Nome as "Disciplina"
+			FROM serie s, disciplinas d
+			WHERE s.Codigo_Serie = d.Serie_Codigo_Serie
+			AND s.Codigo_Serie = '.$codigo;
+
+		$consulta = $GLOBALS['pdo']->query($sql);
+
+		$registros = array();
+
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			$registros[$i] = array();
+			array_push($registros[$i], $linha['Codigo_Disciplina']);
+			array_push($registros[$i], $linha['Disciplina']);
+		}
+
+		return $registros;
+
+	} catch (PDOException $e) {
+		echo "Erro: ".$e->getMessage();
+	}
+
+}
+
+function selectPDO_seriedisc_table ($registros) {
+	
+	echo "<table class='highlight centered responsive-table' border='5'>
+	<thead class='black white-text'>
+	<tr>
+		<th>ID Disciplina</th>
+		<th>Disciplina</th>
+	</tr>
+	</thead>
+	<tdbody>";
+
+	for ($i=0; $i < count($registros); $i++) {
+		echo "<tr>";
+		for ($j=0; $j < count($registros[$i]); $j++) { 
+			echo "<td>".$registros[$i][$j]."</td>";
+		}
+		echo "<tr>";
+	}
+	echo "</tbody>
+	</table>";
+
 }
 
 ?>
