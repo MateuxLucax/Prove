@@ -38,7 +38,7 @@
 
 			<div class="input-field col s12">
 				<label>E-mail</label>
-				<input type="date" name="email">
+				<input type="text" name="email">
 			</div>
 
 			<input type="hidden" name="ultimo_login" id="ultimo_login" value="<?php echo date('Y-m-d H:i:s'); ?>">

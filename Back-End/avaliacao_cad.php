@@ -17,7 +17,7 @@
 	<div class="container">
 		<form action="avaliacao_pdo.php" method="post">
 			<div class="input-field col s12">	
-				<label for="Tema">Tema</label>
+				<label for="Tema">Tema</label>	
 				<input type="text" name="Tema" id="Tema">
 			</div>
 			<button type="submit" name="acao" class="btn black white-text waves-effect waves-light" value="cadastrar">Cadastrar</button>

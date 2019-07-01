@@ -129,7 +129,7 @@ function insertPDO_aval() {
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
 
-	//header("location:avaliacao.php");
+	//header("location:cadastro_questoes_avaliacao.php");
 }
 
 function updatePDO_aval() {
