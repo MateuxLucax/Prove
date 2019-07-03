@@ -6,6 +6,7 @@
       coverTrigger:false
     });
     $('.modal').modal();
+    $('.chips').chips();
   });
 })(jQuery);
 

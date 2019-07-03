@@ -58,7 +58,7 @@
 	</div>
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="avaliacoes">
-		<?php $reg_aval = selectPDO_discaval($codigo);
+		<?php $reg_aval = selectPDO_discaval($codigo, 'disciplina');
 			selectPDO_discaval_table($reg_aval); ?>
 		<a href="cadastro_avaliacao.php">Adicionar avaliação</a>
 	</div>

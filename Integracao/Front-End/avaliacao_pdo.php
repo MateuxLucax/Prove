@@ -124,12 +124,12 @@ function insertPDO_aval() {
 	$peso = $GLOBALS['avaliacao']->getPeso();
 	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
 	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
-
+	
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
 
-	//header("location:cadastro_questoes_avaliacao.php");
+	header("location:disciplina.php?codigo=".$disciplina);
 }
 
 function updatePDO_aval() {

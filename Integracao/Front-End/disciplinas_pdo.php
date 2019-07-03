@@ -427,12 +427,19 @@ function insertPDO_discalun($matriculas, $disciplina) {
 
 
 
-function selectPDO_discaval ($cod_disc) {
+function selectPDO_discaval ($codigo, $tabela /* o valor deve ser ou avaliacao ou disciplina */) {
 	try {
 		$sql = 'select d.Codigo_Disciplina as "ID Disciplina", d.Nome as "Disciplina", a.Codigo_Avaliacao as "ID Avaliacao", a.Conteudo, a.Data_Inicio, a.Data_Fim, a.Peso, a.Embaralhar
-		FROM avaliacoes a, disciplinas d
-		WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina
-		AND d.Codigo_Disciplina = '.$cod_disc;
+		 FROM avaliacoes a, disciplinas d 
+		 WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina ';
+		
+		if($tabela == 'disciplina') {
+			$sql .= ' and d.Codigo_Disciplina = '.$codigo;
+		} else if ($tabela == 'avaliacao') {
+			$sql .=  'and a.Codigo_Avaliacao = '.$codigo;
+		}
+
+		//var_dump($sql);
 
 		$consulta = $GLOBALS['pdo']->query($sql);
 
@@ -469,6 +476,7 @@ function selectPDO_discaval_table ($registros) {
 			<th>Peso</th>
 			<th>Embaralhar</th>
 			<th>Excluir</th>
+			<th>Editar</th>
 		</tr>
 		</thead>
 	<tdbody>";
@@ -479,6 +487,7 @@ function selectPDO_discaval_table ($registros) {
 			echo "<td>".$registros[$i][$j]."</td>";
 		}
 		echo "<td><a href='disciplinas_pdo.php?acao=delete_aval&avaliacao=".$registros[$i][2]."&disciplina=".$registros[$i][0]."'>X</a></td>";
+		echo "<td><a href='avaliacao.php?codigo=".$registros[$i][2]."'>Editar</a></td>";
 
 		echo "<tr>";
 	}
