@@ -9,29 +9,30 @@
 		$codigo = '';
 	}
 
-    include 'disciplinas_pdo.php';
-    include 'funcoes.php';
-    include 'conf.php';
+	include 'disciplinas_pdo.php';
+	include 'avaliacao_pdo.php';
+	include 'funcoes.php';
+	include 'conf.php';
 	date_default_timezone_set('America/Sao_Paulo');
 
-    $registros = selectPDO_discaval($codigo, 'avaliacao');
+	$registros = selectPDO_discaval($codigo, 'avaliacao');
 
-    if($codigo != '') { 
-            
-        $cod_disciplina = $registros[0][0];
-        $disciplina = $registros[0][1];
-        $cod_avaliacao = $registros[0][2];
-        $conteudo = $registros[0][3];
-        $data_inicio = $registros[0][4];
-        $data_fim = $registros[0][5];
-        $peso = $registros[0][6];
-        $embaralhar = $registros[0][7];
+	if($codigo != '') { 
+			
+		$cod_disciplina = $registros[0][0];
+		$disciplina = $registros[0][1];
+		$cod_avaliacao = $registros[0][2];
+		$conteudo = $registros[0][3];
+		$data_inicio = $registros[0][4];
+		$data_fim = $registros[0][5];
+		$peso = $registros[0][6];
+		$embaralhar = $registros[0][7];
 
-        $title = $disciplina." - ".$conteudo;
+		$title = $disciplina." - ".$conteudo;
 
-    } else {
-        $title = '';
-    }
+	} else {
+		$title = '';
+	}
 
 ?>
 <html>
@@ -42,6 +43,9 @@
 	<!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 	<style type="text/css">
 		select { display: block; } /*Tive que colocar, porque por padrão o select estava com display:none por algum motivo*/
 	</style>
@@ -51,61 +55,104 @@
 </head>
 <body>
 	<div class="container">
-        
-        <?php if($codigo != '') { ?>
+		
+		<?php if($codigo != '') { ?>
 
-            <form action="avaliacao_pdo.php" method="post" style="border: 1px black solid">
-                <div class="input-field col s12">
-                    <label for="conteudo">Conteúdo</label>
-                    <input type="text" name="conteudo" id="conteudo" value="<?php echo $conteudo; ?>">
-                </div>
-                <br/>Aqui vão ficar os campos para editar a avaliação (conteúdo, data de início e fim etc.)
-                <br/>O próximo form é para o cadastro de questões.
-                <br/>No meio desses dois forms deve estar a visualização de questões da prova<br/>
-                <button type="submit" name="acao" value="editar" class="btn black waves-effect waves-light">Editar</button>
-            </form>
-            
-            
-            <form action="avaliacao_pdo.php" method="post">
-                
-                <div class="input-field col s12">
-				    <?php gerarSelect($tb_tipo, 'Tipo_Questao', 0, 'Codigo_Tipo', 'Descricao'); ?>
-			    </div><p> Colocar botão para abrir questão </p><br/><br/><br/>
+			<form action="avaliacao_pdo.php" method="post" class="card-panel">
+				<div class="input-field col s12">
+					<label for="conteudo">Conteúdo</label>
+					<input type="text" name="conteudo" id="conteudo" value="<?php echo $conteudo; ?>">
+				</div>
 
+					<div class="input-field col s12">   
+					<input type="text" name="dataInicio" id="dataInicio" value="<?php echo $data_inicio; ?>">
+					<span class="helper-text">Data início</span>
+				</div>
 
-                <div class="chips">
-                    Palavras-chave aqui
-                </div>
+				<div class="input-field col s12">   
+					<input type="text" name="dataFim" id="dataFim" value="<?php echo $data_fim; ?>">
+					<span class="helper-text">Data fim</span>
+				</div>
 
-                <div class="input-field col s12">	
-                    <label for="enunciado">Enunciado</label>
-                    <input type="text" name="enunciado" id="enunciado">
-                </div>
-                
-                <div class="input-field col s12">	
-                    <label for="texto">Texto</label>
-                    <input type="text" name="texto" id="texto">
-                </div>
+				<div class="input-field col s12">   
+					<label for="peso">Peso</label>
+					<input type="text" name="peso" id="peso" value="<?php echo $peso; ?>">
+				</div>
 
-                
+				<div class="input-field col s12">
+					<?php gerarSelect($tb_disciplinas, 'Disciplina_Codigo_Disciplina', 0, 'Codigo_Disciplina', 'Nome'); ?>
+				</div>
+				
+				<div class="input-field col s12">   
+					<div class="switch">Embaralhar <br/>
+						<label for="embaralhar">Não
+							<input type="checkbox" name="embaralhar" id="embaralhar" value="<?php echo $embaralhar; ?>">
+							<span class="lever"></span>
+							Sim</label>
+					</div>
+				</div>
 
-                <div class="input-field col s12">
-                    <?php //gerarSelect($tb_avaliacoes, 'Disciplina_Codigo_Disciplina', 0, 'Codigo_Disciplina', 'Nome'); ?>
-                </div>
-                
-                
+				<input type="hidden" name="Codigo_Avaliacao" value="<?php echo $codigo; ?>">
+				<button type="submit" name="acao" value="editar" class="btn black waves-effect waves-light">Editar</button>
+			</form>
+			
+			<div id="questoes">
+				<?php
+					$questoes = selectPDO_avalques($codigo);
+					selectPDO_avalques_table($questoes);
+				?>
+			</div>
+			
+			<button data-target="addQuestao" class="btn modal-trigger">Adicionar questão</button>
+			<div id="addQuestao" class="modal">
+				<div class="row">
+					<div class="col s12">
+						<ul class="tabs">
+							<li class="tab col s4"><a href="#discursiva">Discursiva</a></li>
+							<li class="tab col s4"><a href="#unicaesc">Única Escolha</a></li>
+							<li class="tab col s4"><a href="#vouf">Verdadeiro ou Falso</a></li>
+						</ul>
+					</div>
+				</div>
 
-                <button type="submit" name="acao" class="btn black white-text waves-effect waves-light" value="cadastrar">Cadastrar</button>
-            </form>
+				<div id="discursiva">
+					<form action="avaliacao_pdo.php" method="post">
+						<div class="input-field col s12">
+							<textarea name="Texto" id="Texto" class="materialize-textarea"></textarea>
+							<label for="Texto">Texto</label>
+						</div>
 
+						<div class="input-field col s12">
+							<input name="Enunciado" id="Enunciado" class="validate">
+							<label for="Enunciado">Enunciado</label>
+						</div>
 
-        <?php } else { ?>
+						<input type="hidden" name="Tipo_Codigo" value="1">
 
-            <div id="erro_codigo">
-                <p><b>Erro: </b> a página não recebeu nenhum código. Adicione, no final da URL, <code>?codigo=[codigo da disciplina]</code></p>
-            </div>
+						<input type="hidden" name="Avaliacao_Codigo_Avaliacao" value="<?php echo $codigo; ?>">
 
-        <?php } ?>
+						<button type="submit" name="acao" class="btn green" value="cadastrar_questao">Cadastrar</button>
+					</form>
+
+				</div>
+	   			<div id="unicaesc" class="col s12">B</div>
+	   			<div id="vouf" class="col s12">C</div>
+	   			
+	   		</div>
+
+		<?php } else { ?>
+
+			<div id="erro_codigo">
+				<p><b>Erro: </b> a página não recebeu nenhum código. Adicione, no final da URL, <code>?codigo=[codigo da disciplina]</code></p>
+			</div>
+
+		<?php } ?>
 	</div>
+
+	<!--  Scripts-->
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
+	<script src="assets/js/materialize.min.js"></script>
+	<script src="assets/js/init.js"></script>
+		
 </body>
 </html>

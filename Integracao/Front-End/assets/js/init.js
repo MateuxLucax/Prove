@@ -7,6 +7,7 @@
     });
     $('.modal').modal();
     $('.chips').chips();
+    $('.tabs').tabs();
   });
 })(jQuery);
 
