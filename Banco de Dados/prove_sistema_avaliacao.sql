@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Tipo` (
   PRIMARY KEY (`Codigo_Tipo`))
 ENGINE = InnoDB;
 
+INSERT INTO Tipo VALUES (1, 'Discursiva'), (2, 'Única Escolha'), (3, 'Verdadeiro ou Falso');
 
 -- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Questao`
@@ -330,9 +331,6 @@ FROM avaliacoes a, disciplinas d
 WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina
 AND d.Codigo_Disciplina = 1;
 
--- INSERT INTO Tipo VALUES (1, 'Discursiva'), (2, 'Única Escolha'), (3, 'Verdadeiro ou Falso');
-
-
 SELECT * FROM Tipo;
 SELECT * FROM Questao;
 SELECT * FROM Avaliacoes;
@@ -346,3 +344,5 @@ WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
 AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
 AND Q.Tipo_Codigo = T.Codigo_Tipo
 AND QA.Avaliacoes_Codigo_Avaliacao = 2;
+
+select * FROM Questao;
