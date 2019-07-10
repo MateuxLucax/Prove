@@ -28,7 +28,7 @@
 	<?php printHeader(); ?>
 
 	<main>
-		<p>
+		<div class="container">
 			<?php
 				echo "Bem vindo ".$_SESSION['nome'].
 				 "<br>
@@ -37,20 +37,28 @@
 			?>
 
 			<?php if($_SESSION['tipo'] == 'aluno') { ?>
-
+				
 
 
 			<?php } ?>		
 
-
 			<?php if($_SESSION['tipo'] == 'professor') { ?>
-
+				<div class="row">
+					<a href="cadastro_disciplina.php"><div class="card-panel teal white-text col s-4"><h4>Criar Disciplina</h4></div></a>
+				</div>
+				<div class="row">
+					<a href="cadastro_avaliacao.php"><div class="card-panel teal white-text col s-4"><h4>Criar Valiação</h4></div></a>
+				</div>
+				<div class="row">
+					<a href="cadastro_serie.php"><div class="card-panel teal white-text col s-4"><h4>Criar Série</h4></div></a>
+				</div>
+				
 
 
 			<?php } ?>
 
 
-		</p>
+		</div>
 	</main>
 
 	<footer class="page-footer">
