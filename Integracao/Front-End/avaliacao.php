@@ -71,8 +71,8 @@
                 <div class="input-field col s12">
 				    <?php gerarSelect($tb_tipo, 'Tipo_Questao', 0, 'Codigo_Tipo', 'Descricao'); ?>
 			    </div><p> Colocar botão para abrir questão </p><br/><br/><br/>
-                
-                
+
+
                 <div class="chips">
                     Palavras-chave aqui
                 </div>
