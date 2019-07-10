@@ -2,6 +2,9 @@
 <?php
 	include 'valida_secao.php';
 	include 'funcoes.php';
+
+	selectDisciplinas($_SESSION['matricula']); // disciplinas do qual o usuário faz parte
+
 ?>
 <html lang="pt-br">
 
@@ -37,16 +40,12 @@
 
 
 
-			<?php } ?>
-
-			
+			<?php } ?>		
 
 
 			<?php if($_SESSION['tipo'] == 'professor') ?>
 
 
-
-				
 
 			<?php } ?>
 
@@ -67,6 +66,12 @@
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="assets/js/materialize.min.js"></script>
 	<script src="assets/js/init.js"></script>
+
+	<?php
+		function selectDisciplinas($matricula) {
+		
+		}
+	?>
 
 	</body>
 
