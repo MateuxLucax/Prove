@@ -5,6 +5,9 @@
 	$matricula = isset($_POST['matricula']) ? $_POST['matricula'] : '';
 	$senha = isset($_POST['senha']) ? sha1($_POST['senha']) : '';
 	$tipo_usuario = isset($_POST['tipo_usuario']) ? $_POST['tipo_usuario'] : '';
+
+	if (isset($_POST['erro'])) { $erro = $_POST['erro']; }
+	else if (isset($_GET['erro'])) { $erro = $_GET['erro']; }
 ?>
 
 <html lang="pt-br">
@@ -71,6 +74,14 @@
               </div>
             </div>
             <br/>
+            <?php if($erro == '1') { ?>
+	            <br/>
+	            <div class="row" style="margin-top: -2rem">
+								<div class="col s12 card-panel red white-text">
+									<p><b>Erro: </b> A senha informada está incorreta</p>
+								</div>
+							</div>
+						<?php } ?>
 						<div class="row" style="margin-top: -2rem">
 							<div class="col s12">
 								<p><a href="">Esqueci minha senha</a></p>

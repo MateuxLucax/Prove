@@ -179,14 +179,19 @@ function deletePDO_aval() {
 
 function selectPDO_avalques($codigo_aval = '') {
 	try {	
-		$sql = 'select A.Codigo_Avaliacao, A.Conteudo, Q.Codigo_Questao, Q.Texto, Q.Enunciado, T.Descricao as \'Tipo\'
-			FROM Questao Q, Questoes_has_Avaliacoes QA, Avaliacoes A, Tipo T
-			WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
-			AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
-			AND Q.Tipo_Codigo = T.Codigo_Tipo ';
-			
-		if($codigo_aval != '') {
-			$sql .= ' AND QA.Avaliacoes_Codigo_Avaliacao = '.$codigo_aval;
+		if ($codigo_aval == 'só_questão') {
+			$sql = 'select Codigo_Questao, Texto, Enunciado, Tipo_Codigo as \'Tipo\' FROM Questao';
+		}
+		else {	
+			$sql = 'select A.Codigo_Avaliacao, A.Conteudo, Q.Codigo_Questao, Q.Texto, Q.Enunciado, T.Descricao as \'Tipo\'
+				FROM Questao Q, Questoes_has_Avaliacoes QA, Avaliacoes A, Tipo T
+				WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+				AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+				AND Q.Tipo_Codigo = T.Codigo_Tipo ';
+				
+			if($codigo_aval != '') {
+				$sql .= ' AND QA.Avaliacoes_Codigo_Avaliacao = '.$codigo_aval;
+			}
 		}
 
 		//var_dump($sql);
@@ -197,8 +202,8 @@ function selectPDO_avalques($codigo_aval = '') {
 
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 			$registros[$i] = array();
-			array_push($registros[$i], $linha['Codigo_Avaliacao']);
-			array_push($registros[$i], $linha['Conteudo']);
+			if(isset($linha['Codigo_Avaliacao'])) array_push($registros[$i], $linha['Codigo_Avaliacao']);
+			if(isset($linha['Conteudo'])) array_push($registros[$i], $linha['Conteudo']);
 			array_push($registros[$i], $linha['Codigo_Questao']);
 			array_push($registros[$i], $linha['Texto']);
 			array_push($registros[$i], $linha['Enunciado']);
@@ -243,8 +248,12 @@ function selectPDO_avalques_table ($registros) {
 }
 
 function insertPDO_avalques() {
-	$questoes = selectPDO_avalques();
-	$proxCodigo = $questoes[(count($questoes)-1)][2] + 1;
+	$questoes = selectPDO_avalques('só_questão'); // Não faz o SELECT com a relação com a avaliação
+	if(count($questoes) > 0) {
+		$proxCodigo = $questoes[(count($questoes)-1)][2] + 1;
+	} else {
+		$proxCodigo = 1;
+	}
 
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_questoes']." (Enunciado, Texto, Tipo_Codigo) VALUES (:Enunciado, :Texto, :Tipo_Codigo)");
 
