@@ -74,14 +74,14 @@
               </div>
             </div>
             <br/>
-            <?php if($erro == '1') { ?>
+            <?php if(isset($erro)) { if($erro == '1') { ?>
 	            <br/>
 	            <div class="row" style="margin-top: -2rem">
 								<div class="col s12 card-panel red white-text">
 									<p><b>Erro: </b> A senha informada está incorreta</p>
 								</div>
 							</div>
-						<?php } ?>
+						<?php } } ?>
 						<div class="row" style="margin-top: -2rem">
 							<div class="col s12">
 								<p><a href="">Esqueci minha senha</a></p>

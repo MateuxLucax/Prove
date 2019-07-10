@@ -36,14 +36,14 @@
 					Você é ".$_SESSION['tipo'];
 			?>
 
-			<?php if($_SESSION['tipo'] == 'aluno') ?>
+			<?php if($_SESSION['tipo'] == 'aluno') { ?>
 
 
 
 			<?php } ?>		
 
 
-			<?php if($_SESSION['tipo'] == 'professor') ?>
+			<?php if($_SESSION['tipo'] == 'professor') { ?>
 
 
 
@@ -69,7 +69,7 @@
 
 	<?php
 		function selectDisciplinas($matricula) {
-		
+
 		}
 	?>
 
