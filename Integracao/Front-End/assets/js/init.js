@@ -7,6 +7,8 @@
     });
     $('.modal').modal();
     $('.chips').chips();
+    $('.tabs').tabs();
+    $('.collapsible').collapsible();
   });
 })(jQuery);
 

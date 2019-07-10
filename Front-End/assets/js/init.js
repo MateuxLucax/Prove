@@ -4,9 +4,13 @@
     $('.sidenav').sidenav();
     $('select').formSelect();
     $('.modal').modal();
+    $('.datepicker').datepicker({
+      format: 'dd/mm/yyyy'
+    });
     
   });
 })(jQuery);
+
 
 function copyrightOnFooter() {
   var d = new Date();

@@ -14,12 +14,13 @@ if (!$acao == '') {
 	echo "Ação: ".$acao."<br>";
 	
 	$avaliacao = new Avaliacao;
-	if(isset($_POST['Codigo_Avaliacao'])) $avaliacao->setCodigo_Avaliacao($_POST['Codigo_Avaliacao']);
+	if(isset($_POST['Codigo_Avaliacao'])) $avaliacao->setCodigo($_POST['Codigo_Avaliacao']);
 	if(isset($_POST['conteudo'])) $avaliacao->setConteudo($_POST['conteudo']);
 	if(isset($_POST['dataInicio'])) $avaliacao->setDataInicio($_POST['dataInicio']);
 	if(isset($_POST['dataFim'])) $avaliacao->setDataFim($_POST['dataInicio']);
 	if(isset($_POST['peso'])) $avaliacao->setPeso($_POST['peso']);
 	if(isset($_POST['embaralhar'])) $avaliacao->setEmbaralhar($_POST['embaralhar']);
+	if(isset($_POST['Disciplina_Codigo_Disciplina'])) $disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 	else $avaliacao->setEmbaralhar(0);
 	
 	
@@ -42,6 +43,9 @@ try {
 			break;
 		case 'deletar':
 			deletePDO_aval();
+			break;
+		case 'cadastrar_questao':
+			insertPDO_avalques();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -133,9 +137,10 @@ function insertPDO_aval() {
 }
 
 function updatePDO_aval() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['$tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Peso = :Peso, Embaralhar = :Embaralhar, Disciplina = :Disciplina");
+	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Peso = :Peso, Embaralhar = :Embaralhar, Disciplina_Codigo_Disciplina = :Disciplina WHERE Codigo_Avaliacao = :Codigo");
 
 
+	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Conteudo', $conteudo);
 	$stmt->bindParam(':Data_Inicio', $data_inicio);
 	$stmt->bindParam(':Data_Fim', $data_fim);
@@ -143,6 +148,7 @@ function updatePDO_aval() {
 	$stmt->bindParam(':Embaralhar', $embaralhar);
 	$stmt->bindParam(':Disciplina', $disciplina);
 	
+	$codigo = $GLOBALS['avaliacao']->getCodigo();
 	$conteudo = $GLOBALS['avaliacao']->getConteudo();
 	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
 	$data_fim = $GLOBALS['avaliacao']->getDataFim();
@@ -167,4 +173,109 @@ function deletePDO_aval() {
 	echo "Linhas afetadas: ".$stmt->rowCount();
 }
 
+
+/////////////////////////////////////////////////////////////////////
+// Funções para comandos referentes a relação avaliação-questão (N:N)
+
+function selectPDO_avalques($codigo_aval = '') {
+	try {	
+		if ($codigo_aval == 'só_questão') {
+			$sql = 'select Codigo_Questao, Texto, Enunciado, Tipo_Codigo as \'Tipo\' FROM Questao';
+		}
+		else {	
+			$sql = 'select A.Codigo_Avaliacao, A.Conteudo, Q.Codigo_Questao, Q.Texto, Q.Enunciado, T.Descricao as \'Tipo\'
+				FROM Questao Q, Questoes_has_Avaliacoes QA, Avaliacoes A, Tipo T
+				WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+				AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+				AND Q.Tipo_Codigo = T.Codigo_Tipo ';
+				
+			if($codigo_aval != '') {
+				$sql .= ' AND QA.Avaliacoes_Codigo_Avaliacao = '.$codigo_aval;
+			}
+		}
+
+		//var_dump($sql);
+
+		$consulta = $GLOBALS['pdo']->query($sql);
+
+		$registros = array();
+
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			$registros[$i] = array();
+			if(isset($linha['Codigo_Avaliacao'])) array_push($registros[$i], $linha['Codigo_Avaliacao']);
+			if(isset($linha['Conteudo'])) array_push($registros[$i], $linha['Conteudo']);
+			array_push($registros[$i], $linha['Codigo_Questao']);
+			array_push($registros[$i], $linha['Texto']);
+			array_push($registros[$i], $linha['Enunciado']);
+			array_push($registros[$i], $linha['Tipo']);
+		}
+
+		return $registros;
+
+
+		//if($tipo == 'unica escolha' || $tipo == 'verdadeiro ou falso') { mostrar alternativas }
+
+	} catch (PDOException $e) {
+		echo "Erro: ".$e->getMessage();
+	}
+}
+
+function selectPDO_avalques_table ($registros) {
+	
+	echo "<table class='highlight centered responsive-table'>
+	<thead class='black white-text'>
+	<tr>
+		<th>Codigo Avaliacao</th>
+		<th>Conteudo</th>
+		<th>Codigo Questao</th>
+		<th>Texto</th>
+		<th>Enunciado</th>
+		<th>Tipo</th>
+	</tr>
+	</thead>
+	<tdbody>";
+
+	for ($i=0; $i < count($registros); $i++) {
+		echo "<tr>";
+		for ($j=0; $j < count($registros[$i]); $j++) { 
+			echo "<td>".$registros[$i][$j]."</td>";
+		}
+		echo "<tr>";
+	}
+	echo "</tbody>
+	</table>";
+
+}
+
+function insertPDO_avalques() {
+	$questoes = selectPDO_avalques('só_questão'); // Não faz o SELECT com a relação com a avaliação
+	if(count($questoes) > 0) {
+		$proxCodigo = $questoes[(count($questoes)-1)][2] + 1;
+	} else {
+		$proxCodigo = 1;
+	}
+
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_questoes']." (Enunciado, Texto, Tipo_Codigo) VALUES (:Enunciado, :Texto, :Tipo_Codigo)");
+
+	$stmt->bindParam(':Enunciado', $_POST['Enunciado']);
+	$stmt->bindParam(':Texto', $_POST['Texto']);
+	$stmt->bindParam(':Tipo_Codigo', $_POST['Tipo_Codigo']);
+		
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	//// Adicionar questão na avaliação
+
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_aval_ques']." (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES (:Questao, :Avaliacao)");
+
+	$stmt->bindParam(':Questao', $proxCodigo);
+	$stmt->bindParam(':Avaliacao', $_POST['Avaliacao_Codigo_Avaliacao']);
+		
+	$stmt->execute();
+
+	echo "Linhas afetadas: ".$stmt->rowCount();	
+
+	//header("location:avaliacao.php?codigo=".$);
+}
 ?>

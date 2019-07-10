@@ -11,7 +11,8 @@
 	$tb_disc_prof = 'professores_has_disciplina';
 	$tb_disc_alun = 'Disciplina_has_Alunos';
 	$tb_avaliacoes = 'Avaliacoes';
-	$tb_questoes = 'Questoes';
+	$tb_questoes = 'Questao';
+	$tb_aval_ques = 'Questoes_has_Avaliacoes';
 	$tb_tipo = 'Tipo';
 	//...
 
@@ -23,7 +24,7 @@
 		array('Serie',$tb_series),
 		array('Avaliacao',$tb_avaliacoes),
 		array('Tipo',$tb_tipo),
-		array('Questoes',$tb_questoes)
+		array('Questao',$tb_questoes)
 		//...
 	);
 ?>

@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Tipo` (
   PRIMARY KEY (`Codigo_Tipo`))
 ENGINE = InnoDB;
 
+INSERT INTO Tipo VALUES (1, 'Discursiva'), (2, 'Única Escolha'), (3, 'Verdadeiro ou Falso');
 
 -- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Questao`
@@ -164,16 +165,9 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Questao` (
   `Codigo_Questao` INT NOT NULL AUTO_INCREMENT,
   `Enunciado` VARCHAR(100) NOT NULL,
   `Texto` TEXT NULL,
-  `Palavra_Chave` INT NOT NULL,
   `Tipo_Codigo` INT NOT NULL,
   PRIMARY KEY (`Codigo_Questao`),
-  INDEX `fk_Questoes_Palavras_Chave1_idx` (`Palavra_Chave` ASC),
   INDEX `fk_Questao_Tipo1_idx` (`Tipo_Codigo` ASC),
-  CONSTRAINT `fk_Questoes_Palavras_Chave1`
-    FOREIGN KEY (`Palavra_Chave`)
-    REFERENCES `prove_sistema_avaliacao`.`Palavras_Chave` (`Codigo_Palavras_Chave`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Questao_Tipo1`
     FOREIGN KEY (`Tipo_Codigo`)
     REFERENCES `prove_sistema_avaliacao`.`Tipo` (`Codigo_Tipo`)
@@ -241,30 +235,6 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Discursiva` (
   CONSTRAINT `fk_Discursiva_Questao1`
     FOREIGN KEY (`Questao_Codigo`)
     REFERENCES `prove_sistema_avaliacao`.`Questao` (`Codigo_Questao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `prove_sistema_avaliacao`.`Texto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Texto` (
-  `Codigo_Texto` INT NOT NULL AUTO_INCREMENT,
-  `Respostas` LONGTEXT NOT NULL,
-  `Questao_Codigo` INT NOT NULL,
-  `Alunos_Matricula` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`Codigo_Texto`),
-  INDEX `fk_Texto_Questao1_idx` (`Questao_Codigo` ASC),
-  INDEX `fk_Texto_Alunos1_idx` (`Alunos_Matricula` ASC),
-  CONSTRAINT `fk_Texto_Questao1`
-    FOREIGN KEY (`Questao_Codigo`)
-    REFERENCES `prove_sistema_avaliacao`.`Questao` (`Codigo_Questao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Texto_Alunos1`
-    FOREIGN KEY (`Alunos_Matricula`)
-    REFERENCES `prove_sistema_avaliacao`.`Alunos` (`Matricula`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -360,3 +330,19 @@ SELECT d.Codigo_Disciplina as 'ID Disciplina', d.Nome as 'Disciplina', a.Codigo_
 FROM avaliacoes a, disciplinas d
 WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina
 AND d.Codigo_Disciplina = 1;
+
+SELECT * FROM Tipo;
+SELECT * FROM Questao;
+SELECT * FROM Avaliacoes;
+SELECT * FROM Questoes_has_Avaliacoes;
+INSERT INTO `Questao` (`Enunciado`, `Tipo_Codigo`) VALUES ('Explique o que é PHP',1);
+INSERT INTO `Questoes_has_Avaliacoes` (`Questoes_Codigo_Questao`, `Avaliacoes_Codigo_Avaliacao`) VALUES (2,2);
+
+SELECT A.Codigo_Avaliacao, A.Conteudo, Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao as 'Tipo'
+FROM Questao Q, Questoes_has_Avaliacoes QA, Avaliacoes A, Tipo T
+WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+AND Q.Tipo_Codigo = T.Codigo_Tipo
+AND QA.Avaliacoes_Codigo_Avaliacao = 2;
+
+select * FROM Questao;
