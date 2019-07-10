@@ -345,4 +345,12 @@ AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
 AND Q.Tipo_Codigo = T.Codigo_Tipo
 AND QA.Avaliacoes_Codigo_Avaliacao = 2;
 
+SELECT * FROM Disciplinas;
+
+SELECT D.Codigo_Disciplina, D.Nome
+FROM Professores P, Disciplinas D, Professores_has_Disciplina PD
+WHERE PD.Professores_Matricula = P.matricula
+AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
+AND P.Matricula = '2031';
+
 select * FROM Questao;

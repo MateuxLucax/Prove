@@ -3,8 +3,6 @@
 	include 'valida_secao.php';
 	include 'funcoes.php';
 
-	selectDisciplinas($_SESSION['matricula']); // disciplinas do qual o usuário faz parte
-
 ?>
 <html lang="pt-br">
 
@@ -42,16 +40,26 @@
 
 			<?php } ?>		
 
-			<?php if($_SESSION['tipo'] == 'professor') { ?>
+			<?php if($_SESSION['tipo'] == 'professor') {
+				$disciplinas = selectDisciplinas($_SESSION['matricula']);
+				var_dump($disciplinas);
+				$contador=count($disciplinas);
+				?>
 				<div class="row">
-					<a href="cadastro_disciplina.php"><div class="card-panel teal white-text col s-4"><h4>Criar Disciplina</h4></div></a>
+					<a href="cadastro_serie.php"><div class="card-panel teal white-text col s-4"><h6>Criar Série</h4></div></a>
+					<a href="cadastro_disciplina.php"><div class="card-panel teal white-text col s-4"><h6>Criar Disciplina</h4></div></a>
+					<a href="cadastro_avaliacao.php"><div class="card-panel teal white-text col s-4"><h6>Criar Avaliação</h4></div></a>
 				</div>
-				<div class="row">
-					<a href="cadastro_avaliacao.php"><div class="card-panel teal white-text col s-4"><h4>Criar Valiação</h4></div></a>
-				</div>
-				<div class="row">
-					<a href="cadastro_serie.php"><div class="card-panel teal white-text col s-4"><h4>Criar Série</h4></div></a>
-				</div>
+				<ul class="collapsible">
+					<?php
+						for ($i=0; $i < $contador ; $i++) {?> 
+							<li>
+      							<div class="collapsible-header"><i class="material-icons">filter_drama</i> <?php echo $disciplinas[$i][1]; ?> </div>
+      							<div class="collapsible-body"><span></span></div>
+    						</li>
+					<?php	}
+					?>
+				</ul>
 				
 
 
@@ -77,7 +85,31 @@
 
 	<?php
 		function selectDisciplinas($matricula) {
+			$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+			try {
+				$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_professores'].' P, '.$GLOBALS['tb_disciplinas'].' D, 
+				'.$GLOBALS['tb_disc_prof'].' PD where PD.Professores_Matricula = P.Matricula
+				AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
+				AND P.Matricula = \''.$matricula.'\' ';
+
+				//var_dump($sql); echo "<br>";
+		
+				$consulta = $GLOBALS['pdo']->query($sql);
+		
+				$registros = array();
+		
+				for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+					$registros[$i] = array();
+					array_push($registros[$i], $linha['Codigo_Disciplina']);
+					array_push($registros[$i], $linha['Nome']);
+				}
+		
+				return $registros;
+			} catch (PDOException $e) {
+				echo "Erro: ".$e->getMessage();
+			}
 		}
 	?>
 

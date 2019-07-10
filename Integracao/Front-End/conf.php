@@ -7,8 +7,8 @@
 	$tb_alunos = "Alunos";
 	$tb_professores = "Professores";
 	$tb_disciplinas = "Disciplinas";
-	$tb_series = "Serie";
 	$tb_disc_prof = 'professores_has_disciplina';
+	$tb_series = "Serie";
 	$tb_disc_alun = 'Disciplina_has_Alunos';
 	$tb_avaliacoes = 'Avaliacoes';
 	$tb_questoes = 'Questao';
