@@ -95,16 +95,8 @@
 				<input type="hidden" name="Codigo_Avaliacao" value="<?php echo $codigo; ?>">
 				<button type="submit" name="acao" value="editar" class="btn black waves-effect waves-light">Editar</button>
 			</form>
-			
-			<div id="questoes">
-				<?php
-					$questoes = selectPDO_avalques($codigo);
-					selectPDO_avalques_table($questoes);
-				?>
-			</div>
-			
-			<button data-target="addQuestao" class="btn modal-trigger">Adicionar questão</button>
-			<div id="addQuestao" class="modal">
+
+			<div id="addQuestao" class="card-panel teal-text">
 				<div class="row">
 					<div class="col s12">
 						<ul class="tabs">
@@ -131,7 +123,9 @@
 
 						<input type="hidden" name="Avaliacao_Codigo_Avaliacao" value="<?php echo $codigo; ?>">
 
-						<button type="submit" name="acao" class="btn green" value="cadastrar_questao">Cadastrar</button>
+						<div class="center-align">
+							<button type="submit" name="acao" class="btn green" value="cadastrar_questao">Cadastrar</button>
+						</div>
 					</form>
 
 				</div>
@@ -139,6 +133,13 @@
 	   			<div id="vouf" class="col s12">C</div>
 	   			
 	   		</div>
+			
+			<div id="questoes">
+				<?php
+					$questoes = selectPDO_avalques($codigo);
+					selectPDO_avalques_table($questoes);
+				?>
+			</div>
 
 		<?php } else { ?>
 
