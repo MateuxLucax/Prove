@@ -2,6 +2,7 @@
 <?php
 	include 'valida_secao.php';
 	include 'funcoes.php';
+	include 'disciplinas_pdo.php';
 
 ?>
 <html lang="pt-br">
@@ -28,10 +29,7 @@
 	<main>
 		<div class="container">
 			<?php
-				echo "Bem vindo ".$_SESSION['nome'].
-				 "<br>
-					matrícula: ".$_SESSION['matricula']."
-					Você é ".$_SESSION['tipo'];
+				echo "<p class='center-align'>Bem vindo, <b>".$_SESSION['nome']."</b>.<br>Matrícula: <b>".$_SESSION['matricula']."</b>.<br>	Você é <b>".$_SESSION['tipo']."</b>.</p>";
 			?>
 
 			<?php if($_SESSION['tipo'] == 'aluno') { ?>
@@ -42,7 +40,7 @@
 
 			<?php if($_SESSION['tipo'] == 'professor') {
 				$disciplinas = selectDisciplinas($_SESSION['matricula']);
-				var_dump($disciplinas);
+				//var_dump($disciplinas);
 				$contador=count($disciplinas);
 				?>
 				<div class="row">
@@ -52,12 +50,38 @@
 				</div>
 				<ul class="collapsible">
 					<?php
-						for ($i=0; $i < $contador ; $i++) {?> 
-							<li>
-      							<div class="collapsible-header"><i class="material-icons">filter_drama</i> <?php echo $disciplinas[$i][1]; ?> </div>
-      							<div class="collapsible-body"><span></span></div>
-    						</li>
-					<?php	}
+						if (isset($disciplinas) && $contador > 0) {
+							for ($i=0; $i < $contador ; $i++) { ?> 
+								<li>
+	      					<div class="collapsible-header"><i class="material-icons">filter_drama</i> <?php echo $disciplinas[$i][1]; ?> </div>
+	      					<div class="collapsible-body">
+	      						<?php
+	      							$avaliacoes = selectPDO_discaval($disciplinas[$i][0], 'disciplina');
+
+	      							if(count($avaliacoes) > 7) $contador_aval = 7;
+	      							else $contador_aval = count($avaliacoes);
+
+	      							echo "<div class=\"collection\">";
+		      							for ($j=0; $j < $contador_aval; $j++) { ?>
+		      								<a href='avaliacao.php?codigo=<?php echo $avaliacoes[$j][2]; ?>' class="collection-item">
+		      									<?php echo $avaliacoes[$j][5].' — '.$avaliacoes[$j][3]; ?>
+		      								</a>
+		      							<?php }
+		      						echo "</div>";
+	      						?>
+
+	      						<!--<php
+	      							$avaliacoes = selectPDO_discaval($disciplinas[$i][0], 'disciplina');
+     									for ($i=0; $i < 7; $i++) { ?>
+    										
+     									?php }
+     								?>-->
+
+
+
+	      					</div>
+	    					</li>
+					<?php } }
 					?>
 				</ul>
 				

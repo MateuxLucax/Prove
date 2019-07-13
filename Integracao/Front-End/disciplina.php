@@ -57,7 +57,7 @@
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="avaliacoes">
 		<?php $reg_aval = selectPDO_discaval($codigo, 'disciplina');
-			discalun_table($reg_aval); ?>
+			discaval_table($reg_aval); ?>
 	</div>
         
 
@@ -76,6 +76,10 @@
 
     <?php
         function discalun_table ($registros) {
+
+        }
+
+        function discaval_table ($registros) {
             echo "<table class='highlight centered responsive-table' border='5'>
             <thead class='black white-text'>
             <tr>
@@ -83,6 +87,10 @@
                 <th>Nome</th>
                 <th>Código</th>
                 <th>Disciplina</th>
+                <th>Data início</th>
+                <th>Data fim</th>
+                <th>Peso</th>
+                <th>Embaralhar</th>
             </tr>
             </thead>
             <tdbody>";

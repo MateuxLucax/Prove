@@ -106,24 +106,30 @@ function insertPDO_serie() {
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
 
-	header("location:cadastro_disciplina.php");
+	//Determinar o código da série que acabou de ser registrada, para redirecionamento
+	$registros = selectPDO_serie();
+	for ($i=0; $i < count($registros); $i++) { 
+		$codigos = $registros[$i][0];
+	}
+	$codigo = $registros[count($codigos)-1][0] + 1;
+
+	header("location:serie.php?codigo=$codigo");
 }
 
 function updatePDO_serie() {
-	$stmt = GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_series']." SET Descricao = :Nome WHERE Codigo_Serie = :Codigo");
+	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_series']." SET Descricao = :Nome WHERE Codigo_Serie = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Nome', $nome);
 	
-	$nome = $GLOBALS['ser']->getCodigo();
+	$codigo = $GLOBALS['ser']->getCodigo();
 	$nome = $GLOBALS['ser']->getDescricao();
 
 	$stmt->execute();
 
-	echo "Linhas afetadas: ".$stmt->rowCount();
+	echo "Linhas afetadas: ".$stmt->rowCount()."!";
 
-	header("location:cadastro_disciplina.php");
-	// DEVERÁ SER SERIE.PHP FUTURAMENTE
+	header("location:serie.php?codigo=$codigo");
 }
 
 function deletePDO_serie() {
@@ -143,7 +149,7 @@ function deletePDO_serie() {
 // Funções relacionadas a comandos que tratam da relação entre as tabelas série e disciplina (1:N)
 
 function selectPDO_seriedisc($codigo) {
-try {	
+	try {	
 
 		$sql = 'select s.Codigo_Serie, s.Descricao as "Serie", d.Codigo_Disciplina, d.Nome as "Disciplina"
 			FROM serie s, disciplinas d
@@ -158,6 +164,8 @@ try {
 			$registros[$i] = array();
 			array_push($registros[$i], $linha['Codigo_Disciplina']);
 			array_push($registros[$i], $linha['Disciplina']);
+			array_push($registros[$i], $linha['Codigo_Serie']);
+			array_push($registros[$i], $linha['Serie']);
 		}
 
 		return $registros;
@@ -175,6 +183,8 @@ function selectPDO_seriedisc_table ($registros) {
 	<tr>
 		<th>ID Disciplina</th>
 		<th>Disciplina</th>
+		<th>ID Série</th>
+		<th>Série</th>
 	</tr>
 	</thead>
 	<tdbody>";
@@ -184,6 +194,7 @@ function selectPDO_seriedisc_table ($registros) {
 		for ($j=0; $j < count($registros[$i]); $j++) { 
 			echo "<td>".$registros[$i][$j]."</td>";
 		}
+		echo "<td><a href=\"disciplina_editar.php?codigo=".$registros[$i][3]."\">Editar</a></td>";
 		echo "<tr>";
 	}
 	echo "</tbody>

@@ -56,11 +56,15 @@ try {
 
 function selectPDO_aval($criterio = 'Conteudo', $pesquisa = '') {
 	try {
-		$sql = "SELECT * FROM ".$GLOBALS['$tb_avaliacoes']." WHERE ".$criterio." ";
-		if ($criterio == 'Conteudo' || $criterio = 'Matricula') 
+		$sql = "SELECT * FROM ".$GLOBALS['tb_avaliacoes']." WHERE ".$criterio." ";
+		if ($criterio == 'Conteudo') {
 			$sql .= " like '%".$pesquisa."%'";
-		else $sql .= ' = '.$pesquisa;
+		} else {
+			$sql .= ' = '.$pesquisa;
+		}
 		$sql .= ";";
+
+		echo $sql;
 		//var_dump($sql); echo "<br>";
 
 		$consulta = $GLOBALS['pdo']->query($sql);
@@ -70,11 +74,11 @@ function selectPDO_aval($criterio = 'Conteudo', $pesquisa = '') {
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 			$registros[$i] = array();
 			array_push($registros[$i], $linha['Codigo_Avaliacao']);
-			array_push($registros[$i], $linha['conteudo']);
-			array_push($registros[$i], $linha['dataInicio']);
-			array_push($registros[$i], $linha['dataFim']);
-			array_push($registros[$i], $linha['peso']);
-			array_push($registros[$i], $linha['embaralhar']);
+			array_push($registros[$i], $linha['Conteudo']);
+			array_push($registros[$i], $linha['Data_Inicio']);
+			array_push($registros[$i], $linha['Data_Fim']);
+			array_push($registros[$i], $linha['Peso']);
+			array_push($registros[$i], $linha['Embaralhar']);
 		}
 
 		return $registros;

@@ -58,81 +58,12 @@
 		
 		<?php if($codigo != '') { ?>
 
-			<form action="avaliacao_pdo.php" method="post" class="card-panel">
-				<div class="input-field col s12">
-					<label for="conteudo">Conteúdo</label>
-					<input type="text" name="conteudo" id="conteudo" value="<?php echo $conteudo; ?>">
-				</div>
+			<?php
+				$reg_aval = selectPDO_aval('Codigo_Avaliacao', $codigo);
+				selectPDO_aval_table($reg_aval);
+			?>
 
-					<div class="input-field col s12">   
-					<input type="text" name="dataInicio" id="dataInicio" value="<?php echo $data_inicio; ?>">
-					<span class="helper-text">Data início</span>
-				</div>
-
-				<div class="input-field col s12">   
-					<input type="text" name="dataFim" id="dataFim" value="<?php echo $data_fim; ?>">
-					<span class="helper-text">Data fim</span>
-				</div>
-
-				<div class="input-field col s12">   
-					<label for="peso">Peso</label>
-					<input type="text" name="peso" id="peso" value="<?php echo $peso; ?>">
-				</div>
-
-				<div class="input-field col s12">
-					<?php gerarSelect($tb_disciplinas, 'Disciplina_Codigo_Disciplina', 0, 'Codigo_Disciplina', 'Nome'); ?>
-				</div>
-				
-				<div class="input-field col s12">   
-					<div class="switch">Embaralhar <br/>
-						<label for="embaralhar">Não
-							<input type="checkbox" name="embaralhar" id="embaralhar" value="<?php echo $embaralhar; ?>">
-							<span class="lever"></span>
-							Sim</label>
-					</div>
-				</div>
-
-				<input type="hidden" name="Codigo_Avaliacao" value="<?php echo $codigo; ?>">
-				<button type="submit" name="acao" value="editar" class="btn black waves-effect waves-light">Editar</button>
-			</form>
-
-			<div id="addQuestao" class="card-panel teal-text">
-				<div class="row">
-					<div class="col s12">
-						<ul class="tabs">
-							<li class="tab col s4"><a href="#discursiva">Discursiva</a></li>
-							<li class="tab col s4"><a href="#unicaesc">Única Escolha</a></li>
-							<li class="tab col s4"><a href="#vouf">Verdadeiro ou Falso</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div id="discursiva">
-					<form action="avaliacao_pdo.php" method="post">
-						<div class="input-field col s12">
-							<textarea name="Texto" id="Texto" class="materialize-textarea"></textarea>
-							<label for="Texto">Texto</label>
-						</div>
-
-						<div class="input-field col s12">
-							<input name="Enunciado" id="Enunciado" class="validate">
-							<label for="Enunciado">Enunciado</label>
-						</div>
-
-						<input type="hidden" name="Tipo_Codigo" value="1">
-
-						<input type="hidden" name="Avaliacao_Codigo_Avaliacao" value="<?php echo $codigo; ?>">
-
-						<div class="center-align">
-							<button type="submit" name="acao" class="btn green" value="cadastrar_questao">Cadastrar</button>
-						</div>
-					</form>
-
-				</div>
-	   			<div id="unicaesc" class="col s12">B</div>
-	   			<div id="vouf" class="col s12">C</div>
-	   			
-	   		</div>
+			
 			
 			<div id="questoes">
 				<?php

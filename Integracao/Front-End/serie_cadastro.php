@@ -2,7 +2,7 @@
 <?php
 	include 'conf.php';
 	include 'funcoes.php';
-	include 'valida_secao_professor.php'; //Deve ser incluído em todas as páginas restritas para usuários do tipo Professor (E não é necessário incluir valida_secao.php também: valida_secao_professor.php já inclui valida_secao.php)
+	include 'valida_secao.php';
 ?>
 <html>
 

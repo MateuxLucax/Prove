@@ -354,3 +354,5 @@ AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
 AND P.Matricula = '2031';
 
 select * FROM Questao;
+
+SELECT * FROM Disciplinas;

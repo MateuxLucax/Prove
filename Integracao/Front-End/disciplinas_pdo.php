@@ -438,6 +438,7 @@ function selectPDO_discaval ($codigo, $tabela /* o valor deve ser ou avaliacao o
 		} else if ($tabela == 'avaliacao') {
 			$sql .=  'and a.Codigo_Avaliacao = '.$codigo;
 		}
+		$sql .= " ORDER BY a.Data_Fim";
 
 		//var_dump($sql);
 
