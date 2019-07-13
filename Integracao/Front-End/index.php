@@ -46,9 +46,9 @@
 				$contador=count($disciplinas);
 				?>
 				<div class="row">
-					<a href="cadastro_serie.php"><div class="card-panel teal white-text col s-4"><h6>Criar Série</h4></div></a>
-					<a href="cadastro_disciplina.php"><div class="card-panel teal white-text col s-4"><h6>Criar Disciplina</h4></div></a>
-					<a href="cadastro_avaliacao.php"><div class="card-panel teal white-text col s-4"><h6>Criar Avaliação</h4></div></a>
+					<a href="serie_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Série</h4></div></a>
+					<a href="disciplina_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Disciplina</h4></div></a>
+					<a href="avaliacao_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Avaliação</h4></div></a>
 				</div>
 				<ul class="collapsible">
 					<?php
