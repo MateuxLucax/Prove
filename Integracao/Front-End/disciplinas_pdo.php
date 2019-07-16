@@ -485,7 +485,8 @@ function selectPDO_discaval_table ($registros) {
 	for ($i=0; $i < count($registros); $i++) {
 		echo "<tr>";
 		for ($j=0; $j < count($registros[$i]); $j++) { 
-			echo "<td>".$registros[$i][$j]."</td>";
+			if($j == 3) echo "<td><a href='avaliacao.php?codigo=".$registros[$i][2]."'>".$registros[$i][$j]."</a></td>";
+					else echo "<td>".$registros[$i][$j]."</td>";
 		}
 		echo "<td><a href='disciplinas_pdo.php?acao=delete_aval&avaliacao=".$registros[$i][2]."&disciplina=".$registros[$i][0]."'>X</a></td>";
 		echo "<td><a href='avaliacao.php?codigo=".$registros[$i][2]."'>Editar</a></td>";

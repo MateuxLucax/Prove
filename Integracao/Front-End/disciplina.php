@@ -2,10 +2,10 @@
 
 <!-- ####################### ( SÓ VISUALIZA ) ##############################  -->
 <?php
-    //session_start();
-    // echo $_SESSION['matricula'];
+	//session_start();
+	// echo $_SESSION['matricula'];
 
-    include 'valida_secao.php';
+	include 'valida_secao.php';
 	include 'disciplinas_pdo.php';
 	include 'conf.php';
 	include 'funcoes.php';
@@ -42,9 +42,9 @@
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="alunos">
 		<?php $reg_alun = selectPDO_discalun($codigo);
-            
-            
-            discalun_table($reg_alun); ?> (Substituir essa tabela, gerada por uma função, por uma tabela na própria pagina)
+			
+			
+			discalun_table($reg_alun); ?> (Substituir essa tabela, gerada por uma função, por uma tabela na própria pagina)
 		
 		<div id="adicao_aluno" style="border:1px solid black; ">
 			<p>Segure o CTRL para selecionar vários alunos</p>
@@ -59,14 +59,14 @@
 		<?php $reg_aval = selectPDO_discaval($codigo, 'disciplina');
 			discaval_table($reg_aval); ?>
 	</div>
-        
+		
 
 
 
 		<br/><br/><br/>
 		<a href="disciplina_editar.php?codigo=<?php echo $codigo; ?>">Editar disciplina</a>
 
-        
+		
 
 
 
@@ -74,61 +74,62 @@
 		<p><b>Erro:</b> A página não recebeu o código de uma disciplina</p>
 	<?php } ?>
 
-    <?php
-        function discalun_table ($registros) {
+	<?php
+		function discalun_table ($registros) {
 
-        }
+		}
 
-        function discaval_table ($registros) {
-            echo "<table class='highlight centered responsive-table' border='5'>
-            <thead class='black white-text'>
-            <tr>
-                <th>Matrícula</th>
-                <th>Nome</th>
-                <th>Código</th>
-                <th>Disciplina</th>
-                <th>Data início</th>
-                <th>Data fim</th>
-                <th>Peso</th>
-                <th>Embaralhar</th>
-            </tr>
-            </thead>
-            <tdbody>";
-        
-            for ($i=0; $i < count($registros); $i++) {
-                echo "<tr>";
-                for ($j=0; $j < count($registros[$i]); $j++) { 
-                    echo "<td>".$registros[$i][$j]."</td>";
-                }
-        
-                echo "<tr>";
-            }
-            echo "</tbody>
-            </table>";
-        }
+		function discaval_table ($registros) {
+			echo "<table class='highlight centered responsive-table' border='5'>
+			<thead class='black white-text'>
+				<tr>
+					<th>ID Disciplina</th>
+					<th>Disciplina</th>
+					<th>ID Avaliacao</th>
+					<th>Conteudo</th>
+					<th>Data_Inicio</th>
+					<th>Data_Fim</th>
+					<th>Peso</th>
+					<th>Embaralhar</th>
+				</tr>
+				</thead>
+			<tdbody>";
 
-        function discprof_table ($registros) {
-            echo "<table class='highlight centered responsive-table' border='5'>
-            <thead class='black white-text'>
-            <tr>
-                <th>Matrícula</th>
-                <th>Nome</th>
-                <th>Código</th>
-                <th>Disciplina</th>
-            </tr>
-            </thead>
-            <tdbody>";
-        
-            for ($i=0; $i < count($registros); $i++) {
-                echo "<tr>";
-                for ($j=0; $j < count($registros[$i]); $j++) { 
-                    echo "<td>".$registros[$i][$j]."</td>";
-                }
-                echo "<tr>";
-            }
-            echo "</tbody>
-            </table>";
-        }
-    ?>
+			for ($i=0; $i < count($registros); $i++) {
+				echo "<tr>";
+				for ($j=0; $j < count($registros[$i]); $j++) { 
+					if($j == 3) echo "<td><a href='avaliacao.php?codigo=".$registros[$i][2]."'>".$registros[$i][$j]."</a></td>";
+					else echo "<td>".$registros[$i][$j]."</td>";
+				}
+
+				echo "<tr>";
+			}
+			echo "</tbody>
+			</table>";
+		}
+
+		function discprof_table ($registros) {
+			echo "<table class='highlight centered responsive-table' border='5'>
+			<thead class='black white-text'>
+			<tr>
+				<th>Matrícula</th>
+				<th>Nome</th>
+				<th>Código</th>
+				<th>Disciplina</th>
+			</tr>
+			</thead>
+			<tdbody>";
+		
+			for ($i=0; $i < count($registros); $i++) {
+				echo "<tr>";
+				for ($j=0; $j < count($registros[$i]); $j++) { 
+					echo "<td>".$registros[$i][$j]."</td>";
+				}
+				echo "<tr>";
+			}
+			echo "</tbody>
+			</table>";
+		}
+	?>
 </body>
 </html>

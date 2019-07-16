@@ -60,15 +60,14 @@
 
 			<?php
 				$reg_aval = selectPDO_aval('Codigo_Avaliacao', $codigo);
-				selectPDO_aval_table($reg_aval);
 			?>
 
 			
 			
 			<div id="questoes">
 				<?php
-					$questoes = selectPDO_avalques($codigo);
-					selectPDO_avalques_table($questoes);
+					$questoes = selectPDO_avalques_all($codigo); //all = todas as questões, incluindo as alternativas e as questões discursivas
+					mostrar_questoes($questoes);					
 				?>
 			</div>
 

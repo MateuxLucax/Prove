@@ -388,3 +388,35 @@ INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
 ,('object.attribute = self.itself(self.relation){self.relation(self.itself = self.self)}',1,5)
 ,('um = leia("quanto é 1+1"); if(um != 2) { escreva("errou")}',1,5)
 ,('$php = false;',0,5);
+
+INSERT INTO Questoes_has_Avaliacoes VALUES
+(1,1)
+,(2,1)
+,(3,1)
+,(4,1)
+,(5,1);
+
+SELECT * FROM Avaliacoes;
+SELECT * FROM Tipo;
+SELECT * FROM Questao;
+SELECT * FROM Alternativa;
+SELECT * FROM Questoes_has_Avaliacoes;
+
+SELECT Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao, AL.Codigo_Alternativa, AL.Descricao, AL.Correta
+FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T, Alternativa AL
+WHERE T.Codigo_Tipo = Q.Tipo_Codigo
+AND AL.Questao_Codigo = Q.Codigo_Questao
+AND QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+AND A.Codigo_Avaliacao = 1;
+-- Esse select só pega as questões de alternativas. O SELECT abaixo, pois, é necessário para que sejam selecionadas todas as questões
+-- Deverão ser juntados os resultados desses dois SELECTS numa só matriz
+
+SELECT Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao
+FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T
+WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+AND T.Codigo_Tipo = Q.Tipo_Codigo
+AND Q.Tipo_Codigo != 2
+AND  Q.Tipo_Codigo != 3
+AND A.Codigo_Avaliacao = 1;

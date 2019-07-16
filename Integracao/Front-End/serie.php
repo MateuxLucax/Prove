@@ -15,7 +15,7 @@
 	$title = "Série: ";
 
 	if (isset($codigo)) {
-		$registros = selectPDO_serie('Codigo_Serie', $codigo); 
+		$registros = selectPDO_serie('Codigo_Serie', $codigo);
 		$descricao = $registros[0][1];
 		$title .= $descricao;
 	}

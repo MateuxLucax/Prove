@@ -282,4 +282,89 @@ function insertPDO_avalques() {
 
 	//header("location:avaliacao.php?codigo=".$);
 }
+
+function selectPDO_avalques_all($codigo) {
+	$sql = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao as "Tipo", AL.Codigo_Alternativa, AL.Descricao, AL.Correta
+	FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T, Alternativa AL
+	WHERE T.Codigo_Tipo = Q.Tipo_Codigo
+	AND AL.Questao_Codigo = Q.Codigo_Questao
+	AND QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+	AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+	AND A.Codigo_Avaliacao = '.$codigo;
+
+	$consulta = $GLOBALS['pdo']->query($sql);
+
+	$registros = array();
+
+	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+		$registros[$i] = array();
+		array_push($registros[$i], $linha['Codigo_Questao']);
+		array_push($registros[$i], $linha['Texto']);
+		array_push($registros[$i], $linha['Enunciado']);
+		array_push($registros[$i], $linha['Tipo']);
+		array_push($registros[$i], $linha['Codigo_Alternativa']);
+		array_push($registros[$i], $linha['Descricao']);
+		array_push($registros[$i], $linha['Correta']);
+	}
+
+
+	$sql = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao as "Tipo"
+	FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T
+	WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
+	AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
+	AND T.Codigo_Tipo = Q.Tipo_Codigo
+	AND Q.Tipo_Codigo != 2
+	AND  Q.Tipo_Codigo != 3
+	AND A.Codigo_Avaliacao = '.$codigo;
+
+	$consulta = $GLOBALS['pdo']->query($sql);
+
+	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+		$registros[$i] = array();
+		array_push($registros[$i], $linha['Codigo_Questao']);
+		array_push($registros[$i], $linha['Texto']);
+		array_push($registros[$i], $linha['Enunciado']);
+		array_push($registros[$i], $linha['Tipo']);
+	}
+
+	return $registros;
+
+}
+
+function mostrar_questoes($questoes) {
+	//$questoes deve ser o return da função "selectPDO_avalques_all"
+	echo "<table>";
+		echo "<thead>";
+			echo "<tr>
+				<th>ID Questão</th>
+				<th>Texto</th>
+				<th>Enunciado</th>
+				<th>Tipo</th>
+				<th>ID Alternativa</th>
+				<th>Alternativa</th>
+				<th>Correta</th>
+			</tr>";
+		echo "</thead>";
+
+		echo "<tbody>";
+		$IDques_anterior = '';
+			for ($i=0; $i < count($questoes); $i++) { 
+				echo "<tr>";
+				if($questoes[$i][0] == $IDques_anterior) {
+					echo "<td></td> <td></td> <td></td> <td></td>";
+				} else {
+					echo "<td>".$questoes[$i][0]."</td>";
+					echo "<td>".$questoes[$i][1]."</td>";
+					echo "<td>".$questoes[$i][2]."</td>";
+					echo "<td>".$questoes[$i][3]."</td>";
+				}
+				if(isset($questoes[$i][4])) echo "<td>".$questoes[$i][4]."</td>";
+				if(isset($questoes[$i][5])) echo "<td>".$questoes[$i][5]."</td>";
+				if(isset($questoes[$i][6])) echo "<td>".$questoes[$i][6]."</td>";
+				echo "</tr>";
+				$IDques_anterior = $questoes[$i][0];
+			}
+		echo "</tbody>";
+	echo "</table>";
+}
 ?>
