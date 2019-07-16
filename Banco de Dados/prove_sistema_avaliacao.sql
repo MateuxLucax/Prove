@@ -163,7 +163,7 @@ INSERT INTO Tipo VALUES (1, 'Discursiva'), (2, 'Única Escolha'), (3, 'Verdadeir
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Questao` (
   `Codigo_Questao` INT NOT NULL AUTO_INCREMENT,
-  `Enunciado` VARCHAR(100) NOT NULL,
+  `Enunciado` VARCHAR(100),
   `Texto` TEXT NULL,
   `Tipo_Codigo` INT NOT NULL,
   PRIMARY KEY (`Codigo_Questao`),
@@ -356,3 +356,35 @@ AND P.Matricula = '2031';
 select * FROM Questao;
 
 SELECT * FROM Disciplinas;
+
+SELECT * FROM Avaliacoes WHERE Codigo_Avaliacao = 1; 
+
+-- Inserção manual de questões para fazer a parte do aluno (respostas)
+SELECT * FROM Avaliacoes;
+SELECT * FROM Questao;
+SELECT * FROM Alternativa;
+SELECT * FROM Tipo;
+SELECT * FROM Questoes_has_Avaliacoes;
+
+
+INSERT INTO Questao (`Enunciado`, `Tipo_Codigo`) VALUES
+('O que é PHP?',1)
+,('Onde PHP é mais usado?',1)
+,('Qual dos seguintes trechos de código são de PHP?',2)
+,('Marque a alternativa INCORRETA sobre o PHP.',2)
+,('Marque os trechos de código que NÃO são de PHP',3);
+
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('if num = 1: print("hello, your number is "+ num)',0,3)
+,('$var = 1; $var++; echo $var;',1,3)
+,('cout << "trust me am php code";',0,3);
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('O PHP é uma linguagem de programação',0,4)
+,('O PHP funciona do lado do cliente',1,4)
+,('No PHP as variáveis são declaradas com $',0,4);
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('function return_number(num){ return self.num }',1,5)
+,('isphp = cin >> "is this a php code? >>; if (isphp) { cout << "yes, you are right"; }',1,5)
+,('object.attribute = self.itself(self.relation){self.relation(self.itself = self.self)}',1,5)
+,('um = leia("quanto é 1+1"); if(um != 2) { escreva("errou")}',1,5)
+,('$php = false;',0,5);
