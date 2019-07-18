@@ -336,8 +336,8 @@ function selectPDO_avalques_all($codigo) {
 
 function mostrar_questoes($questoes) {
 	//$questoes deve ser o return da função "selectPDO_avalques_all"
-		$ID_anterior = 0;
-		
+	$ID_anterior = 0;
+
 		echo "<div class='questao'>";
 			for ($i=0; $i < count($questoes); $i++) { 
 
