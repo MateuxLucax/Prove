@@ -67,7 +67,7 @@
 			<div id="questoes">
 				<?php
 					$questoes = selectPDO_avalques_all($codigo); //all = todas as questões, incluindo as alternativas e as questões discursivas
-					mostrar_questoes($questoes);					
+					mostrar_questoes($questoes); //função em avaliacao_pdo				
 				?>
 			</div>
 

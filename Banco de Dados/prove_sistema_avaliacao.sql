@@ -374,27 +374,29 @@ INSERT INTO Questao (`Enunciado`, `Tipo_Codigo`) VALUES
 ,('Marque a alternativa INCORRETA sobre o PHP.',2)
 ,('Marque os trechos de código que NÃO são de PHP',3);
 
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('if num = 1: print("hello, your number is "+ num)',0,3)
-,('$var = 1; $var++; echo $var;',1,3)
-,('cout << "trust me am php code";',0,3);
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('O PHP é uma linguagem de programação',0,4)
-,('O PHP funciona do lado do cliente',1,4)
-,('No PHP as variáveis são declaradas com $',0,4);
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('function return_number(num){ return self.num }',1,5)
-,('isphp = cin >> "is this a php code? >>; if (isphp) { cout << "yes, you are right"; }',1,5)
-,('object.attribute = self.itself(self.relation){self.relation(self.itself = self.self)}',1,5)
-,('um = leia("quanto é 1+1"); if(um != 2) { escreva("errou")}',1,5)
-,('$php = false;',0,5);
+SELECT * FROM Questao;
 
-INSERT INTO Questoes_has_Avaliacoes VALUES
-(1,1)
-,(2,1)
-,(3,1)
-,(4,1)
-,(5,1);
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('if num = 1: print("hello, your number is "+ num)',0,8)
+,('$var = 1; $var++; echo $var;',1,8)
+,('cout << "trust me am php code";',0,8);
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('O PHP é uma linguagem de programação',0,9)
+,('O PHP funciona do lado do cliente',1,9)
+,('No PHP as variáveis são declaradas com $',0,9);
+INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
+('function return_number(num){ return self.num }',1,10)
+,('isphp = cin >> "is this a php code? >>; if (isphp) { cout << "yes, you are right"; }',1,10)
+,('object.attribute = self.itself(self.relation){self.relation(self.itself = self.self)}',1,10)
+,('um = leia("quanto é 1+1"); if(um != 2) { escreva("errou")}',1,10)
+,('$php = false;',0,10);
+
+INSERT INTO Questoes_has_Avaliacoes (`Questoes_Codigo_Questao`, `Avaliacoes_Codigo_Avaliacao`) VALUES
+(6,1)
+,(7,1)
+,(8,1)
+,(9,1)
+,(10,1);
 
 SELECT * FROM Avaliacoes;
 SELECT * FROM Tipo;
@@ -402,7 +404,7 @@ SELECT * FROM Questao;
 SELECT * FROM Alternativa;
 SELECT * FROM Questoes_has_Avaliacoes;
 
-SELECT Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao, AL.Codigo_Alternativa, AL.Descricao, AL.Correta
+select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as 'Tipo', AL.Codigo_Alternativa, AL.Descricao, AL.Correta
 FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T, Alternativa AL
 WHERE T.Codigo_Tipo = Q.Tipo_Codigo
 AND AL.Questao_Codigo = Q.Codigo_Questao

@@ -108,10 +108,12 @@ function insertPDO_serie() {
 
 	//Determinar o código da série que acabou de ser registrada, para redirecionamento
 	$registros = selectPDO_serie();
+	$codigos = array();
 	for ($i=0; $i < count($registros); $i++) { 
-		$codigos = $registros[$i][0];
+		array_push($codigos, $registros[$i][0]);
 	}
-	$codigo = $registros[count($codigos)-1][0] + 1;
+
+	$codigo = $registros[count($codigos)-1][0];
 
 	header("location:serie.php?codigo=$codigo");
 }
