@@ -64,10 +64,12 @@
 			<div id="info-avaliacao">
 
 			<?php
-			echo "aluno: matricula:";
+				echo "<p><b>Aluno:</b> ".$_SESSION['nome']."</p>";
+				echo "<p><b>Matrícula:</b> ".$_SESSION['matricula']."</p>";
 				$embaralharTxt = $embaralhar == 1 ? 'Sim' : 'Não';
-				echo "<p style='color:lightgrey'>#".$cod_avaliacao."</p>";
-				echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
+				echo "<p><b>Conteúdo:</b> ".$conteudo."
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<small style='color:grey'>#".$cod_avaliacao."</small></p>";	
 				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
 				echo "<p><b>Peso: </b>".$peso."</p>";
 				echo "<p><b>Embaralhar questões:</b> ".$embaralharTxt."</p>";
