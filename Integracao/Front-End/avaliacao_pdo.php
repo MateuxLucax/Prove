@@ -32,6 +32,7 @@ if (!$acao == '') {
 
 $pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo -> exec("SET CHARACTER SET utf8");
 
 try {
 	switch ($acao) {
@@ -284,13 +285,13 @@ function insertPDO_avalques() {
 }
 
 function selectPDO_avalques_all($codigo) {
-	$sql = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as "Tipo", AL.Codigo_Alternativa, AL.Descricao, AL.Correta
+	$sql = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as \'Tipo\', AL.Codigo_Alternativa, AL.Descricao, AL.Correta
 		FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T, Alternativa AL
 		WHERE T.Codigo_Tipo = Q.Tipo_Codigo
 		AND AL.Questao_Codigo = Q.Codigo_Questao
 		AND QA.Questoes_Codigo_Questao = Q.Codigo_Questao
 		AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
-		AND A.Codigo_Avaliacao = '.$codigo.';';
+		AND A.Codigo_Avaliacao = '.$codigo;
 
 	$consulta = $GLOBALS['pdo']->query($sql);
 
@@ -298,6 +299,7 @@ function selectPDO_avalques_all($codigo) {
 
 	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 		$registros[$i] = array();
+
 		array_push($registros[$i], $linha['Codigo_Questao']);
 		array_push($registros[$i], $linha['Texto']);
 		array_push($registros[$i], $linha['Enunciado']);
@@ -309,7 +311,7 @@ function selectPDO_avalques_all($codigo) {
 	}
 
 
-	$sql2 = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as "Tipo"
+	$sql = 'select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as "Tipo"
 	FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T
 	WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
 	AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
@@ -318,78 +320,24 @@ function selectPDO_avalques_all($codigo) {
 	AND  Q.Tipo_Codigo != 3
 	AND A.Codigo_Avaliacao = '.$codigo;
 
-	$consulta2 = $GLOBALS['pdo']->query($sql2);
+	$consulta = $GLOBALS['pdo']->query($sql);
 
 	# $i = (count($registros)-1) !!!!! não pode ser $i = 0 porque dessa forma iria sobrepor o que foi registrado na consulta anterior
-	for ($i = (count($registros)-1); $linha2 = $consulta2->fetch(PDO::FETCH_ASSOC); $i++) {
+	for ($i = (count($registros)); $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 		$registros[$i] = array();
-		array_push($registros[$i], $linha2['Codigo_Questao']);
-		array_push($registros[$i], $linha2['Texto']);
-		array_push($registros[$i], $linha2['Enunciado']);
-		array_push($registros[$i], $linha2['Codigo_Tipo']);
-		array_push($registros[$i], $linha2['Tipo']);
+		array_push($registros[$i], $linha['Codigo_Questao']);
+		array_push($registros[$i], $linha['Texto']);
+		array_push($registros[$i], $linha['Enunciado']);
+		array_push($registros[$i], $linha['Codigo_Tipo']);
+		array_push($registros[$i], $linha['Tipo']);
 	}
 
 	return $registros;
 
 }
 
-function mostrar_questoes($questoes) {
-	//$questoes deve ser o return da função "selectPDO_avalques_all"
-	$ID_anterior = 0;
-
-		echo "<div class='questao'>";
-			for ($i=0; $i < count($questoes); $i++) { 
-
-				if($questoes[$i][0] != $ID_anterior) {
-					if($i >= 1) {
-						echo "</form><form class='card-panel container' action='' method='post'>";
-					} else {
-						echo "<form class='card-panel container'>";
-					}
-
-					echo "<small style='color:grey'>#".$questoes[$i][0]."</small>";
-
-					if(isset($questoes[$i][1])) echo "<p>".$questoes[$i][1]."</p>";
-
-					echo "<p><b>".$questoes[$i][2]."</b></p>";
-
-					if($questoes[$i][3] != 1) {	
-						if($questoes[$i][3] == 2) {
-							$tipo = 'radio';
-						} else if ($questoes[$i][3] == 3) {
-							$tipo = 'checkbox';
-						}
-
-						echo "<p>
-							<label>
-								<input type='".$tipo."' name='questao".$questoes[$i][0]."alt'/>
-								<span>".$questoes[$i][6]."</span>
-							</label>
-						</p>";
-					} else {
-						echo "<textarea class='materialize-textarea' name='questao".$questoes[$i][0]."txt'></textarea>";
-					}
-
-				} else {
-					if($questoes[$i][3] == 2) {
-						$tipo = 'radio';
-					} else if ($questoes[$i][3] == 3) {
-						$tipo = 'checkbox';
-					}
-
-					echo "<p>
-						<label>
-							<input type='".$tipo."' name='questao".$questoes[$i][0]."alt'/>
-							<span>".$questoes[$i][6]."</span>
-						</label>
-					</p>";
-
-				}
-
-				$ID_anterior = $questoes[$i][0];
-
-			}
-	echo "</div>";
+function gerar_formulario_questoes($questoes, $cod_avaliacao, $matircula) {
+	# ...
 }
+
 ?>

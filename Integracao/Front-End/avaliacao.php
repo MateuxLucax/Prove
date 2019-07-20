@@ -58,16 +58,39 @@
 		
 		<?php if($codigo != '') { ?>
 
-			<?php
-				$reg_aval = selectPDO_aval('Codigo_Avaliacao', $codigo);
-			?>
+			<?php if($_SESSION['tipo'] == 'aluno') {
+				$reg_disc_alun = selectPDO_discalun($cod_disciplina);
+				$alunos_na_disciplina = array();
+				for ($i=0; $i < count($reg_disc_alun); $i++) { 
+					array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
+				}
+				if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
+					?>
+					<form action="avaliacao_responder.php" method="post">
+						<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
+						<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
+						<button type="submit" class="btn waves-effect waves-light">Responder</button>
+					</form>
+					<?php
+				}
+			} ?>
 
+			<div id="info-avaliacao">
+			<?php
+				echo "<p style='color:lightgrey'>#".$cod_avaliacao."</p>";
+				echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
+				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
+				echo "<p><b>Peso: </b>".$peso."</p>";
+				echo "<p><b>Embaralhar questões:</b> ".$embaralhar."</p>";
+			?>
+			</div>
 			
+			<hr/>			
 			
 			<div id="questoes">
 				<?php
 					$questoes = selectPDO_avalques_all($codigo); //all = todas as questões, incluindo as alternativas e as questões discursivas
-					mostrar_questoes($questoes); //função em avaliacao_pdo				
+					mostrar_questoes($questoes); //função em funcoes
 				?>
 			</div>
 

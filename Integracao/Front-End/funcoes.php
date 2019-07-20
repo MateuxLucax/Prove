@@ -60,4 +60,71 @@ function gerarSelectMultiple($tabela, $selectName, $value, $texto) {
 	}
 	echo "</select>";
 }
+
+
+function mostrar_questoes($questoes) {
+	//$questoes deve ser o return da função "selectPDO_avalques_all"
+	$ID_anterior = 0;
+
+	/*for ($i=0; $i < count($questoes); $i++) { 
+		for ($j=0; $j < count($questoes[$i]); $j++) { 
+			echo $questoes[$i][$j]."---";
+		}
+		echo "<br/><br/>";
+	}*/
+
+		echo "<div class='questao'>";
+			for ($i=0; $i < count($questoes); $i++) { 
+
+				if($questoes[$i][0] != $ID_anterior) {
+					if($i >= 1) {
+						echo "</form><form class='card-panel container' action='' method='post'>";
+					} else {
+						echo "<form class='card-panel container'>";
+					}
+
+					echo "<small style='color:grey'>#".$questoes[$i][0]."</small>";
+
+					if(isset($questoes[$i][1])) echo "<p>".$questoes[$i][1]."</p>";
+
+					echo "<p><b>".$questoes[$i][2]."</b></p>";
+
+					if($questoes[$i][3] != 1) {	
+						if($questoes[$i][3] == 2) {
+							$tipo = 'radio';
+						} else if ($questoes[$i][3] == 3) {
+							$tipo = 'checkbox';
+						}
+
+						echo "<p>
+							<label>
+								<input type='".$tipo."' name='questao".$questoes[$i][0]."alt' disabled/>
+								<span>".$questoes[$i][6]."</span>
+							</label>
+						</p>";
+					} else {
+						echo "<textarea disabled class='materialize-textarea' name='questao".$questoes[$i][0]."txt'></textarea>";
+					}
+
+				} else {
+					if($questoes[$i][3] == 2) {
+						$tipo = 'radio';
+					} else if ($questoes[$i][3] == 3) {
+						$tipo = 'checkbox';
+					}
+
+					echo "<p>
+						<label>
+							<input type='".$tipo."' name='questao".$questoes[$i][0]."alt' disabled/>
+							<span>".$questoes[$i][6]."</span>
+						</label>
+					</p>";
+
+				}
+
+				$ID_anterior = $questoes[$i][0];
+
+			}
+	echo "</div>";
+}
 ?>

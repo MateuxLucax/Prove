@@ -38,16 +38,21 @@
 
 			<?php } ?>		
 
-			<?php if($_SESSION['tipo'] == 'professor') {
-				$disciplinas = selectDisciplinas($_SESSION['matricula']);
+			<?php if($_SESSION['tipo'] == 'professor' || $_SESSION['tipo'] == 'aluno') {
+				
+				$disciplinas = selectDisciplinas($_SESSION['matricula'], $_SESSION['tipo']);
 				//var_dump($disciplinas);
 				$contador=count($disciplinas);
-				?>
-				<div class="row">
-					<a href="serie_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Série</h4></div></a>
-					<a href="disciplina_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Disciplina</h4></div></a>
-					<a href="avaliacao_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Avaliação</h4></div></a>
-				</div>
+					
+
+				if($_SESSION['tipo'] == 'professor') {?>
+					<div class="row">
+						<a href="serie_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Série</h4></div></a>
+						<a href="disciplina_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Disciplina</h4></div></a>
+						<a href="avaliacao_cadastro.php"><div class="card-panel teal white-text col s-4"><h6>Criar Avaliação</h4></div></a>
+					</div>
+				<?php } ?>
+
 				<ul class="collapsible">
 					<?php
 						if (isset($disciplinas) && $contador > 0) {
@@ -62,6 +67,7 @@
 	      							else $contador_aval = count($avaliacoes);
 
 	      							echo "<div class=\"collection\">";
+	      								echo "<a class=\"collection-item\" href='disciplina.php?codigo=".$disciplinas[$i][0]."'>Ver disciplina</a>";
 		      							for ($j=0; $j < $contador_aval; $j++) { ?>
 		      								<a href='avaliacao.php?codigo=<?php echo $avaliacoes[$j][2]; ?>' class="collection-item">
 		      									<?php echo $avaliacoes[$j][5].' — '.$avaliacoes[$j][3]; ?>
@@ -80,7 +86,7 @@
 
 
 	      					</div>
-	    					</li>
+	    				</li>
 					<?php } }
 					?>
 				</ul>
@@ -108,15 +114,22 @@
 	<script src="assets/js/init.js"></script>
 
 	<?php
-		function selectDisciplinas($matricula) {
+		function selectDisciplinas($matricula,$tipo) {
 			$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			try {
-				$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_professores'].' P, '.$GLOBALS['tb_disciplinas'].' D, 
-				'.$GLOBALS['tb_disc_prof'].' PD where PD.Professores_Matricula = P.Matricula
-				AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
-				AND P.Matricula = \''.$matricula.'\' ';
+				if($tipo == 'aluno') {
+					$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_alunos'].' A, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_alun'].' AD
+					WHERE AD.Alunos_Matricula = A.Matricula
+					AND AD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
+					AND A.Matricula = \''.$matricula.'\' ';
+				} else {
+					$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_professores'].' P, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_prof'].' PD
+					WHERE PD.Professores_Matricula = P.Matricula
+					AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
+					AND P.Matricula = \''.$matricula.'\' ';
+				}
 
 				//var_dump($sql); echo "<br>";
 		

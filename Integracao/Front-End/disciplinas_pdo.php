@@ -440,7 +440,7 @@ function selectPDO_discaval ($codigo, $tabela /* o valor deve ser ou avaliacao o
 		}
 		$sql .= " ORDER BY a.Data_Fim";
 
-		//var_dump($sql);
+		//var_dump($sql); echo "<br/>";
 
 		$consulta = $GLOBALS['pdo']->query($sql);
 

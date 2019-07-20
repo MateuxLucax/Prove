@@ -76,7 +76,27 @@
 
 	<?php
 		function discalun_table ($registros) {
+			echo "<table class='highlight centered responsive-table' border='5'>
+			<thead class='black white-text'>
+			<tr>
+				<th>Matrícula</th>
+				<th>Nome</th>
+				<th>Código</th>
+				<th>Disciplina</th>
+			</tr>
+			</thead>
+			<tdbody>";
 
+			for ($i=0; $i < count($registros); $i++) {
+				echo "<tr>";
+				for ($j=0; $j < count($registros[$i]); $j++) { 
+					echo "<td>".$registros[$i][$j]."</td>";
+				}
+
+				echo "<tr>";
+			}
+			echo "</tbody>
+			</table>";
 		}
 
 		function discaval_table ($registros) {
