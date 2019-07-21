@@ -36,6 +36,10 @@
 	} else {
 		$title = '';
 	}
+
+	if (isset($_POST['ultima'])) { $ultima = $_POST['ultima']; }
+	else if (isset($_GET['ultima'])) { $ultima = $_GET['ultima']; }
+	else { $ultima = 0; }
 ?>
 <html>
 <head>
@@ -79,10 +83,7 @@
 
 			<div id="formulario-questoes">
 				<?php
-					$questoes = selectPDO_avalques_all($codigo); 
-					if ($embaralhar == 1) { shuffle($questoes); }
-
-					gerar_formulario_questoes($questoes, $cod_avaliacao, $_SESSION['matricula']);
+					gerar_formulario_questoes($cod_avaliacao, $_SESSION['matricula'], $ultima);
 				?>
 			</div>
 		</div>
@@ -90,5 +91,10 @@
 
 	<footer>
 	</footer>
+
+	<!--  Scripts-->
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
+	<script src="assets/js/materialize.min.js"></script>
+	<script src="assets/js/init.js"></script>
 </body>
 </html>

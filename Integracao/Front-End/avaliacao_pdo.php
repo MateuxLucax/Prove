@@ -336,8 +336,8 @@ function selectPDO_avalques_all($codigo) {
 
 }
 
-function gerar_formulario_questoes($questoes, $cod_avaliacao, $matircula) {
-	# ...
+function gerar_formulario_questoes($cod_avaliacao, $matricula, $ultima) {
+	
 }
 
 ?>
