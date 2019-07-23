@@ -36,10 +36,6 @@
 	} else {
 		$title = '';
 	}
-
-	if (isset($_POST['ultima'])) { $ultima = $_POST['ultima']; }
-	else if (isset($_GET['ultima'])) { $ultima = $_GET['ultima']; }
-	else { $ultima = 0; }
 ?>
 <html>
 <head>
@@ -83,7 +79,7 @@
 
 			<div id="formulario-questoes">
 				<?php
-					gerar_formulario_questoes($cod_avaliacao, $_SESSION['matricula'], $ultima);
+					gerar_formulario_questoes($cod_avaliacao, $embaralhar, $_SESSION['matricula']); // função em avaliacao_pdo.php
 				?>
 			</div>
 		</div>

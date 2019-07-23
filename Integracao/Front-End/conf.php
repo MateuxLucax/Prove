@@ -14,9 +14,10 @@
 	$tb_questoes = 'Questao';
 	$tb_aval_ques = 'Questoes_has_Avaliacoes';
 	$tb_tipo = 'Tipo';
+	$tb_alternativa = 'Alternativa';
 	//...
 
-	// Matriz que relaciona tabelas do banco de dados com as classes
+	/*// Matriz que relaciona tabelas do banco de dados com as classes
 	$matrizClassesTb = array(
 		array('Aluno',$tb_alunos),
 		array('Professor',$tb_professores),
@@ -26,5 +27,5 @@
 		array('Tipo',$tb_tipo),
 		array('Questao',$tb_questoes)
 		//...
-	);
+	);*/
 ?>
