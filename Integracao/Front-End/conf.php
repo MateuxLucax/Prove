@@ -15,6 +15,8 @@
 	$tb_aval_ques = 'Questoes_has_Avaliacoes';
 	$tb_tipo = 'Tipo';
 	$tb_alternativa = 'Alternativa';
+	$tb_res_discursiva = 'Discursiva';
+	$tb_res_alternativa = 'Resposta_Alternativa';
 	//...
 
 	/*// Matriz que relaciona tabelas do banco de dados com as classes

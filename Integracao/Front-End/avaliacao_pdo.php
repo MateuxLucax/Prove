@@ -364,6 +364,7 @@ function gerar_formulario_questoes($cod_avaliacao, $embaralhar, $matricula) {
 			echo "<form action='resposta_pdo.php' method='post'>";
 				echo "<input type='hidden' name='cod_avaliacao' value='".$cod_avaliacao."'>";
 				echo "<input type='hidden' name='matricula' value='".$matricula."'>";
+				echo "<input type='hidden' name='cod_questao' value='".$questoes[$i][0]."'>";
 
 				if($questoes[$i][3] == 1) {
 
@@ -375,14 +376,18 @@ function gerar_formulario_questoes($cod_avaliacao, $embaralhar, $matricula) {
 					$tipo_input = $questoes[$i][3] == 2 ? 'radio' : 'checkbox';
 
 					echo "<div class='alternativas'>";
+					$cnt = 0;
 					for ($j=0; $j < count($alternativas); $j++) { 
 						echo "<p> <label>";
 							echo "<input type='".$tipo_input."'
-								name='resposta_q".$questoes[$i][0]."'
-								value='1'>";
+								name='resposta_q".$questoes[$i][0]."[]'
+								value='".$j."'>";
 							echo "<span>".$alternativas[$j][1]."</span>";
 						echo "</label> </p>";
+
+						$cnt++;
 					}
+					echo "<input type='hidden' name='noAlternativas' value='".$cnt."'>";
 					echo "</div>";
 				}
 

@@ -402,7 +402,7 @@ INSERT INTO Questoes_has_Avaliacoes (`Questoes_Codigo_Questao`, `Avaliacoes_Codi
 SELECT * FROM Avaliacoes;
 SELECT * FROM Tipo;
 SELECT * FROM Questao;
-	SELECT * FROM Alternativa;
+SELECT * FROM Alternativa;
 SELECT * FROM Questoes_has_Avaliacoes;
 
 select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as 'Tipo', AL.Codigo_Alternativa, AL.Descricao, AL.Correta
@@ -425,30 +425,3 @@ AND  Q.Tipo_Codigo != 3
 AND A.Codigo_Avaliacao = 1;
 
 SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

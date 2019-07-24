@@ -14,9 +14,7 @@
 
 	//echo "Código=".$codigo."=";
 
-	if (isset($_POST['matricula'])) { $matricula = $_POST['matricula']; }
-	else if (isset($_GET['matricula'])) { $matricula = $_GET['matricula']; }
-	else { $matricula = ''; }
+	$matricula = $_SESSION['matricula'];
 
 	$registros = selectPDO_discaval($codigo, 'avaliacao');
 
