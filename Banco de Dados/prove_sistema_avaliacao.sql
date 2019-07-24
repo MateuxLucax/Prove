@@ -360,12 +360,13 @@ SELECT * FROM Disciplinas;
 SELECT * FROM Avaliacoes WHERE Codigo_Avaliacao = 1; 
 
 -- Inserção manual de questões para fazer a parte do aluno (respostas)
-SELECT * FROM Avaliacoes;
-SELECT * FROM Questao;
-SELECT * FROM Alternativa;
-SELECT * FROM Tipo;
-SELECT * FROM Questoes_has_Avaliacoes;
+-- SELECT * FROM Avaliacoes;
+-- SELECT * FROM Questao;
+-- SELECT * FROM Alternativa;
+-- SELECT * FROM Tipo;
+-- SELECT * FROM Questoes_has_Avaliacoes;
 
+-- OBS: Antes precisa ter uma avaliação registrada
 
 INSERT INTO Questao (`Enunciado`, `Tipo_Codigo`) VALUES
 ('O que é PHP?',1)
@@ -423,4 +424,31 @@ AND Q.Tipo_Codigo != 2
 AND  Q.Tipo_Codigo != 3
 AND A.Codigo_Avaliacao = 1;
 
-  SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND() 
+SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
