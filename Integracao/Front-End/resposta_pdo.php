@@ -29,6 +29,8 @@ var_dump($res);
 
 echo "<a href='avaliacao_responder.php?codigo=".$avaliacao."'>Voltar</a>";
 
+echo "<b><br/><br/>Importante: o sistema não deve manter mais de uma resposta para uma questão de uma avaliação por aluno. Deve permitir, no máximo, que o aluno mude sua resposta (comando update), e isso apenas entre o intervalo de tempo data início-data fim.<br/><br/></b>";
+
 #### Construção dos objetos ####################################################################
 
 if ($acao == 'addResAlternativa') {
@@ -42,7 +44,7 @@ if ($acao == 'addResAlternativa') {
 		}
 	}
 
-	echo "<br/><br/>Array de resposa (alternativa [1: marcada/verdadeira -ou- 0: não marcada/falsa])<br/>"; var_dump($resposta_alt); echo "<br/><br/>";
+	echo "<br/>Array de resposa (alternativa [1: marcada/verdadeira -ou- 0: não marcada/falsa])<br/>"; var_dump($resposta_alt); echo "<br/><br/>";
 
 	for ($i=0; $i < count($resposta_alt); $i++) { 
 		$resposta_alt_obj[$i] = new Resposta1Alternativa;
@@ -104,7 +106,7 @@ function insertPDO_resDisc() {
 }
 
 function insertPDO_resAlt() {
-
+	
 }
 
 ?>
