@@ -263,11 +263,6 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Resposta_Alternativa` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DELETE FROM Resposta_Alternativa WHERE Codigo_Resposta > 0;
-SELECT * FROM Resposta_Alternativa;
-
-SELECT Codigo_Resposta FROM Resposta_Alternativa WHERE Alunos_Matricula = 201742;
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
