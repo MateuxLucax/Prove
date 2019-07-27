@@ -24,12 +24,19 @@ echo "Matrícula do aluno: ".$matricula."<br/>";
 $noAlternativas = $_POST['noAlternativas'];
 echo "Número de alternativas: ".$noAlternativas."<br/>";
 
+$cod_alternativa = $_POST['cod_alternativa'];
+echo "Código das alternativas: ";
+for ($i=0; $i < count($cod_alternativa); $i++) { 
+	echo $cod_alternativa[$i].", ";
+}
+echo "<br/>";
+
 $res = $_POST[$nome_resposta];
 var_dump($res);
 
 echo "<a href='avaliacao_responder.php?codigo=".$avaliacao."'>Voltar</a>";
 
-echo "<b><br/><br/>Importante: o sistema não deve manter mais de uma resposta para uma questão de uma avaliação por aluno. Deve permitir, no máximo, que o aluno mude sua resposta (comando update), e isso apenas entre o intervalo de tempo data início-data fim.<br/><br/></b>";
+echo "<b><br/><br/>Importante: o sistema não deve manter mais de uma resposta para determinada questão por aluno. Deve permitir, no máximo, que o aluno mude sua resposta (comando update), e isso apenas entre o intervalo de tempo <i>data início</i>-<i>data fim</i>.<br/><br/></b>";
 
 #### Construção dos objetos ####################################################################
 
@@ -44,7 +51,7 @@ if ($acao == 'addResAlternativa') {
 		}
 	}
 
-	echo "<br/>Array de resposa (alternativa [1: marcada/verdadeira -ou- 0: não marcada/falsa])<br/>"; var_dump($resposta_alt); echo "<br/><br/>";
+	echo "<br/>Array de resposta (alternativa 1: marcada/verdadeira ou 0: não marcada/falsa)<br/>"; var_dump($resposta_alt); echo "<br/><br/>";
 
 	for ($i=0; $i < count($resposta_alt); $i++) { 
 		$resposta_alt_obj[$i] = new Resposta1Alternativa;
@@ -106,7 +113,44 @@ function insertPDO_resDisc() {
 }
 
 function insertPDO_resAlt() {
+
+
+
+
+	# !! RESTRIÇÃO: O aluno não pode ter mais de uma resposta para cada questão
+	# if () {} else { updatePDO_resAlt }
+	# tb falta fazer um updatePDO_resDisc
+
+
 	
+
+	$resposta = $GLOBALS['resposta_ques']->getRespostas();
+	for ($i=0; $i < count($resposta); $i++) { 
+		$resposta[$i] = $resposta[$i]->getResposta();
+	}
+
+	//var_dump($resposta);
+
+	$cnt_linhas = 0;
+	for ($i=0; $i < count($resposta); $i++) { 
+		$sql = "INSERT INTO ".$GLOBALS['tb_res_alternativa']." ";
+		$sql .= " (Alternativa_Alternativa_Codigo, Alunos_Matricula) ";
+		$sql .= " VALUES (:Alternativa, :Matricula) ";
+
+		$stmt = $GLOBALS['pdo']->prepare($sql);
+
+		$stmt->bindParam(":Alternativa", $alternativa);
+		$stmt->bindParam(":Matricula", $matricula);
+
+		$alternativa = $GLOBALS['cod_alternativa'][$i];
+		$matricula = $GLOBALS['matricula'];
+
+		$stmt->execute();
+
+		echo "Linhas afetadas: ".$stmt->rowCount();
+		if($stmt->rowCount() == 1) $cnt_linhas++;
+		echo " - Ao total: ".$cnt_linhas."<br/>";
+	}
 }
 
 ?>
