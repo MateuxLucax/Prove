@@ -19,6 +19,8 @@
 	$tb_res_alternativa = 'Resposta_Alternativa';
 	//...
 
+
+
 	/*// Matriz que relaciona tabelas do banco de dados com as classes
 	$matrizClassesTb = array(
 		array('Aluno',$tb_alunos),
