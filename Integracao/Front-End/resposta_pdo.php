@@ -21,15 +21,19 @@ echo "Resposta (nome input): ".$nome_resposta."<br/>";
 $matricula = $_POST['matricula'];
 echo "Matrícula do aluno: ".$matricula."<br/>";
 
-$noAlternativas = $_POST['noAlternativas'];
-echo "Número de alternativas: ".$noAlternativas."<br/>";
-
-$cod_alternativa = $_POST['cod_alternativa'];
-echo "Código das alternativas: ";
-for ($i=0; $i < count($cod_alternativa); $i++) { 
-	echo $cod_alternativa[$i].", ";
+if (isset($_POST['noAlternativas'])) {
+	$noAlternativas = $_POST['noAlternativas'];
+	echo "Número de alternativas: ".$noAlternativas."<br/>";
 }
-echo "<br/>";
+
+if(isset($_POST['cod_alternativa'])) {
+	$cod_alternativa = $_POST['cod_alternativa'];
+	echo "Código das alternativas: ";
+	for ($i=0; $i < count($cod_alternativa); $i++) { 
+		echo $cod_alternativa[$i].", ";
+	}
+	echo "<br/>";
+}
 
 $res = $_POST[$nome_resposta];
 var_dump($res);
@@ -91,10 +95,20 @@ try {
 
 #### Funções ###################################################################################
 
-function insertPDO_resDisc() {
-	//echo $GLOBALS['resposta_disc'];
+########################################################################################
+#### Funções para respostas de questões discursivas
 
-	$sql = "INSERT INTO ".$GLOBALS['tb_res_discursiva']." (Resposta, Alunos_Matricula, Questao_Codigo) VALUES (:Resposta, :Matricula, :Questao)";
+function insertPDO_resDisc() {
+	
+	$alunoJaRespondeu = jaRespondeu_disc();
+
+	if($alunoJaRespondeu) {
+		$sql = "UPDATE ".$GLOBALS['tb_res_discursiva']." SET Resposta = :Resposta WHERE Questao_Codigo = :Questao AND Questao_Codigo = :Questao";
+		echo "<b><i>A resposta será <u>atualizada</u></i></b><br/>";
+	} else {
+		$sql = "INSERT INTO ".$GLOBALS['tb_res_discursiva']." (Resposta, Alunos_Matricula, Questao_Codigo) VALUES (:Resposta, :Matricula, :Questao)";
+		echo "<b><i>A resposta será <u>registrada</u></i></b><br/>";
+	}
 
 	$stmt = $GLOBALS['pdo']->prepare($sql);
 
@@ -109,47 +123,109 @@ function insertPDO_resDisc() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
-
 }
+
+function jaRespondeu_disc() {
+	$sql = "SELECT Questao_Codigo FROM ".$GLOBALS['tb_res_discursiva']." WHERE Alunos_Matricula = ".$GLOBALS['matricula'];
+
+	$consulta = $GLOBALS['pdo']->query($sql);
+
+	$qRespondidas = array();
+
+	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+		array_push($qRespondidas, $linha['Questao_Codigo']);
+	}
+
+	if (in_array($GLOBALS['questao'], $qRespondidas)) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+########################################################################################
+#### Funções para respostas de questões alternativas
 
 function insertPDO_resAlt() {
 
-
-
-
-	# !! RESTRIÇÃO: O aluno não pode ter mais de uma resposta para cada questão
-	# if () {} else { updatePDO_resAlt }
-	# tb falta fazer um updatePDO_resDisc
-
-
-	
-
 	$resposta = $GLOBALS['resposta_ques']->getRespostas();
-	for ($i=0; $i < count($resposta); $i++) { 
-		$resposta[$i] = $resposta[$i]->getResposta();
+		for ($i=0; $i < count($resposta); $i++) { 
+			$resposta[$i] = $resposta[$i]->getResposta();
+		}
+
+	$alunoJaRespondeu = jaRespondeu_alt();
+	if ($alunoJaRespondeu) {
+
+		echo "<b><i>A resposta será <u>atualizada</u></i></b><br/>";
+		$cnt_linhas = 0;
+		for ($i=0; $i < count($resposta); $i++) { 
+			$sql = "UPDATE ".$GLOBALS['tb_res_alternativa']." ";
+			$sql .= " SET Resposta = :Resposta ";
+			$sql .= " WHERE Alunos_Matricula = :Matricula ";
+			$sql .= " AND Alternativa_Alternativa_Codigo = :Alternativa";
+
+			$stmt = $GLOBALS['pdo']->prepare($sql);
+
+			$stmt->bindParam(":Resposta", $res2);
+			$stmt->bindParam(":Alternativa", $alternativa);
+			$stmt->bindParam(":Matricula", $matricula);
+
+			$res2 = $resposta[$i];
+			$alternativa = $GLOBALS['cod_alternativa'][$i];
+			$matricula = $GLOBALS['matricula'];
+
+			$stmt->execute();
+
+			echo "Linhas afetadas: ".$stmt->rowCount();
+			if($stmt->rowCount() == 1) $cnt_linhas++;
+			echo " - Ao total: ".$cnt_linhas."<br/>";
+		}
+		
+
+	} else {
+
+		echo "<b><i>A resposta será <u>registrada</u></i></b><br/>";
+		$cnt_linhas = 0;
+		for ($i=0; $i < count($resposta); $i++) { 
+			$sql = "INSERT INTO ".$GLOBALS['tb_res_alternativa']." ";
+			$sql .= " (Resposta, Alternativa_Alternativa_Codigo, Alunos_Matricula) ";
+			$sql .= " VALUES (:Resposta, :Alternativa, :Matricula) ";
+
+			$stmt = $GLOBALS['pdo']->prepare($sql);
+
+			$stmt->bindParam(":Resposta", $res2);
+			$stmt->bindParam(":Alternativa", $alternativa);
+			$stmt->bindParam(":Matricula", $matricula);
+
+			$res2 = $resposta[$i];
+			$alternativa = $GLOBALS['cod_alternativa'][$i];
+			$matricula = $GLOBALS['matricula'];
+
+			$stmt->execute();
+
+			echo "Linhas afetadas: ".$stmt->rowCount();
+			if($stmt->rowCount() == 1) $cnt_linhas++;
+			echo " - Ao total: ".$cnt_linhas."<br/>";
+		}
+
+	}
+}
+
+function jaRespondeu_alt() {
+	$sql = "SELECT Alternativa_Alternativa_Codigo FROM ".$GLOBALS['tb_res_alternativa']." WHERE Alunos_Matricula = ".$GLOBALS['matricula'];
+
+	$consulta = $GLOBALS['pdo']->query($sql);
+
+	$altRespondidas = array();
+
+	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+		array_push($altRespondidas, $linha['Alternativa_Alternativa_Codigo']);
 	}
 
-	//var_dump($resposta);
-
-	$cnt_linhas = 0;
-	for ($i=0; $i < count($resposta); $i++) { 
-		$sql = "INSERT INTO ".$GLOBALS['tb_res_alternativa']." ";
-		$sql .= " (Alternativa_Alternativa_Codigo, Alunos_Matricula) ";
-		$sql .= " VALUES (:Alternativa, :Matricula) ";
-
-		$stmt = $GLOBALS['pdo']->prepare($sql);
-
-		$stmt->bindParam(":Alternativa", $alternativa);
-		$stmt->bindParam(":Matricula", $matricula);
-
-		$alternativa = $GLOBALS['cod_alternativa'][$i];
-		$matricula = $GLOBALS['matricula'];
-
-		$stmt->execute();
-
-		echo "Linhas afetadas: ".$stmt->rowCount();
-		if($stmt->rowCount() == 1) $cnt_linhas++;
-		echo " - Ao total: ".$cnt_linhas."<br/>";
+	if (in_array($GLOBALS['cod_alternativa'][0], $altRespondidas)) {
+		return 1;
+	} else {
+		return 0;
 	}
 }
 

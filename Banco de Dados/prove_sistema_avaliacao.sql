@@ -239,7 +239,6 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Discursiva` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Resposta_Alternativa`
 -- -----------------------------------------------------
@@ -247,6 +246,7 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Resposta_Alternativa` (
   `Codigo_Resposta` INT NOT NULL AUTO_INCREMENT,
   `Alternativa_Alternativa_Codigo` INT NOT NULL,
   `Alunos_Matricula` VARCHAR(15) NOT NULL,
+  `Resposta` TINYINT NOT NULL,
   PRIMARY KEY (`Codigo_Resposta`),
   UNIQUE INDEX `idResposta_UNIQUE` (`Codigo_Resposta` ASC),
   INDEX `fk_Resposta_Alternativa1_idx` (`Alternativa_Alternativa_Codigo` ASC),
@@ -263,6 +263,10 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Resposta_Alternativa` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+DELETE FROM Resposta_Alternativa WHERE Codigo_Resposta > 0;
+SELECT * FROM Resposta_Alternativa;
+
+SELECT Codigo_Resposta FROM Resposta_Alternativa WHERE Alunos_Matricula = 201742;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
