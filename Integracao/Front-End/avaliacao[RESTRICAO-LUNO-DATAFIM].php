@@ -55,35 +55,29 @@
 </head>
 <body>
 	<div class="container">
-		<?php
-			function 
-		?>
-		<?php if($codigo != '') { ?>
 
+		<?php if($codigo != '') { 
+
+            if(aval_ainda_disponivel()) {
+                 if($_SESSION['tipo'] == 'aluno') {
+                    $reg_disc_alun = selectPDO_discalun($cod_disciplina);
+                    $alunos_na_disciplina = array();
+                    for ($i=0; $i < count($reg_disc_alun); $i++) { 
+                        array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
+                    }
+                    if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
+                        ?>
+                        <form action="avaliacao_responder.php" method="post">
+                            <input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
+                            <input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
+                            <button type="submit" class="btn waves-effect waves-light">Responder</button>
+                        </form>
+                        <?php
+                    }
+                }    
+            }
+        ?>
 			
-			
-			
-			<?php if($_SESSION['tipo'] == 'aluno') {
-				$reg_disc_alun = selectPDO_discalun($cod_disciplina);
-				$alunos_na_disciplina = array();
-				for ($i=0; $i < count($reg_disc_alun); $i++) { 
-					array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
-				}
-				if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
-					?>
-					<form action="avaliacao_responder.php" method="post">
-						<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
-						<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
-						<button type="submit" class="btn waves-effect waves-light">Responder</button>
-					</form>
-					<?php
-				}
-			} ?>
-
-
-
-
-
 			<div id="info-avaliacao">
 			<?php
 				echo "<p style='color:lightgrey'>#".$cod_avaliacao."</p>";
@@ -119,3 +113,19 @@
 		
 </body>
 </html>
+
+<?php
+
+function aval_ainda_disponivel() {
+    $dataFinal=$GLOBALS['data_fim'];
+    $data_atual=date('y-m-d');
+    if(strtotime($dataFinal) < strtotime($data_atual)){
+        return true;
+    } else {
+        return false;
+    }
+
+return;
+}
+
+?>
