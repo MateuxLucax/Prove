@@ -12,6 +12,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 		<title>Calcula Nota</title>
 
+		<!-- Linkagem para GoogleCharts -->
+		<script type="text/javascript" src="js/loader.js"></script>
+
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="assets/img/favicon.png" />
 
@@ -26,9 +29,27 @@
 		<?php printHeader(); /*include 'funcoes.php'; lá em cima*/ ?>
 
         <?php 
-            
+			$vetor = array("['Excelente', 1]", "['Ótimo', 4]", "['Bom', 2]", "['Razoável', 1]", "['Ruim', 1]", "['Péssimo', 1]"); //['LEGENDA', NUMERO PARA CALCULO]
+			$titulo = 'Desempenho na Prova';
+			$div = 'grafico';
+		
+			
+			geraGraficoSetor($vetor, $titulo, $div);
+
 
          ?>
+		<div id="grafico" style="width: 900px; height: 500px;"></div>
+
+	<br/><br/><br/><br/>
+
+
+	<?php
+		$sql='SELECT Correta FROM alternativa';
+
+	?>
+
+
+
 
 		<footer>
 		</footer>
