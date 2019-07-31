@@ -138,6 +138,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `prove_sistema_avaliacao`.`Palavras_Chave`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Palavras_Chave` (
+  `Codigo_Palavras_Chave` INT NOT NULL AUTO_INCREMENT,
+  `Descricao` VARCHAR(40) NOT NULL,
+  PRIMARY KEY (`Codigo_Palavras_Chave`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `prove_sistema_avaliacao`.`Tipo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Tipo` (
@@ -164,18 +174,6 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Questao` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `prove_sistema_avaliacao`.`Palavras_Chave`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Palavras_Chave` (
-  `Codigo_Palavras_Chave` INT NOT NULL AUTO_INCREMENT,
-  `Descricao` VARCHAR(40) NOT NULL,
-  FOREIGN KEY (`Codigo_Palavras_Chave`) REFERENCES `prove_sistema_avaliacao`.`Questao` (`Codigo_Questao`),
-  PRIMARY KEY (`Codigo_Palavras_Chave`))
-ENGINE = InnoDB;
-
 
 
 -- -----------------------------------------------------
@@ -425,18 +423,4 @@ AND Q.Tipo_Codigo != 2
 AND  Q.Tipo_Codigo != 3
 AND A.Codigo_Avaliacao = 1;
 
-
-
-
-SELECT * FROM alternativa a;
-
-SELECT * FROM alternativa a, Questao q WHERE q.Codigo_Questao=3 AND a.Questao_Codigo = q.Codigo_Questao AND a.Correta = 1;
-
-SELECT * FROM alternativa a, Questao q, Resposta_Alternativa r WHERE q.Codigo_Questao=3 AND a.Questao_Codigo = q.Codigo_Questao AND a.Correta = 1 AND r.Resposta=a.Questao_Codigo AND r.Alunos_Matricula = 1010;
-
-SELECT * FROM Resposta_Alternativa;
-
-INSERT INTO Resposta_Alternativa (`Alternativa_Alternativa_Codigo`,`Alunos_Matricula`,`Resposta`) VALUES
-(2,1010,3)
-,(2,1011,2)
-,(2,1012,1);
+SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND();
