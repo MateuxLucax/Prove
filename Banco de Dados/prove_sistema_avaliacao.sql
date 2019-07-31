@@ -398,56 +398,22 @@ INSERT INTO Questoes_has_Avaliacoes (`Questoes_Codigo_Questao`, `Avaliacoes_Codi
 ,(4,1)
 ,(5,1);
 
-SELECT * FROM Avaliacoes;
-SELECT * FROM Tipo;
-SELECT * FROM Questao;
-SELECT * FROM Alternativa;
-SELECT * FROM Questoes_has_Avaliacoes;
-
-select Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Codigo_Tipo, T.Descricao as 'Tipo', AL.Codigo_Alternativa, AL.Descricao, AL.Correta
-FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T, Alternativa AL
-WHERE T.Codigo_Tipo = Q.Tipo_Codigo
-AND AL.Questao_Codigo = Q.Codigo_Questao
-AND QA.Questoes_Codigo_Questao = Q.Codigo_Questao
-AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
-AND A.Codigo_Avaliacao = 1;
--- Esse select só pega as questões de alternativas. O SELECT abaixo, pois, é necessário para que sejam selecionadas todas as questões
--- Deverão ser juntados os resultados desses dois SELECTS numa só matriz
-
-SELECT Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao
-FROM Avaliacoes A, Questao Q, Questoes_has_Avaliacoes QA, Tipo T
-WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
-AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
-AND T.Codigo_Tipo = Q.Tipo_Codigo
-AND Q.Tipo_Codigo != 2
-AND  Q.Tipo_Codigo != 3
-AND A.Codigo_Avaliacao = 1;
-
-SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND();
 
 
-SELECT * FROM Disciplinas;
-SELECT * FROM Professores_has_Disciplina;
-SELECT * FROM Avaliacoes;
-SELECT * FROM Professores_has_Disciplina;
 
-SELECT Disciplina_Codigo_Disciplina
-FROM Avaliacoes
-WHERE Codigo_Avaliacao = 1;
 
-SELECT P.Matricula
-FROM Professores P, Disciplinas D, Professores_has_Disciplina DP
-WHERE P.Matricula = DP.Professores_Matricula
-AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina
-AND D.Codigo_Disciplina = 1;
 
-SELECT * FROM Questao;
+
+-- Correção de respostas
+SELECT * FROM alternativa a;
+
+SELECT * FROM alternativa a, Questao q WHERE q.Codigo_Questao=3 AND a.Questao_Codigo = q.Codigo_Questao AND a.Correta = 1;
+
+SELECT * FROM alternativa a, Questao q, Resposta_Alternativa r WHERE q.Codigo_Questao=3 AND a.Questao_Codigo = q.Codigo_Questao AND a.Correta = 1 AND r.Resposta=a.Questao_Codigo AND r.Alunos_Matricula = 1010;
+
 SELECT * FROM Resposta_Alternativa;
-SELECT * FROM Alternativa;
-SELECT * FROM Discursiva;
-SELECT * FROM Alunos;
 
-SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
-WHERE Alunos_Matricula = 201799
-AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
-AND A.Questao_Codigo = 5;
+INSERT INTO Resposta_Alternativa (`Alternativa_Alternativa_Codigo`,`Alunos_Matricula`,`Resposta`) VALUES
+(2,1010,3)
+,(2,1011,2)
+,(2,1012,1);
