@@ -22,6 +22,8 @@ function gerar_formulario_questoes($cod_avaliacao, $embaralhar, $matricula) {
 		echo "<div id='q".$questoes[$i][0]."' class='card-panel'>";
 		if($alunoJaRespondeu) {
 			echo "<span class='new badge green darken-1' data-badge-caption='Respondida'></span>";
+		} else {
+			echo "<span class='new badge red darken-1' data-badge-caption='Não respondida'></span>";
 		}
 
 			echo "<p><b>".$noQuestao.")</b></p>";

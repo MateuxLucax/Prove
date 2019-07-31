@@ -58,21 +58,23 @@
 		
 		<?php if($codigo != '') { ?>
 
-			<?php if($_SESSION['tipo'] == 'aluno') {
-				$reg_disc_alun = selectPDO_discalun($cod_disciplina);
-				$alunos_na_disciplina = array();
-				for ($i=0; $i < count($reg_disc_alun); $i++) { 
-					array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
-				}
-				if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
-					?>
-					<form action="avaliacao_responder.php" method="post">
-						<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
-						<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
-						<button type="submit" class="btn waves-effect waves-light">Responder</button>
-					</form>
-					<?php
-				}
+			<?php if(aval_ainda_disponivel()) {
+				if($_SESSION['tipo'] == 'aluno') {
+					$reg_disc_alun = selectPDO_discalun($cod_disciplina);
+					$alunos_na_disciplina = array();
+					for ($i=0; $i < count($reg_disc_alun); $i++) { 
+						array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
+					}
+					if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
+						?>
+						<form action="avaliacao_responder.php" method="post">
+							<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
+							<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
+							<button type="submit" class="btn waves-effect waves-light">Responder</button>
+						</form>
+						<?php
+					}
+				} 
 			} 
 
 			// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
@@ -117,7 +119,10 @@
 	<script src="assets/js/materialize.min.js"></script>
 	<script src="assets/js/init.js"></script>
 	
-	<?php
+</body>
+</html>
+
+<?php
 
 	function prof_da_disciplina() {
 		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
@@ -159,6 +164,22 @@
 		}
 	}
 
+
+	function aval_ainda_disponivel() {
+		$data_final=$GLOBALS['data_fim'];
+		$data_atual=date('Y-m-d H:i:s');
+
+		//echo "Data final: ".$data_final."<br/>";
+		//echo "Data atual: ".$data_atual."<br/>";
+		//echo "strtotime(Data Final): ".strtotime($data_final)."<br/>";
+		//echo "strtotime(Data Atual): ".strtotime($data_atual)."<br/>";
+		
+		if(strtotime($data_final) > strtotime($data_atual)){
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
 	?>
-</body>
-</html>
