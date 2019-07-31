@@ -6,6 +6,7 @@
 	include 'avaliacao_pdo.php';
 	include 'funcoes.php';
 	include 'conf.php';
+	include 'avaliacao_funcaoFormulario.php';
 	date_default_timezone_set('America/Sao_Paulo');
 
 	if (isset($_POST['codigo'])) { $codigo = $_POST['codigo']; }
@@ -77,7 +78,8 @@
 
 			<div id="formulario-questoes">
 				<?php
-					gerar_formulario_questoes($cod_avaliacao, $embaralhar, $_SESSION['matricula']); // função em avaliacao_pdo.php
+					gerar_formulario_questoes($cod_avaliacao, $embaralhar, $_SESSION['matricula']);
+					// função em avaliacao_funcaoFormulario.php
 				?>
 			</div>
 		</div>

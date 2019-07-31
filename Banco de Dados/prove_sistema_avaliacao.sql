@@ -440,3 +440,14 @@ FROM Professores P, Disciplinas D, Professores_has_Disciplina DP
 WHERE P.Matricula = DP.Professores_Matricula
 AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina
 AND D.Codigo_Disciplina = 1;
+
+SELECT * FROM Questao;
+SELECT * FROM Resposta_Alternativa;
+SELECT * FROM Alternativa;
+SELECT * FROM Discursiva;
+SELECT * FROM Alunos;
+
+SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
+WHERE Alunos_Matricula = 201799
+AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
+AND A.Questao_Codigo = 5;
