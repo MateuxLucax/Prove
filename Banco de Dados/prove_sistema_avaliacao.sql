@@ -424,3 +424,30 @@ AND  Q.Tipo_Codigo != 3
 AND A.Codigo_Avaliacao = 1;
 
 SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Avaliacoes A, Questoes_has_Avaliacoes QA WHERE Q.Codigo_Questao = QA.Questoes_Codigo_Questao AND A.Codigo_Avaliacao = QA.Avaliacoes_Codigo_Avaliacao AND A.Codigo_Avaliacao = 1 ORDER BY RAND();
+
+
+SELECT * FROM Disciplinas;
+SELECT * FROM Professores_has_Disciplina;
+SELECT * FROM Avaliacoes;
+SELECT * FROM Professores_has_Disciplina;
+
+SELECT Disciplina_Codigo_Disciplina
+FROM Avaliacoes
+WHERE Codigo_Avaliacao = 1;
+
+SELECT P.Matricula
+FROM Professores P, Disciplinas D, Professores_has_Disciplina DP
+WHERE P.Matricula = DP.Professores_Matricula
+AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina
+AND D.Codigo_Disciplina = 1;
+
+SELECT * FROM Questao;
+SELECT * FROM Resposta_Alternativa;
+SELECT * FROM Alternativa;
+SELECT * FROM Discursiva;
+SELECT * FROM Alunos;
+
+SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
+WHERE Alunos_Matricula = 201799
+AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
+AND A.Questao_Codigo = 5;

@@ -6,11 +6,15 @@
 	include 'avaliacao_pdo.php';
 	include 'funcoes.php';
 	include 'conf.php';
+	include 'avaliacao_funcaoFormulario.php';
 	date_default_timezone_set('America/Sao_Paulo');
 
 	if (isset($_POST['codigo'])) { $codigo = $_POST['codigo']; }
 	else if (isset($_GET['codigo'])) { $codigo = $_GET['codigo']; }
 	else { $codigo = ''; }
+
+	if (isset($_POST['res_alert'])) { $res_alert = $_POST['res_alert']; }
+	else if (isset($_GET['res_alert'])) { $res_alert = $_GET['res_alert']; }
 
 	//echo "Código=".$codigo."=";
 
@@ -75,9 +79,23 @@
 			</div>
 			<hr/>
 
+			<div id="info-ao-aluno">
+				<p>Caso você já tenha respondido certa questão mas queira mudar a resposta, basta respondê-la novamente e o sistema a atualizará.</p>
+			</div>
+			<hr/>
+
 			<div id="formulario-questoes">
 				<?php
-					gerar_formulario_questoes($cod_avaliacao, $embaralhar, $_SESSION['matricula']); // função em avaliacao_pdo.php
+					if(isset($res_alert)) {
+						echo "<div class='card-panel green darken-5 green-text text-lighten-5 center-align'>";
+						if ($res_alert == 'registrada') echo "<b>A resposta foi registrada.</b>";
+						else if ($res_alert = 'atualizada') echo "<b>A resposta foi atualizada.</b>";
+						echo "</div>";
+					}
+				?>
+				<?php
+					gerar_formulario_questoes($cod_avaliacao, $embaralhar, $_SESSION['matricula']);
+					// função em avaliacao_funcaoFormulario.php
 				?>
 			</div>
 		</div>

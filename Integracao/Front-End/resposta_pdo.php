@@ -179,6 +179,8 @@ function insertPDO_resAlt() {
 			echo "Linhas afetadas: ".$stmt->rowCount();
 			if($stmt->rowCount() == 1) $cnt_linhas++;
 			echo " - Ao total: ".$cnt_linhas."<br/>";
+
+			header("location:avaliacao_responder.php?codigo=".$GLOBALS['avaliacao']."&res_alert=atualizada");
 		}
 		
 
@@ -206,6 +208,8 @@ function insertPDO_resAlt() {
 			echo "Linhas afetadas: ".$stmt->rowCount();
 			if($stmt->rowCount() == 1) $cnt_linhas++;
 			echo " - Ao total: ".$cnt_linhas."<br/>";
+
+			header("location:avaliacao_responder.php?codigo=".$GLOBALS['avaliacao']."&res_alert=registrada");
 		}
 
 	}
