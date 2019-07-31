@@ -73,7 +73,16 @@
 					</form>
 					<?php
 				}
-			} ?>
+			} 
+
+			// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
+			if($_SESSION['tipo'] == 'professor') {
+				if(prof_da_disciplina()) { // função está no fim do arquivo
+					echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_editar.php?codigo=".$codigo."\">Editar</a>";				
+				}
+			}
+
+			?>
 
 			<div id="info-avaliacao">
 			<?php
@@ -107,6 +116,49 @@
 	<script src="assets/js/jquery-2.1.1.min.js"></script>
 	<script src="assets/js/materialize.min.js"></script>
 	<script src="assets/js/init.js"></script>
-		
+	
+	<?php
+
+	function prof_da_disciplina() {
+		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo -> exec("SET CHARACTER SET utf8");
+
+		try {
+			// Primeiro se consulta o código da disciplina da qual a avaliação faz parte...
+			$query1 = "SELECT Disciplina_Codigo_Disciplina FROM ".$GLOBALS['tb_avaliacoes']." WHERE Codigo_Avaliacao = ".$GLOBALS['codigo'];
+			//var_dump($query1);
+
+			$consulta = $GLOBALS['pdo']->query($query1);
+
+			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+				$cod_disciplina = $linha['Disciplina_Codigo_Disciplina'];
+			}
+
+			// ... então se consulta se o professor está nessa disciplina
+			$query2 = "SELECT P.Matricula ";
+			$query2 .= " FROM Professores P, Disciplinas D, Professores_has_Disciplina DP "; 
+			$query2 .= " WHERE P.Matricula = DP.Professores_Matricula ";
+			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
+			$query2 .= " AND D.Codigo_Disciplina = ".$GLOBALS['codigo'];
+			
+			$consulta = $GLOBALS['pdo']->query($query2);
+
+			$matriculas = array();
+			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+				array_push($matriculas, $linha['Matricula']);
+			}
+
+			if (in_array($_SESSION['matricula'], $matriculas)) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} catch (PDOException $e) {
+			echo "Erro: ".$e->getMessage();
+		}
+	}
+
+	?>
 </body>
 </html>

@@ -17,7 +17,7 @@ if (!$acao == '') {
 	if(isset($_POST['Codigo_Avaliacao'])) $avaliacao->setCodigo($_POST['Codigo_Avaliacao']);
 	if(isset($_POST['conteudo'])) $avaliacao->setConteudo($_POST['conteudo']);
 	if(isset($_POST['dataInicio'])) $avaliacao->setDataInicio($_POST['dataInicio']);
-	if(isset($_POST['dataFim'])) $avaliacao->setDataFim($_POST['dataInicio']);
+	if(isset($_POST['dataFim'])) $avaliacao->setDataFim($_POST['dataFim']);
 	if(isset($_POST['peso'])) $avaliacao->setPeso($_POST['peso']);
 	if(isset($_POST['embaralhar'])) $avaliacao->setEmbaralhar($_POST['embaralhar']);
 	if(isset($_POST['Disciplina_Codigo_Disciplina'])) $disciplina = $_POST['Disciplina_Codigo_Disciplina'];
@@ -133,6 +133,8 @@ function insertPDO_aval() {
 	$peso = $GLOBALS['avaliacao']->getPeso();
 	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
 	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
+
+	//echo "Data início:". $data_inicio."<br/>Data fim: ".$data_fim;
 	
 	$stmt->execute();
 
@@ -164,6 +166,8 @@ function updatePDO_aval() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:avaliacao.php?codigo=".$codigo);
 }
 
 function deletePDO_aval() {
@@ -176,6 +180,8 @@ function deletePDO_aval() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:avaliacao.php?codigo=".$codigo);
 }
 
 
