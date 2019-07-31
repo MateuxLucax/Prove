@@ -385,6 +385,8 @@ function gerar_formulario_questoes($cod_avaliacao, $embaralhar, $matricula) {
 							echo "<span>".$alternativas[$j][1]."</span>";
 						echo "</label> </p>";
 
+						echo "<input type='hidden' name='cod_alternativa[]' value='".$alternativas[$j][0]."'>";
+
 						$cnt++;
 					}
 					echo "<input type='hidden' name='noAlternativas' value='".$cnt."'>";
@@ -439,6 +441,7 @@ function select_alternativas_formulario($cod_questao) {
 		$sql .= " Codigo_Alternativa, Descricao ";
 		$sql .= " FROM ".$GLOBALS['tb_alternativa']." ";
 		$sql .= " WHERE Questao_Codigo = ".$cod_questao;
+		$sql .= " ORDER BY Codigo_Alternativa";
 
 		//var_dump($sql);
 
