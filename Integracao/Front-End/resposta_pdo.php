@@ -105,9 +105,11 @@ function insertPDO_resDisc() {
 	if($alunoJaRespondeu) {
 		$sql = "UPDATE ".$GLOBALS['tb_res_discursiva']." SET Resposta = :Resposta WHERE Questao_Codigo = :Questao AND Questao_Codigo = :Questao";
 		echo "<b><i>A resposta será <u>atualizada</u></i></b><br/>";
+		$res_alert = "atualizada";
 	} else {
 		$sql = "INSERT INTO ".$GLOBALS['tb_res_discursiva']." (Resposta, Alunos_Matricula, Questao_Codigo) VALUES (:Resposta, :Matricula, :Questao)";
 		echo "<b><i>A resposta será <u>registrada</u></i></b><br/>";
+		$res_alert = "registrada";
 	}
 
 	$stmt = $GLOBALS['pdo']->prepare($sql);
@@ -123,6 +125,8 @@ function insertPDO_resDisc() {
 	$stmt->execute();
 
 	echo "Linhas afetadas: ".$stmt->rowCount();
+
+	header("location:avaliacao_responder.php?codigo=".$GLOBALS['avaliacao']."&res_alert=".$res_alert);
 }
 
 function jaRespondeu_disc() {

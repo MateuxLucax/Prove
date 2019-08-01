@@ -130,21 +130,23 @@ function select_alternativas_formulario($cod_questao) {
 }
 
 function alunoJaRespondeu ($cod_questao, $tipo_questao, $matricula) {
+	
 	if ($tipo_questao == 1) {
-
+		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = ".$matricula." AND Questao_Codigo = ".$cod_questao;
 	} else {
 		$query = "SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
 		WHERE Alunos_Matricula = ".$matricula."
 		AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
 		AND A.Questao_Codigo = ".$cod_questao;
-		$consulta = $GLOBALS['pdo']->query($query);
+	}
+
+	$consulta = $GLOBALS['pdo']->query($query);
 		
 		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
 		$respondeu = $linha['Respondeu'];
 
 		if ($respondeu > 0) return true;
 		else return false;
-	}
 }
 
 ?>
