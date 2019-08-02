@@ -25,7 +25,8 @@
 		$conteudo = $registros[0][3];
 		$data_inicio = $registros[0][4];
 		$data_fim = $registros[0][5];
-		$embaralhar = $registros[0][6];
+		$peso = $registros[0][6];
+		$embaralhar = $registros[0][7];
 
 		$title = $disciplina." - ".$conteudo;
 
@@ -71,6 +72,11 @@
 				<div class="input-field col s12">   
 					<input type="text" name="dataFim" id="dataFim" value="<?php echo $data_fim; ?>">
 					<span class="helper-text">Data fim</span>
+				</div>
+
+				<div class="input-field col s12">   
+					<label for="peso">Peso</label>
+					<input type="text" name="peso" id="peso" value="<?php echo $peso; ?>">
 				</div>
 
 				<div class="input-field col s12">

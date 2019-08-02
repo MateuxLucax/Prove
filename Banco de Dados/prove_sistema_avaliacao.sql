@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Avaliacoes` (
   `Disciplina_Codigo_Disciplina` INT NOT NULL,
   `Data_Inicio` DATETIME NOT NULL,
   `Data_Fim` DATETIME NOT NULL,
-  `Peso` VARCHAR(5) NULL,
+  `Peso` VARCHAR(5) NOT NULL,
   `Embaralhar` TINYINT NULL,
   PRIMARY KEY (`Codigo_Avaliacao`),
   INDEX `fk_Avaliacoes_Disciplina1_idx` (`Disciplina_Codigo_Disciplina` ASC),
@@ -417,5 +417,3 @@ INSERT INTO Resposta_Alternativa (`Alternativa_Alternativa_Codigo`,`Alunos_Matri
 (2,1010,3)
 ,(2,1011,2)
 ,(2,1012,1);
-AND Q.Tipo_Codigo = 1
-AND Q.Codigo_Questao = AQ.Questoes_Codigo_Questao;

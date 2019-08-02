@@ -18,6 +18,7 @@ if (!$acao == '') {
 	if(isset($_POST['conteudo'])) $avaliacao->setConteudo($_POST['conteudo']);
 	if(isset($_POST['dataInicio'])) $avaliacao->setDataInicio($_POST['dataInicio']);
 	if(isset($_POST['dataFim'])) $avaliacao->setDataFim($_POST['dataFim']);
+	if(isset($_POST['peso'])) $avaliacao->setPeso($_POST['peso']);
 	if(isset($_POST['embaralhar'])) $avaliacao->setEmbaralhar($_POST['embaralhar']);
 	if(isset($_POST['Disciplina_Codigo_Disciplina'])) $disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 	else $avaliacao->setEmbaralhar(0);
@@ -77,6 +78,7 @@ function selectPDO_aval($criterio = 'Conteudo', $pesquisa = '') {
 			array_push($registros[$i], $linha['Conteudo']);
 			array_push($registros[$i], $linha['Data_Inicio']);
 			array_push($registros[$i], $linha['Data_Fim']);
+			array_push($registros[$i], $linha['Peso']);
 			array_push($registros[$i], $linha['Embaralhar']);
 		}
 
@@ -97,6 +99,7 @@ function selectPDO_aval_table ($registros) {
 		<th>Conteudo</th>
 		<th>Data de Inicio</th>
 		<th>Data de Fim</th>
+		<th>Peso</th>
 		<th>Embaralhar</th>
 	</tr>
 	</thead>
@@ -115,17 +118,19 @@ function selectPDO_aval_table ($registros) {
 }
 
 function insertPDO_aval() {
-	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar, :Disciplina)");
+	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Peso, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar, :Disciplina)");
 
 	$stmt->bindParam(':Conteudo', $conteudo);
 	$stmt->bindParam(':Data_Inicio', $data_inicio);
 	$stmt->bindParam(':Data_Fim', $data_fim);
+	$stmt->bindParam(':Peso', $peso);
 	$stmt->bindParam(':Embaralhar', $embaralhar);
 	$stmt->bindParam(':Disciplina', $disciplina);
 
 	$conteudo = $GLOBALS['avaliacao']->getConteudo();
 	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
 	$data_fim = $GLOBALS['avaliacao']->getDataFim();
+	$peso = $GLOBALS['avaliacao']->getPeso();
 	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
 	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 
@@ -139,13 +144,14 @@ function insertPDO_aval() {
 }
 
 function updatePDO_aval() {
-	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Embaralhar = :Embaralhar, Disciplina_Codigo_Disciplina = :Disciplina WHERE Codigo_Avaliacao = :Codigo");
+	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Peso = :Peso, Embaralhar = :Embaralhar, Disciplina_Codigo_Disciplina = :Disciplina WHERE Codigo_Avaliacao = :Codigo");
 
 
 	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Conteudo', $conteudo);
 	$stmt->bindParam(':Data_Inicio', $data_inicio);
 	$stmt->bindParam(':Data_Fim', $data_fim);
+	$stmt->bindParam(':Peso', $peso);
 	$stmt->bindParam(':Embaralhar', $embaralhar);
 	$stmt->bindParam(':Disciplina', $disciplina);
 	
@@ -153,6 +159,7 @@ function updatePDO_aval() {
 	$conteudo = $GLOBALS['avaliacao']->getConteudo();
 	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
 	$data_fim = $GLOBALS['avaliacao']->getDataFim();
+	$peso = $GLOBALS['avaliacao']->getPeso();
 	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
 	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 
