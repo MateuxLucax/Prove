@@ -74,11 +74,6 @@
 					<span class="helper-text">Data fim</span>
 				</div>
 
-				<div class="input-field col s12">   
-					<label for="peso">Peso</label>
-					<input type="text" name="peso" id="peso" value="<?php echo $peso; ?>">
-				</div>
-
 				<div class="input-field col s12">
 					<?php gerarSelect($tb_disciplinas, 'Disciplina_Codigo_Disciplina', 0, 'Codigo_Disciplina', 'Nome'); ?>
 				</div>
