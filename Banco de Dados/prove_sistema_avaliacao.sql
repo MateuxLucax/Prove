@@ -224,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Discursiva` (
   `Resposta` TEXT NOT NULL,
   `Alunos_Matricula` VARCHAR(15) NOT NULL,
   `Questao_Codigo` INT NOT NULL,
+  `Correta` INT NULL,
   PRIMARY KEY (`Codigo_Discursiva`),
   INDEX `fk_Discursiva_Alunos1_idx` (`Alunos_Matricula` ASC),
   INDEX `fk_Discursiva_Questao1_idx` (`Questao_Codigo` ASC),
@@ -417,3 +418,19 @@ INSERT INTO Resposta_Alternativa (`Alternativa_Alternativa_Codigo`,`Alunos_Matri
 (2,1010,3)
 ,(2,1011,2)
 ,(2,1012,1);
+
+SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado
+FROM Questao Q, Questoes_has_Avaliacoes AQ
+WHERE AQ.Questoes_Codigo_Questao = Q.Codigo_Questao
+AND Tipo_Codigo = 1
+AND AQ.Avaliacoes_Codigo_Avaliacao = 1;
+
+SELECT D.Codigo_Discursiva, D.Resposta, D.Correta
+FROM Discursiva D, Questao Q
+WHERE Q.Codigo_Questao = D.Questao_Codigo
+AND Q.Codigo_Questao = 1;
+
+SELECT * FROM Discursiva;
+UPDATE Discursiva SET Correta = 2 WHERE Codigo_Discursiva = 1;
+
+UPDATE Discursiva SET Correta = 0 WHERE Codigo_Discursiva = 3;

@@ -6,20 +6,20 @@
 require_once 'autoload.php';
 include 'conf.php';
 
-$acao = $_POST['acao'];
-echo "Código da questão: ".$acao."<br/>";
+if(isset($_POST['acao'])) { $acao = $_POST['acao'];
+echo "<b>Ação: </b>".$acao."<br/>"; }
 
-$questao = $_POST['cod_questao'];
-echo "Código da questão: ".$questao."<br/>";
+if(isset($_POST['cod_questao'])) { $questao = $_POST['cod_questao'];
+echo "Código da questão: ".$questao."<br/>"; }
 
-$avaliacao = $_POST['cod_avaliacao'];
-echo "Código da avaliação: ".$avaliacao."<br/>";
+if(isset($_POST['cod_avaliacao'])) { $avaliacao = $_POST['cod_avaliacao'];
+echo "<b>Código da avaliação:</b> ".$avaliacao."<br/>"; }
 
-$nome_resposta = "resposta_q".$questao;
-echo "Resposta (nome input): ".$nome_resposta."<br/>";
+if(isset($questao)) { $nome_resposta = "resposta_q".$questao;
+echo "Resposta (nome input): ".$nome_resposta."<br/>"; }
 
-$matricula = $_POST['matricula'];
-echo "Matrícula do aluno: ".$matricula."<br/>";
+if(isset($_POST['matricula'])) { $matricula = $_POST['matricula'];
+echo "Matrícula do aluno: ".$matricula."<br/>"; }
 
 if (isset($_POST['noAlternativas'])) {
 	$noAlternativas = $_POST['noAlternativas'];
@@ -35,12 +35,39 @@ if(isset($_POST['cod_alternativa'])) {
 	echo "<br/>";
 }
 
-$res = $_POST[$nome_resposta];
-var_dump($res);
+if(isset($nome_resposta)) { $res = $_POST[$nome_resposta];
+var_dump($res); }
 
-echo "<a href='avaliacao_responder.php?codigo=".$avaliacao."'>Voltar</a>";
+if(isset($avaliacao)){ echo "<a href='avaliacao_responder.php?codigo=".$avaliacao."'>Voltar</a><br/>"; }
 
-echo "<b><br/><br/>Importante: o sistema não deve manter mais de uma resposta para determinada questão por aluno. Deve permitir, no máximo, que o aluno mude sua resposta (comando update), e isso apenas entre o intervalo de tempo <i>data início</i>-<i>data fim</i>.<br/><br/></b>";
+#### Outras ações ##############################################################################
+
+if ($acao == 'addCorrecaoDiscursiva') {
+	try {	
+		//UPDATE da Discursiva, mudando o campo 'Correta' para o valor informado pelo professor
+		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo -> exec("SET CHARACTER SET utf8");
+	
+		$query = "UPDATE Discursiva SET Correta = :Correta WHERE Codigo_Discursiva = :Codigo_Discursiva";
+
+		$stmt = $GLOBALS['pdo']->prepare($query);
+
+		$stmt->bindParam(":Correta", $correcao);
+		$stmt->bindParam(":Codigo_Discursiva", $cod_discursiva);
+
+		$correcao = $_POST['correcao']; echo "<b>Correção</b>: ".$correcao."<br/>";
+		$cod_discursiva = $_POST['cod_discursiva']; echo "<b>Código da resposta</b>: ".$cod_discursiva."<br/>";
+
+		$stmt->execute();
+
+		echo "<b>Linhas afetadas: </b>".$stmt->rowCount();
+
+		header("location:resposta_discursivaCorrecao.php?codigo=".$GLOBALS['avaliacao']);
+	} catch (PDOException $e) {
+		echo "Erro: ".$e->getMessage();
+	}
+}
 
 #### Construção dos objetos ####################################################################
 
