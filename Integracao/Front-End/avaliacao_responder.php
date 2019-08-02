@@ -30,8 +30,7 @@
 		$conteudo = $registros[0][3];
 		$data_inicio = $registros[0][4];
 		$data_fim = $registros[0][5];
-		$peso = $registros[0][6];
-		$embaralhar = $registros[0][7];
+		$embaralhar = $registros[0][6];
 
 		$title = $disciplina." - ".$conteudo;
 
@@ -73,7 +72,6 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<small style='color:grey'>#".$cod_avaliacao."</small></p>";	
 				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
-				echo "<p><b>Peso: </b>".$peso."</p>";
 				echo "<p><b>Embaralhar questões:</b> ".$embaralharTxt."</p>";
 			?>
 			</div>

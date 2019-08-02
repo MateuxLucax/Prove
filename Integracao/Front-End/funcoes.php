@@ -127,4 +127,10 @@ function mostrar_questoes($questoes) {
 			}
 	echo "</div>";
 }
+
+
+
+function respondeuTodasQuestoes($cod_avaliacao) {
+	// Retorna se o usuário respondeu todas as questões de uma avaliação e, caso não tenha, mostrar isso ao usuário em páginas onde as suas avaliações aparecerem para ele (index, por exemplo)
+}
 ?>
