@@ -398,3 +398,101 @@ INSERT INTO Questoes_has_Avaliacoes (`Questoes_Codigo_Questao`, `Avaliacoes_Codi
 ,(3,1)
 ,(4,1)
 ,(5,1);
+
+-- Cadastro de várias questões, alternativas, disciplinas, avaliações etc. para testar as funções da página funcoes_correcao.php
+SELECT * FROM Serie;
+INSERT INTO Serie (Descricao) VALUES ('3INFO');
+
+SELECT * FROM Disciplinas;
+INSERT INTO Disciplinas (Nome, Serie_Codigo_Serie) VALUES ('Banco de Dados', 1), ('Redes de Computadores', 1);
+
+SELECT * FROM Avaliacoes;
+INSERT INTO Avaliacoes (Conteudo, Disciplina_Codigo_Disciplina, Data_Inicio, Data_Fim, Embaralhar) VALUES
+('MySQL Básico', 2, '2019-03-10 00:00:00', '2019-03-20 00:00:00', 0),
+('MySQL Intermediário', 2, '2019-05-10 00:00:00', '2019-05-20 00:00:00', 1),
+('MySQL Avançado', 2, '2019-07-10 00:00:00', '2019-07-20 00:00:00', 1);
+INSERT INTO Avaliacoes (Conteudo, Disciplina_Codigo_Disciplina, Data_Inicio, Data_Fim, Embaralhar) VALUES
+('O que são redes', 3, '2019-03-10 00:00:00', '2019-03-20 00:00:00', 1),
+('Modelo OSI', 3, '2019-05-10 00:00:00', '2019-05-20 00:00:00', 0),
+('IP e máscara de sub-rede', 3, '2019-07-10 00:00:00', '2019-07-20 00:00:00', 1);
+
+SELECT * FROM Tipo;
+SELECT * FROM Questao;
+SELECT * FROM Avaliacoes;
+SELECT * FROM Questoes_has_Avaliacoes;
+INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
+('O que é MySQL?', 1),
+('Quais dos seguintes comandos são de MySQL?', 3),
+('Assinale a alternativa falsa sobre o MySQL', 2);
+INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
+(6, 2),
+(7, 2),
+(8, 2);
+
+SELECT * FROM Questoes_has_Avaliacoes WHERE Avaliacoes_Codigo_Avaliacao = 2;
+SELECT * FROM Questao;
+
+SELECT * FROM Alternativa;
+INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
+('select.tabela("nome, campo, idade");',0,7),
+('INSERT INTO tabela (campo1, nome) VALUES (1), ("jondgr");',1,7),
+('SELECT * FROM tabela;',1,7),
+('tabela->SELECT(*) FROM WHERE value = 2;',0,7);
+INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
+('o MySQL é um sistema gerenciador de banco de dados',0,8),
+('no mySQL informações são armazenadas em tabelas',0,8),
+('o MySQL é utilizado por meio de um site',1,8);
+
+
+INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
+('Para que servem os comandos count() e avg()?', 1),
+('Marque os comandos SQL que não dariam certo', 3),
+('Qual o comando SQL usado para agrupar?', 2);
+SELECT * FROM Questao;
+SELECT * FROM Questoes_has_Avaliacoes;
+SELECT * FROM Avaliacoes;
+INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
+(9, 3),
+(10, 3),
+(11, 3);
+SELECT * FROM Alternativa;
+INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
+('SELECT (SELECT numero FROM numero) WHERE numero = 10;', 1, 10),
+('UPDATE numero = 5;', 1, 10),
+('SELECT nome, idade FROM tabela WHERE nome = "jonsnerg";', 0, 10),
+('INSERT numero = 5 INTO tabela;', 1, 10);
+INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
+('SET GROUP campo;', 0, 11),
+('GROUPY BY campo;', 1, 11),
+('ORDER BY GROUP grupo;', 0, 11),
+('SELECT GROUP FROM tabela;', 0, 11);
+
+INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
+('O que são funções armazenadas?', 1),
+('Marque as respostas corretas para 2+2', 3);
+SELECT * FROM Questao;
+SELECT * FROM Questoes_has_Avaliacoes;
+SELECT * FROM Avaliacoes;
+INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
+(12, 4),
+(13, 4);
+INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
+('(2+4-2)^2', 0, 13),
+('2^2', 1, 13),
+('4', 1, 13),
+('4-2+8-6', 1, 13);
+
+INSERT INTO Professores_has_Disciplina (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES ('2017305998', 2), ('2017305998', 3);
+SELECT * FROM Disciplina_has_Alunos;
+SELECT * FROM Alunos;
+SELECT * FROM Disciplinas;
+INSERT INTO Disciplina_has_Alunos (Disciplina_Codigo_Disciplina, Alunos_Matricula) VALUES
+(2,201701),
+(2,201717),
+(2,201771),
+(3,201701),
+(3,201717),
+(3,201771);
+
+SELECT * FROM Avaliacoes;
+UPDATE Avaliacoes SET Data_Fim = '2018-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;

@@ -3,7 +3,17 @@
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$pdo -> exec("SET CHARACTER SET utf8");
 
-	function notasDisciplinaTodos($cod_disciplina) {
+	
+	$notas_aluno = notaTodasDiscAluno('201701');
+
+	for ($i=0; $i < count($notas_aluno); $i++) { 
+		for ($j=0; $j < count($notas_aluno[$i]); $j++) { 
+			if(isset($notas_aluno[$i][$j])) echo $notas_aluno[$i][$j]." - ";
+		}
+		echo "<br/>";
+	}
+
+	function notasDisciplinaTodos($cod_disciplina) { // O MÁXIMO QUE O PROFESSOR VERÁ
 		// gera uma matriz que tem as notas de todos os alunos da disciplina
 
 		// consulta quais os alunos que fazem parte da disciplina
@@ -26,6 +36,33 @@
 		}
 
 		return $notas_alunos;
+	}
+
+	function notaTodasDiscAluno($matricula) { // O MÁXIMO QUE O ALUNO VERÁ
+		// gera uma matriz com as notas de um aluno de todas as disciplinas em que está
+
+		// consulta de que disciplinas o aluno faz parte
+		$query = "SELECT Disciplina_Codigo_Disciplina FROM Disciplina_has_Alunos WHERE Alunos_Matricula = ".$matricula;
+		$consulta = $GLOBALS['pdo']->query($query);
+		$cod_disciplinas = array();
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			array_push($cod_disciplinas, $linha['Disciplina_Codigo_Disciplina']);
+		}
+
+		$notas_aluno = array();
+		for ($i=0; $i < count($cod_disciplinas); $i++) { 
+			$notas_aluno[$i] = array();
+			$notas_aluno[$i][0] = $cod_disciplinas[$i];
+
+			$notas_disciplina =  notasDisciplinaAluno($cod_disciplinas[$i], $matricula);
+			for ($j=0; $j < count($notas_disciplina); $j++) { 
+				array_push($notas_aluno[$i], $notas_disciplina[$j]);
+			}
+		}
+
+		return $notas_aluno;
+
+
 	}
 
 	function notasDisciplinaAluno($cod_disciplina, $matricula) {
@@ -51,16 +88,18 @@
 		$correcao = correcaoAvaliacao($cod_avaliacao, $matricula);
 
 		$qtd_questoes = count($correcao);
-		$valor_questao = 10 / $qtd_questoes;
+		if($qtd_questoes > 0) {
+			$valor_questao = 10 / $qtd_questoes;
 
-		$nota = 0;
-		for ($i=0; $i < $qtd_questoes; $i++) { 
-			$nota += $correcao[$i][1];
+			$nota = 0;
+			for ($i=0; $i < $qtd_questoes; $i++) { 
+				$nota += $correcao[$i][1];
+			}
+
+			$nota *= $valor_questao;
+		
+			return round($nota,2);
 		}
-
-		$nota *= $valor_questao;
-
-		return $nota;
 	}
 
 	function correcaoAvaliacao($cod_avaliacao, $matricula) {
@@ -81,7 +120,7 @@
 			$correcao[$i][0] = $cod_questoes[$i];
 			$correcao[$i][1] = correcaoResposta($cod_questoes[$i], $matricula);
 		}
-
+		
 		return $correcao;
 	}
 
@@ -116,15 +155,21 @@
 	function correcaoResposta_disc($cod_questao, $matricula) {
 		// consulta o código da resposta que o usuário deu
 		$query0 = "SELECT Codigo_Discursiva FROM Discursiva WHERE Alunos_Matricula = '".$matricula."' AND Questao_Codigo = ".$cod_questao;
+		//var_dump($query0);
 		$consulta = $GLOBALS['pdo']->query($query0);
 		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
 		$cod_resposta = $linha['Codigo_Discursiva'];
 
-		// consulta a correção da resposta que o usuário deu
-		$query = "SELECT Correta FROM Discursiva WHERE Codigo_Discursiva = ".$cod_resposta;
-		$consulta = $GLOBALS['pdo']->query($query);
-		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-		return ($linha['Correta'] / 2);
+		if(isset($cod_resposta)) {
+			// consulta a correção da resposta que o usuário deu
+			$query = "SELECT Correta FROM Discursiva WHERE Codigo_Discursiva = ".$cod_resposta.";";
+			//var_dump($query);
+			$consulta = $GLOBALS['pdo']->query($query);
+			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+			return ($linha['Correta'] / 2);
+		} else {
+			return 0;
+		}
 	}
 
 	function correcaoResposta_unica($cod_questao, $matricula) {
@@ -168,14 +213,19 @@
 			array_push($alt_respostas, $linha['Resposta']);
 		}
 
-		$qtd_acertos = 0;
-		for ($i=0; $i < $qtd_alt; $i++) { 
-			if ($alt_corretas[$i] == $alt_respostas[$i]) {
-				$qtd_acertos++;
-			}
-		}
+		if(count($alt_respostas) == count($alt_corretas)) {
 
-		$correcao = $qtd_acertos / $qtd_alt;
-		return round($correcao,2);
+			$qtd_acertos = 0;
+			for ($i=0; $i < $qtd_alt; $i++) { 
+				if ($alt_corretas[$i] == $alt_respostas[$i]) {
+					$qtd_acertos++;
+				}
+			}
+
+			$correcao = $qtd_acertos / $qtd_alt;
+			return round($correcao,2);
+		} else {
+			return 0;
+		}
 	}
 ?>

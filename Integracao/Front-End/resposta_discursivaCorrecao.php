@@ -147,7 +147,7 @@
 			$query2 .= " FROM Professores P, Disciplinas D, Professores_has_Disciplina DP "; 
 			$query2 .= " WHERE P.Matricula = DP.Professores_Matricula ";
 			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
-			$query2 .= " AND D.Codigo_Disciplina = ".$GLOBALS['codigo'];
+			$query2 .= " AND D.Codigo_Disciplina = ".$cod_disciplina;
 			
 			$consulta = $GLOBALS['pdo']->query($query2);
 

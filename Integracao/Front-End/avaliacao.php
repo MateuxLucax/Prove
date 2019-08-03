@@ -13,6 +13,7 @@
 	include 'avaliacao_pdo.php';
 	include 'funcoes.php';
 	include 'conf.php';
+	include 'avaliacao_funcaoFormulario.php';
 	date_default_timezone_set('America/Sao_Paulo');
 
 	$registros = selectPDO_discaval($codigo, 'avaliacao');
@@ -104,8 +105,7 @@
 			
 			<div id="questoes">
 				<?php
-					$questoes = selectPDO_avalques_all($codigo); //all = todas as questões, incluindo as alternativas e as questões discursivas
-					mostrar_questoes($questoes); //função em funcoes
+					gerar_formulario_questoes_visualizar($codigo); //função em funcoes
 				?>
 			</div>
 
@@ -129,6 +129,7 @@
 <?php
 
 	function prof_da_disciplina() {
+		//echo $_SESSION['matricula'];
 		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$pdo -> exec("SET CHARACTER SET utf8");
@@ -149,7 +150,7 @@
 			$query2 .= " FROM Professores P, Disciplinas D, Professores_has_Disciplina DP "; 
 			$query2 .= " WHERE P.Matricula = DP.Professores_Matricula ";
 			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
-			$query2 .= " AND D.Codigo_Disciplina = ".$GLOBALS['codigo'];
+			$query2 .= " AND D.Codigo_Disciplina = ".$cod_disciplina;
 			
 			$consulta = $GLOBALS['pdo']->query($query2);
 
@@ -157,6 +158,8 @@
 			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 				array_push($matriculas, $linha['Matricula']);
 			}
+
+			//var_dump($matriculas);
 
 			if (in_array($_SESSION['matricula'], $matriculas)) {
 				return 1;
