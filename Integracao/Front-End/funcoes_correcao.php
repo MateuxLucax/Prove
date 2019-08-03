@@ -3,16 +3,6 @@
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$pdo -> exec("SET CHARACTER SET utf8");
 
-	
-	$notas_aluno = notaTodasDiscAluno('201701');
-
-	for ($i=0; $i < count($notas_aluno); $i++) { 
-		for ($j=0; $j < count($notas_aluno[$i]); $j++) { 
-			if(isset($notas_aluno[$i][$j])) echo $notas_aluno[$i][$j]." - ";
-		}
-		echo "<br/>";
-	}
-
 	function notasDisciplinaTodos($cod_disciplina) { // O MÁXIMO QUE O PROFESSOR VERÁ
 		// gera uma matriz que tem as notas de todos os alunos da disciplina
 
