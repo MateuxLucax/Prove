@@ -430,7 +430,24 @@ FROM Discursiva D, Questao Q
 WHERE Q.Codigo_Questao = D.Questao_Codigo
 AND Q.Codigo_Questao = 1;
 
+SELECT * FROM Resposta_Alternativa;
+SELECT * FROM Alternativa;
 SELECT * FROM Discursiva;
 UPDATE Discursiva SET Correta = 2 WHERE Codigo_Discursiva = 1;
 
 UPDATE Discursiva SET Correta = 0 WHERE Codigo_Discursiva = 3;
+SELECT Codigo_Discursiva FROM Discursiva WHERE Alunos_Matricula = '201701' AND Questao_Codigo = 1;
+
+SELECT * FROM Alternativa;
+SELECT * FROM Questao;
+
+SELECT Codigo_Alternativa FROM Alternativa WHERE Questao_Codigo = 3 AND Correta = 1;
+SELECT Resposta FROM Resposta_Alternativa WHERE Alternativa_Alternativa_Codigo = 2 AND Alunos_Matricula = 201701 ;
+
+SELECT * FROM Questao WHERE Tipo_Codigo = 3;
+
+SELECT Codigo_Alternativa, Correta FROM Alternativa WHERE Questao_Codigo = 5 ORDER BY Codigo_Alternativa;
+SELECT Resposta FROM Resposta_Alternativa WHERE Alternativa_Alternativa_Codigo >= 7 AND Alternativa_Alternativa_Codigo <= 11 AND Alunos_Matricula = '201701' ORDER BY Alternativa_Alternativa_Codigo;
+
+SELECT count(*) FROM Questao Q, Questoes_has_Avaliacoes QA WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao AND QA.Avaliacoes_Codigo_Avaliacao = 1;
+(`Questoes_Codigo_Questao`, `Avaliacoes_Codigo_Avaliacao`)
