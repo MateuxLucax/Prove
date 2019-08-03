@@ -3,9 +3,51 @@
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$pdo -> exec("SET CHARACTER SET utf8");
 
-	echo gerarNota(1, '201701');
+	function notasDisciplinaTodos($cod_disciplina) {
+		// gera uma matriz que tem as notas de todos os alunos da disciplina
 
-	function gerarNota($cod_avaliacao, $matricula) {
+		// consulta quais os alunos que fazem parte da disciplina
+		$query = "SELECT Alunos_Matricula FROM Disciplina_has_Alunos WHERE Disciplina_Codigo_Disciplina = ".$cod_disciplina;
+		$consulta = $GLOBALS['pdo']->query($query);
+		$matriculas = array();
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			array_push($matriculas, $linha['Alunos_Matricula']);
+		}
+
+		$notas_alunos = array();
+		for ($i=0; $i < count($matriculas); $i++) { 
+			$notas_alunos[$i] = array();
+			$notas_alunos[$i][0] = $matriculas[$i];
+
+			$notas = notasDisciplinaAluno($cod_disciplina, $matriculas[$i]);
+			for ($j=0; $j < count($notas); $j++) { 
+				array_push($notas_alunos[$i], $notas[$j]);
+			}
+		}
+
+		return $notas_alunos;
+	}
+
+	function notasDisciplinaAluno($cod_disciplina, $matricula) {
+		// gera um array que tem todas as notas de um aluno na disciplina
+
+		// consulta os códigos das avaliações que são da disciplina
+		$query = "SELECT Codigo_Avaliacao FROM Avaliacoes WHERE Disciplina_Codigo_Disciplina = ".$cod_disciplina." ORDER BY Codigo_Avaliacao";
+		$consulta = $GLOBALS['pdo']->query($query);
+		$cod_avaliacoes = array();
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			array_push($cod_avaliacoes, $linha['Codigo_Avaliacao']);
+		}
+
+		$notas = array();
+		for ($i=0; $i < count($cod_avaliacoes); $i++) { 
+			array_push($notas, notaAvaliacao($cod_avaliacoes[$i], $matricula));
+		}
+
+		return $notas;
+	}
+
+	function notaAvaliacao($cod_avaliacao, $matricula) {
 		$correcao = correcaoAvaliacao($cod_avaliacao, $matricula);
 
 		$qtd_questoes = count($correcao);
