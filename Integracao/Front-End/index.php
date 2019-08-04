@@ -53,43 +53,23 @@
 					</div>
 				<?php } ?>
 
-				<ul class="collapsible">
+			
 					<?php
+						echo "<div class='row flex-wrap'>";
 						if (isset($disciplinas) && $contador > 0) {
-							for ($i=0; $i < $contador ; $i++) { ?> 
-								<li>
-	      					<div class="collapsible-header"><i class="material-icons">filter_drama</i> <?php echo $disciplinas[$i][1]; ?> </div>
-	      					<div class="collapsible-body">
-	      						<?php
-	      							$avaliacoes = selectPDO_discaval($disciplinas[$i][0], 'disciplina');
-
-	      							if(count($avaliacoes) > 7) $contador_aval = 7;
-	      							else $contador_aval = count($avaliacoes);
-
-	      							echo "<div class=\"collection\">";
-	      								echo "<a class=\"collection-item\" href='disciplina.php?codigo=".$disciplinas[$i][0]."'>Ver disciplina</a>";
-		      							for ($j=0; $j < $contador_aval; $j++) { ?>
-		      								<a href='avaliacao.php?codigo=<?php echo $avaliacoes[$j][2]; ?>' class="collection-item">
-		      									<?php echo $avaliacoes[$j][5].' — '.$avaliacoes[$j][3]; ?>
-		      								</a>
-		      							<?php }
-		      						echo "</div>";
-	      						?>
-
-	      						<!--<php
-	      							$avaliacoes = selectPDO_discaval($disciplinas[$i][0], 'disciplina');
-     									for ($i=0; $i < 7; $i++) { ?>
-    										
-     									?php }
-     								?>-->
-
-
-
-	      					</div>
-	    				</li>
-					<?php } }
+							for ($i=0; $i < $contador ; $i++) {
+								$cod = $disciplinas[$i][0];
+								$nome = $disciplinas[$i][1];
+								echo "<div class='card-panel col s6 m4 center-align'>";
+									echo "<a class='teal-text' href='disciplina.php?codigo=".$cod."'>";
+										echo "<p><i class='material-icons large'>web</i></p>";
+										echo "<h5 class='truncate'>".$nome."</h5>";
+									echo "</a>";
+								echo "</div>";
+							}
+						}
+						echo "</div>";
 					?>
-				</ul>
 				
 
 
