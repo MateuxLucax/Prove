@@ -56,10 +56,12 @@
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<!-- CSS -->
+	<link href="assets/css/login/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-	<header>
-	</header>
+	<header> <?php printHeader(); ?> </header>
 
 	<main>
 		<div class="container">

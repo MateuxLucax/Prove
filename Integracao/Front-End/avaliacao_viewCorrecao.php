@@ -57,47 +57,57 @@
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<!-- CSS -->
+	<link href="assets/css/login/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-	<div class="container">
-		
-		<div id="info-avaliacao">
-		<?php
-			echo "<p><b>Disciplina:</b> ".$disciplina."</p>";
-			echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
-			echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
-			echo "<hr/>";
-			echo "<p><b>Nome do aluno: </b> ".$_SESSION['nome']."</p>";
-			echo "<p><b>Matrícula do aluno: </b> ".$_SESSION['matricula']."</p>";
-			echo "<h5><b>Nota: </b>".notaAvaliacao($codigo, $_SESSION['matricula'])."</h5>";
-			echo "<hr/>";
-		?>
+	<header>
+		<?php printHeader(); ?>
+	</header>
 
-		</div>
-
-		<div id="avaliacao-correcao">
-			<?php correcaoAvaliacao_view($codigo, $_SESSION['matricula']); ?>
-		</div>
-
-		<?php
-			function aval_ainda_disponivel() {
-				$data_final=$GLOBALS['data_fim'];
-				$data_atual=date('Y-m-d H:i:s');
+	<main>
+		<div class="container">
 			
-				if(strtotime($data_final) > strtotime($data_atual)){
-					return true;
-				} else {
-					return false;
+			<div id="info-avaliacao">
+			<?php
+				echo "<p><b>Disciplina:</b> ".$disciplina."</p>";
+				echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
+				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
+				echo "<hr/>";
+				echo "<p><b>Nome do aluno: </b> ".$_SESSION['nome']."</p>";
+				echo "<p><b>Matrícula do aluno: </b> ".$_SESSION['matricula']."</p>";
+				echo "<h5><b>Nota: </b>".notaAvaliacao($codigo, $_SESSION['matricula'])."</h5>";
+				echo "<hr/>";
+			?>
+
+			</div>
+
+			<div id="avaliacao-correcao">
+				<?php correcaoAvaliacao_view($codigo, $_SESSION['matricula']); ?>
+			</div>
+
+			<?php
+				function aval_ainda_disponivel() {
+					$data_final=$GLOBALS['data_fim'];
+					$data_atual=date('Y-m-d H:i:s');
+				
+					if(strtotime($data_final) > strtotime($data_atual)){
+						return true;
+					} else {
+						return false;
+					}
 				}
-			}
-		?>
+			?>
 
-		<!--  Scripts-->
-		<script src="assets/js/jquery-2.1.1.min.js"></script>
-		<script src="assets/js/materialize.min.js"></script>
-		<script src="assets/js/init.js"></script>
+			
 
-	</div>
-	
+		</div>
+	</main>
+
+	<!--  Scripts-->
+	<script src="assets/js/jquery-2.1.1.min.js"></script>
+	<script src="assets/js/materialize.min.js"></script>
+	<script src="assets/js/init.js"></script>
 </body>
 </html>

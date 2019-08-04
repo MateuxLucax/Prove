@@ -53,74 +53,85 @@
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<!-- CSS -->
+	<link href="assets/css/login/login.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-	<div class="container">
-		
-		<?php if($codigo != '') { ?>
+	<header> <?php printHeader(); ?> </header>
 
-			<?php if(aval_ainda_disponivel()) {
-				if($_SESSION['tipo'] == 'aluno') {
-					$reg_disc_alun = selectPDO_discalun($cod_disciplina);
-					$alunos_na_disciplina = array();
-					for ($i=0; $i < count($reg_disc_alun); $i++) { 
-						array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
-					}
-					if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
-						?>
-						<form action="avaliacao_responder.php" method="post">
-							<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
-							<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
-							<button type="submit" class="btn waves-effect waves-light">Responder</button>
-						</form>
-						<?php
-					}
+	<main>	
+		<div class="container">
+			
+			<?php if($codigo != '') { ?>
+
+				<?php if(aval_ainda_disponivel()) {
+					if($_SESSION['tipo'] == 'aluno') {
+						$reg_disc_alun = selectPDO_discalun($cod_disciplina);
+						$alunos_na_disciplina = array();
+						for ($i=0; $i < count($reg_disc_alun); $i++) { 
+							array_push($alunos_na_disciplina, $reg_disc_alun[$i][0]);
+						}
+						if(in_array($_SESSION['matricula'], $alunos_na_disciplina)) {
+							?>
+							<form action="avaliacao_responder.php" method="post">
+								<input type="hidden" name="codigo" value="<?php echo $cod_avaliacao; ?>">
+								<input type="hidden" name="matricula" value="<?php echo $_SESSION['matricula']; ?>">
+								<button type="submit" class="btn waves-effect waves-light">Responder</button>
+							</form>
+							<?php
+						}
+					} 
 				} 
-			} 
 
-			if (!aval_ainda_disponivel() && $_SESSION['tipo'] == 'aluno') {
-				header("location:avaliacao_viewCorrecao.php?codigo=".$codigo);
-			}
-
-			// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
-			if($_SESSION['tipo'] == 'professor') {
-				if(prof_da_disciplina()) { // função está no fim do arquivo
-					echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_editar.php?codigo=".$codigo."\">Editar</a>";
-					
-					if(!aval_ainda_disponivel()) {
-						echo "<a class=\"btn waves-effect waves-light\" href=\"resposta_discursivaCorrecao.php?codigo=".$codigo."\">Corrigir discursivas</a>";
-					}	
+				if (!aval_ainda_disponivel() && $_SESSION['tipo'] == 'aluno') {
+					header("location:avaliacao_viewCorrecao.php?codigo=".$codigo);
 				}
-			}
 
-			?>
+				// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
+				if($_SESSION['tipo'] == 'professor') {
+					if(prof_da_disciplina()) { // função está no fim do arquivo
+						echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_editar.php?codigo=".$codigo."\">Editar</a>";
+						
+						if(!aval_ainda_disponivel()) {
+							echo "<a class=\"btn waves-effect waves-light\" href=\"resposta_discursivaCorrecao.php?codigo=".$codigo."\">Corrigir discursivas</a>";
+						}	
+					}
+				}
 
-			<div id="info-avaliacao">
-			<?php
-				echo "<p style='color:lightgrey'>#".$cod_avaliacao."</p>";
-				echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
-				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
-				echo "<p><b>Peso: </b>".$peso."</p>";
-				echo "<p><b>Embaralhar questões:</b> ".$embaralhar."</p>";
-			?>
-			</div>
-			
-			<hr/>			
-			
-			<div id="questoes">
-				<?php
-					gerar_formulario_questoes_visualizar($codigo); //função em funcoes
 				?>
-			</div>
 
-		<?php } else { ?>
+				<div id="info-avaliacao">
+				<?php
+					echo "<p style='color:lightgrey'>#".$cod_avaliacao."</p>";
+					echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
+					echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
+					echo "<p><b>Peso: </b>".$peso."</p>";
+					echo "<p><b>Embaralhar questões:</b> ".$embaralhar."</p>";
+				?>
+				</div>
+				
+				<hr/>			
+				
+				<div id="questoes">
+					<?php
+						gerar_formulario_questoes_visualizar($codigo); //função em funcoes
+					?>
+				</div>
 
-			<div id="erro_codigo">
-				<p><b>Erro: </b> a página não recebeu nenhum código. Adicione, no final da URL, <code>?codigo=[codigo da disciplina]</code></p>
-			</div>
+			<?php } else { ?>
 
-		<?php } ?>
-	</div>
+				<div id="erro_codigo">
+					<p><b>Erro: </b> a página não recebeu nenhum código. Adicione, no final da URL, <code>?codigo=[codigo da disciplina]</code></p>
+				</div>
+
+			<?php } ?>
+		</div>
+	</main>
+
+	<footer>
+
+	</footer>
 
 	<!--  Scripts-->
 	<script src="assets/js/jquery-2.1.1.min.js"></script>
