@@ -48,24 +48,24 @@
 				if($_SESSION['tipo'] == 'professor') {?>
 					<div class="row">
 
-						<div class="card-panel teal col s4 center-align">
+						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="serie_cadastro.php">
-								<p><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate">Série</h5>
+								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Série</h5>
 							</a>
 						</div>
 
-						<div class="card-panel teal col s4 center-align">
+						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="disciplina_cadastro.php">
-								<p><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate">Disciplina</h5>
+								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Disciplina</h5>
 							</a>
 						</div>
 
-						<div class="card-panel teal col s4 center-align">
+						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="avaliacao_cadastro.php">
-								<p><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate">Avaliação</h5>
+								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Avaliação</h5>
 							</a>
 						</div>
 
@@ -79,7 +79,7 @@
 							for ($i=0; $i < $contador ; $i++) {
 								$cod = $disciplinas[$i][0];
 								$nome = $disciplinas[$i][1];
-								echo "<div class='card-panel col s6 m4 center-align'>";
+								echo "<div class='card-panel col s12 m4 center-align'>";
 									echo "<a class='teal-text' href='disciplina.php?codigo=".$cod."'>";
 										echo "<p><i class='material-icons large'>web</i></p>";
 										echo "<h5 class='truncate'>".$nome."</h5>";
