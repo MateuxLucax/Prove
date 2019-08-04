@@ -55,6 +55,11 @@
 
 	}
 
+	function mediaDisciplinaAluno($cod_disciplina, $matricula) {
+		$notas = notasDisciplinaAluno($cod_disciplina, $matricula);
+		return round((array_sum($notas) / count($notas)), 1);
+	}
+
 	function notasDisciplinaAluno($cod_disciplina, $matricula) {
 		// gera um array que tem todas as notas de um aluno na disciplina
 

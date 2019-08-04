@@ -61,6 +61,7 @@
 		?>
 		<div class="container">
 			<div class="card-panel">
+				<p>OBS: Algumas notas podem estar baixas porque o(a) professor(a) ainda não corrigiu todas as respostas.</p>
 				<table class="highlight table-responsive centered">
 					<thead>
 						<tr>
@@ -87,6 +88,14 @@
 								}
 							echo "</tr>";
 						}
+
+						$media = mediaDisciplinaAluno($codigo, $_SESSION['matricula']);
+						$cor_media = $media >= 7 ? ' green lighten-2 ' : 'red lighten-2 ';
+						echo "<tr>";
+							echo "<td></td>";
+							echo "<td><b>Média</b></td>";
+							echo "<td class='".$cor_media."'>".$media."</td>";
+						echo "</tr>";
 						?>
 					</tbody>
 				</table>
