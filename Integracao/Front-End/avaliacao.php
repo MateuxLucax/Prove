@@ -78,6 +78,10 @@
 				} 
 			} 
 
+			if (!aval_ainda_disponivel() && $_SESSION['tipo'] == 'aluno') {
+				header("location:avaliacao_viewCorrecao.php?codigo=".$codigo);
+			}
+
 			// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
 			if($_SESSION['tipo'] == 'professor') {
 				if(prof_da_disciplina()) { // função está no fim do arquivo
