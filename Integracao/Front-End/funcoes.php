@@ -35,6 +35,17 @@ function printHeader() {
 	<?php
 }
 
+function printFooter() {
+	?>
+		<div class="footer-copyright">
+			<div class="container">
+				<span class="left" id="copyright-js"></span> &nbsp; <a target="_blank" href="https://github.com/MateuxLucax/Prove">Prove</a>
+				<span class="right"><a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a></span>
+			</div>
+		</div>
+	<?php
+}
+
 function gerarSelect($tabela, $selectName, $codigo, $value, $texto) {
 	$sql = "SELECT * FROM $tabela";
 

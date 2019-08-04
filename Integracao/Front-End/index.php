@@ -99,12 +99,7 @@
 	</main>
 
 	<footer class="page-footer">
-		<div class="footer-copyright">
-			<div class="container">
-				<span class="left" id="copyright-js"></span> &nbsp; <a target="_blank" href="https://github.com/MateuxLucax/Sicherheit">Prove</a>
-				<span class="right"><a target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a></span>
-			</div>
-		</div>
+		<?php printFooter(); ?>
 	</footer>
 
 	<!--  Scripts-->

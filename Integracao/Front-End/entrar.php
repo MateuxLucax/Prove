@@ -136,8 +136,8 @@
 	</center>
 	</main>
 
-	<footer>
-
+	<footer class="page-footer">
+		<?php printFooter(); ?>
 	</footer>
 
 	<!--  Scripts-->
