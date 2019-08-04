@@ -225,7 +225,7 @@
 
 	function correcaoAvaliacao_view($cod_avaliacao, $matricula) {
 		// consulta os códigos das questões da prova
-		$query = "SELECT Codigo_Questao, Texto, Enunciado FROM Questao Q, Questoes_has_Avaliacoes QA WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao AND QA.Avaliacoes_Codigo_Avaliacao = ".$cod_avaliacao." ORDER BY Codigo_Questao";
+		$query = "SELECT Codigo_Questao, Texto, Enunciado, Tipo_Codigo FROM Questao Q, Questoes_has_Avaliacoes QA WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao AND QA.Avaliacoes_Codigo_Avaliacao = ".$cod_avaliacao." ORDER BY Codigo_Questao";
 		$consulta = $GLOBALS['pdo']->query($query);
 		$questoes = array();
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
@@ -233,6 +233,7 @@
 			array_push($questoes[$i], $linha['Codigo_Questao']);
 			array_push($questoes[$i], $linha['Texto']);
 			array_push($questoes[$i], $linha['Enunciado']);
+			array_push($questoes[$i], $linha['Tipo_Codigo']);
 		}
 
 		$qtd_questoes = count($questoes);
@@ -251,8 +252,13 @@
 				echo "<p><b>".$noQuestao.")</b></p>";
 				if(isset($questoes[$i][1])) { echo "<p><b>Texto:</b> ".$questoes[$i][1]."</p>"; }
 				echo "<p><b>Enunciado: </b> ".$questoes[$i][2]."</p>";
+			if(jaRespondeu($questoes[$i][0], $questoes[$i][3], $matricula)) {
 				correcaoResposta_view($questoes[$i][0], $matricula);
 				echo "<p><b>Pontuação do aluno: </b> ".$nota_questao[$i]." de ".$valor_questao."</p>";
+			} else {
+				echo "<div class='row'><b class='col red-text text-darken-2'>O aluno não respondeu a questão</b></div>";
+				echo "<p><b>Pontuação do aluno: </b> 0 de ".$valor_questao."</p>";
+			}
 			echo "</div>";
 		}
 	}
@@ -471,6 +477,29 @@
 			return 0;
 		}
 	}
+
+
+
+	function jaRespondeu ($cod_questao, $tipo_questao, $matricula) {
+	
+	if ($tipo_questao == 1) {
+		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = ".$matricula." AND Questao_Codigo = ".$cod_questao;
+	} else {
+		$query = "SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
+		WHERE Alunos_Matricula = ".$matricula."
+		AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
+		AND A.Questao_Codigo = ".$cod_questao;
+	}
+
+	$consulta = $GLOBALS['pdo']->query($query);
+		
+		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+		$respondeu = $linha['Respondeu'];
+
+		if ($respondeu > 0) return true;
+		else return false;
+	}
 ?>
+
 
 
