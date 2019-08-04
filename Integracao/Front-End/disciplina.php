@@ -41,6 +41,7 @@
 	</div>
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="alunos">
+		<a href="disciplina_boletim.php?codigo=<?php echo $codigo; ?>">Boletim da disciplina</a>
 		<?php $reg_alun = selectPDO_discalun($codigo);
 			
 			

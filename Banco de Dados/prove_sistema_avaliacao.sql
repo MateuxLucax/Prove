@@ -495,4 +495,6 @@ INSERT INTO Disciplina_has_Alunos (Disciplina_Codigo_Disciplina, Alunos_Matricul
 (3,201771);
 
 SELECT * FROM Questao;
-UPDATE Avaliacoes SET Data_Fim = '2020-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;
+UPDATE Avaliacoes SET Data_Fim = '2018-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;
+
+SELECT Conteudo, Data_Fim FROM Avaliacoes WHERE Disciplina_Codigo_Disciplina = 2 ORDER BY Codigo_Avaliacao;
