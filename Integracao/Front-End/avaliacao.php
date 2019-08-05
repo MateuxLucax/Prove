@@ -85,7 +85,7 @@
 				} 
 
 				if (!aval_ainda_disponivel() && $_SESSION['tipo'] == 'aluno') {
-					header("location:avaliacao_viewCorrecao.php?codigo=".$codigo);
+					header("location:avaliacao_viewCorrecao_aluno.php?codigo=".$codigo);
 				}
 
 				// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
@@ -95,6 +95,7 @@
 						
 						if(!aval_ainda_disponivel()) {
 							echo "<a class=\"btn waves-effect waves-light\" href=\"resposta_discursivaCorrecao.php?codigo=".$codigo."\">Corrigir discursivas</a>";
+							echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_viewCorrecao_prof.php?codigo=".$codigo."\">Ver notas</a>";
 						}	
 					}
 				}

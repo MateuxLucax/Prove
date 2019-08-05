@@ -3,6 +3,16 @@
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$pdo -> exec("SET CHARACTER SET utf8");
 
+	function notasDisciplinaTodos_view($cod_disciplina) {
+		$notas = notasDisciplinaTodos($cod_disciplina);
+		for ($i=0; $i < count($notas); $i++) { 
+			for ($j=0; $j < count($notas[$i]); $j++) { 
+				echo $notas[$i][$j]." - ";
+			}
+			echo "<br/>";
+		}
+	}
+
 	function notasDisciplinaTodos($cod_disciplina) { // O MÁXIMO QUE O PROFESSOR VERÁ
 		// gera uma matriz que tem as notas de todos os alunos da disciplina
 
@@ -26,6 +36,63 @@
 		}
 
 		return $notas_alunos;
+	}
+
+	function notaTodasAvalProf_view($cod_avaliacao) {
+		$notas = notaTodasAvalProf($cod_avaliacao);
+		echo "<table class='centered highlight table-responsive'>";
+			echo "<thead>";
+				echo "<tr>";
+					echo "<th>Matrícula</th>";
+					echo "<th>Nome</th>";
+					echo "<th>Nota</th>";
+				echo "</tr>";
+			echo "</thead>";
+			echo "<tbody>";
+			for ($i=0; $i < count($notas); $i++) { 
+				$sql = "SELECT Nome FROM Alunos WHERE Matricula = ".$notas[$i][0];
+				$query = $GLOBALS['pdo']->query($sql);
+				$row = $query->fetch(PDO::FETCH_ASSOC);
+				$nome = $row['Nome'];
+
+				$cor = $notas[$i][1] >= 7 ? ' green lighten-2 ' : ' red lighten-2 ';
+
+				echo "<tr>";
+					echo "<td>".$notas[$i][0]."</td>";
+					echo "<td>".$nome."</td>";
+					echo "<td class='".$cor."'>".$notas[$i][1]."</td>";
+				echo "</tr>";
+			}
+			echo "</tbody>";
+		echo "</table>";
+	}
+
+	function notaTodasAvalProf($cod_avaliacao) {
+		// Para que o professor veja a nota de uma avaliação de todos os alunos
+
+		// Pega o código da disciplina da qual a avaliação informada faz parte
+		$sql = "SELECT Disciplina_Codigo_Disciplina FROM Avaliacoes WHERE Codigo_Avaliacao = ".$cod_avaliacao;
+		$query = $GLOBALS['pdo']->query($sql);
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+		$cod_disciplina = $row['Disciplina_Codigo_Disciplina'];
+
+		// Pega a matrícula de todos os alunos que fazem parte da disciplina
+		$sql = "SELECT Alunos_Matricula FROM Disciplina_has_Alunos WHERE Disciplina_Codigo_Disciplina = ".$cod_disciplina;
+		$query = $GLOBALS['pdo']->query($sql);
+		$matriculas = array();
+		for ($i=0; $row = $query->fetch(PDO::FETCH_ASSOC); $i++) { 
+			array_push($matriculas, $row['Alunos_Matricula']);
+		}
+
+		$notas = array();
+		for ($i=0; $i < count($matriculas); $i++) { 
+			$notas[$i] = array();
+			array_push ($notas[$i], $matriculas[$i]);
+			array_push ($notas[$i], notaAvaliacao($cod_avaliacao, $matricula));
+		}
+
+		return $notas;
+
 	}
 
 	function notaTodasDiscAluno($matricula) { // O MÁXIMO QUE O ALUNO VERÁ
