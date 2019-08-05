@@ -41,7 +41,7 @@
 	</div>
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="alunos">
-		<?php if($_SESSION['tipo'] == 'aluno ') { ?>
+		<?php if($_SESSION['tipo'] == 'aluno') { ?>
 			<a href="disciplina_boletim_aluno.php?codigo=<?php echo $codigo; ?>">Boletim da disciplina</a>
 		<?php } else if ($_SESSION['tipo'] == 'professor') { ?>
 			<a href="disciplina_boletim_prof.php?codigo=<?php echo $codigo; ?>">Boletim da disciplina</a>

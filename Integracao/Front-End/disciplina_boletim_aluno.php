@@ -32,7 +32,7 @@
 ?>
 <html>
 <head>
-	<title><?php echo $title ?></title> 
+	<title>Boletim da disciplina</title> 
 	<meta charset="utf-8">
 
 	<!-- Compiled and minified CSS -->
@@ -57,7 +57,7 @@
 	<main>	
 		<?php
 			$notas = notasDisciplinaAluno($codigo, $_SESSION['matricula']);
-			$avaliacao = select_avaliacoes($codigo);						
+			$avaliacoes = select_avaliacoes($codigo);						
 		?>
 		<div class="container">
 			<div class="card-panel">
@@ -74,14 +74,14 @@
 						<?php
 						for ($i=0; $i < count($notas); $i++) { 
 							$cor_nota = $notas[$i] >= 7 ? ' green lighten-2 ' : ' red lighten-2 ';
-							if(aval_ainda_disponivel($avaliacao[$i][1])) {
+							if(aval_ainda_disponivel($avaliacoes[$i][1])) {
 								$cor_data = 'yellow lighten-3';
 							} else $cor_data = '';
 
 							echo "<tr>";
-								echo "<td>".$avaliacao[$i][0]."</td>";
-								echo "<td class='".$cor_data."'>".$avaliacao[$i][1]."</td>";
-								if(aval_ainda_disponivel($avaliacao[$i][1])) {
+								echo "<td>".$avaliacoes[$i][0]."</td>";
+								echo "<td class='".$cor_data."'>".$avaliacoes[$i][1]."</td>";
+								if(aval_ainda_disponivel($avaliacoes[$i][1])) {
 									echo "<td> -- </td>";
 								} else {
 									echo "<td class='".$cor_nota."'> ".$notas[$i]." </td>";
@@ -134,50 +134,6 @@
 
 		return $avaliacoes;
 	}
-
-	function prof_da_disciplina() {
-		//echo $_SESSION['matricula'];
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo -> exec("SET NAMES utf8");
-
-		try {
-			// Primeiro se consulta o código da disciplina da qual a avaliação faz parte...
-			$query1 = "SELECT Disciplina_Codigo_Disciplina FROM ".$GLOBALS['tb_avaliacoes']." WHERE Codigo_Avaliacao = ".$GLOBALS['codigo'];
-			//var_dump($query1);
-
-			$consulta = $GLOBALS['pdo']->query($query1);
-
-			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
-				$cod_disciplina = $linha['Disciplina_Codigo_Disciplina'];
-			}
-
-			// ... então se consulta se o professor está nessa disciplina
-			$query2 = "SELECT P.Matricula ";
-			$query2 .= " FROM Professores P, Disciplinas D, Professores_has_Disciplina DP "; 
-			$query2 .= " WHERE P.Matricula = DP.Professores_Matricula ";
-			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
-			$query2 .= " AND D.Codigo_Disciplina = ".$cod_disciplina;
-			
-			$consulta = $GLOBALS['pdo']->query($query2);
-
-			$matriculas = array();
-			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
-				array_push($matriculas, $linha['Matricula']);
-			}
-
-			//var_dump($matriculas);
-
-			if (in_array($_SESSION['matricula'], $matriculas)) {
-				return 1;
-			} else {
-				return 0;
-			}
-		} catch (PDOException $e) {
-			echo "Erro: ".$e->getMessage();
-		}
-	}
-
 
 	function aval_ainda_disponivel($data_final) {
 		$data_atual=date('Y-m-d H:i:s');

@@ -500,3 +500,5 @@ UPDATE Avaliacoes SET Data_Fim = '2018-03-20 00:00:00' WHERE Codigo_Avaliacao > 
 SELECT Conteudo, Data_Fim FROM Avaliacoes WHERE Disciplina_Codigo_Disciplina = 2 ORDER BY Codigo_Avaliacao;
 
 SELECT * FROM Alunos;
+
+SELECT DA.Alunos_Matricula, A.Nome FROM Disciplina_has_Alunos DA, Alunos A WHERE DA.Disciplina_Codigo_Disciplina = 1 AND DA.Alunos_Matricula = A.Matricula ORDER BY DA.Alunos_Matricula;
