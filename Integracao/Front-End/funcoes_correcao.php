@@ -88,7 +88,7 @@
 		for ($i=0; $i < count($matriculas); $i++) { 
 			$notas[$i] = array();
 			array_push ($notas[$i], $matriculas[$i]);
-			array_push ($notas[$i], notaAvaliacao($cod_avaliacao, $matricula));
+			array_push ($notas[$i], notaAvaliacao($cod_avaliacao, $matriculas[$i]));
 		}
 
 		return $notas;
@@ -523,6 +523,7 @@
 		if(isset($cod_resposta)) {
 			// consulta a correção da resposta que o usuário deu
 			$query = "SELECT Resposta, Correta FROM Discursiva WHERE Codigo_Discursiva = ".$cod_resposta.";";
+			//echo $query;
 			//var_dump($query);
 			$consulta = $GLOBALS['pdo']->query($query);
 			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -534,7 +535,11 @@
 
 			$correcao = $linha['Correta'];
 
+			if(!isset($linha['Correta'])) $correcao = -1;
+
+
 			switch ($correcao) {
+				case -1: $cor = ' grey darken-2 '; $icon = ' help_outline ' ; $txt = ' Sem correção '; break;
 				case 0: $cor = ' red darken-2 '; $icon=' close '; $txt = 'Errado'; break;
 				case 1: $cor = ' yellow darken-3 '; $icon = ' waves '; $txt = 'Meio certo'; break;
 				case 2: $cor = ' green darken-2 '; $icon = ' done '; $txt = 'Certo'; break;

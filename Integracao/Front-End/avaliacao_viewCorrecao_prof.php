@@ -75,10 +75,6 @@
 				echo "<p><b>Conteúdo:</b> ".$conteudo."</p>";
 				echo "<p><b>Disponível entre</b> ".$data_inicio." <b>e</b> ".$data_fim."</p>";
 				echo "<hr/>";
-				echo "<p><b>Nome do aluno: </b> ".$_SESSION['nome']."</p>";
-				echo "<p><b>Matrícula do aluno: </b> ".$_SESSION['matricula']."</p>";
-				echo "<h5><b>Nota: </b>".notaAvaliacao($codigo, $_SESSION['matricula'])."</h5>";
-				echo "<hr/>";
 			?>
 
 			</div>
