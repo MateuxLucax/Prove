@@ -74,7 +74,7 @@
               <div class="row" style="margin-top: -2rem">
                 <div class="input-field col s12 m6">
                   <input id="matricula" name="matricula" type="text" class="validate" />
-                  <label for="matricula">Matrícula</label>
+                  <label for="matricula">Nome de usuário</label>
                 </div>
                   <div class="input-field col s12 m6">
                   <input id="email" name="email" type="email" class="validate" />

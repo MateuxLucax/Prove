@@ -50,7 +50,7 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<input id="matricula" name="matricula" type="text" class="validate">
-								<label for="matricula">Matrícula</label>
+								<label for="matricula">Nome de usuário</label>
 							</div>
 						</div>
 						<div class="row" style="margin-top: -2rem">
