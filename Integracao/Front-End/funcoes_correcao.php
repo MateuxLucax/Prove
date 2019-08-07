@@ -50,7 +50,7 @@
 			echo "</thead>";
 			echo "<tbody>";
 			for ($i=0; $i < count($notas); $i++) { 
-				$sql = "SELECT Nome FROM Alunos WHERE Matricula = ".$notas[$i][0];
+				$sql = "SELECT Nome FROM Alunos WHERE Matricula = '".$notas[$i][0]."'";
 				$query = $GLOBALS['pdo']->query($sql);
 				$row = $query->fetch(PDO::FETCH_ASSOC);
 				$nome = $row['Nome'];
@@ -99,7 +99,7 @@
 		// gera uma matriz com as notas de um aluno de todas as disciplinas em que está
 
 		// consulta de que disciplinas o aluno faz parte
-		$query = "SELECT Disciplina_Codigo_Disciplina FROM Disciplina_has_Alunos WHERE Alunos_Matricula = ".$matricula;
+		$query = "SELECT Disciplina_Codigo_Disciplina FROM Disciplina_has_Alunos WHERE Alunos_Matricula = '".$matricula."'";
 		$consulta = $GLOBALS['pdo']->query($query);
 		$cod_disciplinas = array();
 		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
@@ -456,7 +456,7 @@
 			if ($linha['Correta'] == 1) $correta = $linha['Codigo_Alternativa'];
 		}
 
-		$query2 = "SELECT Alternativa_Alternativa_Codigo, Resposta FROM Resposta_Alternativa WHERE Alternativa_Alternativa_Codigo >= ".$cod_alts[0]." AND Alternativa_Alternativa_Codigo <= ".$cod_alts[(count($cod_alts)-1)]." AND Alunos_Matricula = ".$matricula." ORDER BY Alternativa_Alternativa_Codigo";
+		$query2 = "SELECT Alternativa_Alternativa_Codigo, Resposta FROM Resposta_Alternativa WHERE Alternativa_Alternativa_Codigo >= ".$cod_alts[0]." AND Alternativa_Alternativa_Codigo <= ".$cod_alts[(count($cod_alts)-1)]." AND Alunos_Matricula = '".$matricula."' ORDER BY Alternativa_Alternativa_Codigo";
 		$consulta = $GLOBALS['pdo']->query($query2);
 		$alts_res = array();
 		for ($i=0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) { 
@@ -560,10 +560,10 @@
 	function jaRespondeu ($cod_questao, $tipo_questao, $matricula) {
 	
 	if ($tipo_questao == 1) {
-		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = ".$matricula." AND Questao_Codigo = ".$cod_questao;
+		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = '".$matricula."' AND Questao_Codigo = ".$cod_questao;
 	} else {
 		$query = "SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
-		WHERE Alunos_Matricula = ".$matricula."
+		WHERE Alunos_Matricula = '".$matricula."'
 		AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
 		AND A.Questao_Codigo = ".$cod_questao;
 	}

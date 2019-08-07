@@ -482,6 +482,9 @@ INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
 ('4', 1, 13),
 ('4-2+8-6', 1, 13);
 
+UPDATE Avaliacoes SET Data_Fim = '2028-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;
+SELECT * FROM Avaliacoes;
+
 INSERT INTO Professores_has_Disciplina (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES ('2017305998', 2), ('2017305998', 3);
 SELECT * FROM Disciplina_has_Alunos;
 SELECT * FROM Alunos;
@@ -502,3 +505,8 @@ SELECT Conteudo, Data_Fim FROM Avaliacoes WHERE Disciplina_Codigo_Disciplina = 2
 SELECT * FROM Alunos;
 
 SELECT DA.Alunos_Matricula, A.Nome FROM Disciplina_has_Alunos DA, Alunos A WHERE DA.Disciplina_Codigo_Disciplina = 1 AND DA.Alunos_Matricula = A.Matricula ORDER BY DA.Alunos_Matricula;
+
+SELECT * FROM Questao;
+INSERT INTO Questao VALUES (Enunciado, Texto) VALUES ();
+
+SELECT * FROM Avaliacoes;

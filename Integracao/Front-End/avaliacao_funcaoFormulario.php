@@ -132,10 +132,10 @@ function select_alternativas_formulario($cod_questao) {
 function alunoJaRespondeu ($cod_questao, $tipo_questao, $matricula) {
 	
 	if ($tipo_questao == 1) {
-		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = ".$matricula." AND Questao_Codigo = ".$cod_questao;
+		$query = "SELECT count(Alunos_Matricula) as 'Respondeu' FROM Discursiva WHERE Alunos_Matricula = '".$matricula."' AND Questao_Codigo = ".$cod_questao;
 	} else {
 		$query = "SELECT count(RA.Alunos_Matricula) as 'Respondeu' FROM Resposta_Alternativa RA, Alternativa A
-		WHERE Alunos_Matricula = ".$matricula."
+		WHERE Alunos_Matricula = '".$matricula."'
 		AND RA.Alternativa_Alternativa_Codigo = A.Codigo_Alternativa
 		AND A.Questao_Codigo = ".$cod_questao;
 	}

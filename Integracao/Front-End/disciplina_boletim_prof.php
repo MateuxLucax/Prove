@@ -77,6 +77,7 @@
 								for ($i=0; $i < count($avaliacoes); $i++) { 
 									echo "<th>".$avaliacoes[$i][1]."</th>";
 								}
+								echo "<th>MÉDIA</th>";
 							?>
 						</tr>
 					</thead>
@@ -88,12 +89,20 @@
 
 									
 
-
+									$soma_notas = 0;
+									$cnt_notas = 0;
 									for ($j=0; $j < count($avaliacoes); $j++) { 
 										$nota = notaAvaliacao($avaliacoes[$j][0], $alunos[$i][0]);
+										$soma_notas += $nota;
+										$cnt_notas++;
 										if ($nota >= 7) { $cor = ' green lighten-3 '; } else { $cor = ' red lighten-3'; }
 										echo "<td class='".$cor."'>".$nota."</td>";
 									}
+									$media = round(($soma_notas / $cnt_notas),1);
+
+									if ($media >= 7) { $cor = ' green lighten-3 '; } else { $cor = ' red lighten-3'; }
+									echo "<td class='".$cor."'>".$media."</td>";
+
 
 								echo "</tr>";
 							}

@@ -157,7 +157,7 @@ function insertPDO_resDisc() {
 }
 
 function jaRespondeu_disc() {
-	$sql = "SELECT Questao_Codigo FROM ".$GLOBALS['tb_res_discursiva']." WHERE Alunos_Matricula = ".$GLOBALS['matricula'];
+	$sql = "SELECT Questao_Codigo FROM ".$GLOBALS['tb_res_discursiva']." WHERE Alunos_Matricula = '".$GLOBALS['matricula']."'";
 
 	$consulta = $GLOBALS['pdo']->query($sql);
 
@@ -247,7 +247,7 @@ function insertPDO_resAlt() {
 }
 
 function jaRespondeu_alt() {
-	$sql = "SELECT Alternativa_Alternativa_Codigo FROM ".$GLOBALS['tb_res_alternativa']." WHERE Alunos_Matricula = ".$GLOBALS['matricula'];
+	$sql = "SELECT Alternativa_Alternativa_Codigo FROM ".$GLOBALS['tb_res_alternativa']." WHERE Alunos_Matricula = '".$GLOBALS['matricula']."'";
 
 	$consulta = $GLOBALS['pdo']->query($sql);
 
