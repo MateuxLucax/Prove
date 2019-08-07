@@ -9,12 +9,24 @@
 
 // Custom gradient background
 
-/*
-.gradient-green {
-    background: linear-gradient(to right, $primary-color-dark, $primary-color);
+
+.gradient-primary {
+	background-image: linear-gradient(to right bottom, #11abc1, #00b6c1, #00c0be, #1ccab8, #3ed3b0) !important;
 }
 
-*/
+
+.title {
+  @extend .nunito;
+  text-transform: uppercase;
+  &-minor {
+    text-transform: none; 
+  }
+}
+
+.icone-cadastro { 
+  height: 10rem;
+  margin-left: 1.5rem;
+}
 
 // Helpers
 
@@ -44,4 +56,17 @@
 
 .margin-top-small-minus {
   margin-top: -2rem !important;
+}
+
+.margin-top-thin {
+  margin-top: 1.5rem !important;
+}
+
+.logo-sidenav {
+  padding: 2rem 2rem .5rem   2rem;
+  width: 75%;
+}
+
+.justificar {
+  text-align: justify;
 }

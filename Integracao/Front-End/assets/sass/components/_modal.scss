@@ -11,7 +11,7 @@
   right: 0;
   background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
+  max-height: 90%;
   width: 55%;
   margin: auto;
   overflow-y: auto;
@@ -91,4 +91,93 @@
   max-height: 45%;
   border-radius: 0;
   will-change: bottom, opacity;
+}
+
+// Login modal
+
+.modal-login {
+	width: 30%;
+	height: 70%;
+	background-image: linear-gradient(to right bottom, #11abc1, #00b6c1, #00c0be, #1ccab8, #3ed3b0) !important;
+  @media #{$medium-and-down} {
+		width: 60%;
+  }
+  @media #{$small-and-down} {
+		width: 90%;
+		height: 80%;
+   }
+   &-avatar {
+     height: 10rem;
+     padding: 1rem;
+   }	 
+	.input-field label {
+		color: $branco !important;
+	}
+	.input-field input[type=text]:focus + label {
+		color: $branco !important;
+	}
+	.input-field input {
+		border-bottom: 1px solid $branco !important;
+	}
+	.input-field input[type=text]:focus {
+		border-bottom: 1px solid $branco !important;
+		color: $branco !important;
+		box-shadow: 0 1px 0 0 $branco !important;
+	}
+	.input-field input[type=text].valid {
+		color: $branco !important;
+		border-bottom: 1px solid $branco !important;
+		box-shadow: 0 1px 0 0 $branco !important;
+	}
+	.input-field input[type=password] {
+		color: $branco !important;
+		border-bottom: 1px solid $branco !important;
+		box-shadow: 0 1px 0 0 $branco !important;
+	}
+	.input-field input[type=text].invalid {
+		color: $branco !important;
+		border-bottom: 1px solid $branco !important;
+		box-shadow: 0 1px 0 0 $branco !important;
+	}
+	.input-field .prefix.active {
+		color: $branco !important;
+	}
+	&-link {
+		color: $branco !important;
+		font-weight: bold;
+		transition: all .3s ease-in-out;
+		&:hover {	
+			color: darken($branco, 10%) !important;
+		}
+	}
+	&-btn {
+		margin: 1rem auto 1rem auto;
+		border-radius: 2rem;
+		color: $branco;
+		border: .15rem solid $branco;
+		padding-bottom: 2.3rem;
+		background: transparent;
+		box-shadow: none;
+		transition: all .3s ease-in-out;
+		&:hover {
+			color: $branco;
+			background: transparent;
+			@extend .hoverable;
+		}
+		&:active, &:focus {
+			color: $branco;
+			background: transparent;
+			box-shadow: none;
+		}
+	}
+	&-box {
+		margin: 0px;
+		padding: 2rem;
+		float: left;
+		width:100%;
+		position:absolute;
+		top: 50%;
+		transform: translateY(-50%) translateX(-50%);
+		left:50%;
+	}
 }

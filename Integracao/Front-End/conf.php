@@ -1,7 +1,7 @@
 <?php
 	// Inicialização / conexão PDO
-	$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	//$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
+	//$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	// Tabelas do Banco de Dados
 	$tb_alunos = "Alunos";
