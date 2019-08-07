@@ -1,0 +1,27 @@
+header, main, footer {
+    padding-left: 300px !important;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0 !important;
+    }
+ }
+
+ 
+.disciplinas {
+    padding: 2rem;
+    @media only screen and (max-width : 992px) {
+        padding: 0;
+        &-footer {
+            margin: auto 1rem auto .5rem;
+        }
+    }
+    &-footer {
+        margin: auto 2.2rem auto 2.2rem;
+    }
+}
+
+.logo-sidenav {
+    padding: 1rem 0rem 0 0rem !important    ;
+}
