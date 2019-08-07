@@ -103,10 +103,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="input-field col s12 m6 l4">
-                  <input id="peso" name="peso" min="1" type="number" class="validate" />
-                  <label for="peso">Peso</label>
-                </div>
               </div>
               <div class="row">
                 <div class="input-field col s12 m6">
