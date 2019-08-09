@@ -91,7 +91,7 @@
 				// Restrição para que o botão "avaliacao_editar.php" seja mostrado apenas a professores
 				if($_SESSION['tipo'] == 'professor') {
 					if(prof_da_disciplina()) { // função está no fim do arquivo
-						echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_editar.php?codigo=".$codigo."\">Editar</a>";
+						echo "<a class=\"btn waves-effect waves-light\" href=\"avaliacao_cadastro.php?codigo=".$codigo."\">Editar</a>";
 						
 						if(!aval_ainda_disponivel()) {
 							echo "<a class=\"btn waves-effect waves-light\" href=\"resposta_discursivaCorrecao.php?codigo=".$codigo."\">Corrigir discursivas</a>";

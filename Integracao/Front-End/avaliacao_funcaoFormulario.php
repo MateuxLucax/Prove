@@ -151,61 +151,69 @@ function alunoJaRespondeu ($cod_questao, $tipo_questao, $matricula) {
 
 
 
-function gerar_formulario_questoes_visualizar($cod_avaliacao) {
-	// consulta o código das questoes que fazem parte da avaliação
-	$query1 = "SELECT Questoes_Codigo_Questao FROM Questoes_has_Avaliacoes WHERE Avaliacoes_Codigo_Avaliacao = ".$cod_avaliacao;
-	$consulta = $GLOBALS['pdo']->query($query1);
-	$cod_questoes = array();
-	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
-		array_push($cod_questoes, $linha['Questoes_Codigo_Questao']);
-	}
+function gerar_formulario_questoes_visualizar($cod_avaliacao, $modo_view='') {
+	$query0 = "SELECT count(Questoes_Codigo_Questao) as 'qtd' FROM Questoes_has_Avaliacoes WHERE Avaliacoes_Codigo_Avaliacao = ".$cod_avaliacao;
+	$consulta = $GLOBALS['pdo']->query($query0);
+	$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+	$qtdQuestoes = $linha['qtd'];
 
-	// consulta as questões e gera o formulário de visualização
-	$query2 = "SELECT Codigo_Questao, Texto, Enunciado, Tipo_Codigo FROM Questao WHERE Codigo_Questao >= ".$cod_questoes[0]." AND Codigo_Questao <= ".$cod_questoes[(count($cod_questoes)-1)]." ORDER BY Codigo_Questao";
-	$consulta = $GLOBALS['pdo']->query($query2);
-	$questoes = array();
-	for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
-		$questoes[$i] = array();
-		array_push($questoes[$i], $linha['Codigo_Questao']);
-		array_push($questoes[$i], $linha['Texto']);
-		array_push($questoes[$i], $linha['Enunciado']);
-		array_push($questoes[$i], $linha['Tipo_Codigo']);
-	}
+	if($qtdQuestoes > 0)
+	{
+		$query = "SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado, Q.Tipo_Codigo FROM Questao Q, Questoes_has_Avaliacoes QA WHERE QA.Avaliacoes_Codigo_Avaliacao = ".$cod_avaliacao." AND QA.Questoes_Codigo_Questao = Q.Codigo_Questao ";
+		$consulta = $GLOBALS['pdo']->query($query);
+		$questoes = array();
+		for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
+			$questoes[$i] = array();
+			array_push($questoes[$i], $linha['Codigo_Questao']);
+			array_push($questoes[$i], $linha['Texto']);
+			array_push($questoes[$i], $linha['Enunciado']);
+			array_push($questoes[$i], $linha['Tipo_Codigo']);
+		}
 
-	// gera o formulário de visualização
-	$noQuestao = 0;
-	for ($i=0; $i < count($questoes); $i++) { 
-		$noQuestao++;
-		echo "<div class='card-panel'>";
-			echo "<p><b>".$noQuestao.")</b><p>";
-			if(isset($questoes[$i][1])) { echo "<p><b>Texto: </b> ".$questoes[$i][1]."</p>"; }
-			echo "<p><b>Enunciado: </b> ".$questoes[$i][2]."</p>";
+		//var_dump($questoes);
 
-			if ($questoes[$i][3] == 1) {
-				echo "<textarea class='materialize-textarea' disabled></textarea>";
-			} else {
-				if ($questoes[$i][3] == 2) { $tipo = 'radio'; }
-				else if ($questoes[$i][3] == 3) { $tipo = 'checkbox'; }
+		// gera o formulário de visualização
+		$noQuestao = 0;
+		for ($i=0; $i < count($questoes); $i++) { 
+			$noQuestao++;
+			echo "<div class='card-panel left-align'>";
+				echo "<p><b>".$noQuestao.")</b><p>";
+				if(isset($questoes[$i][1])) { echo "<p><b>Texto: </b> ".$questoes[$i][1]."</p>"; }
+				echo "<p><b>Enunciado: </b> ".$questoes[$i][2]."</p>";
 
-				// consulta as alternativas que fazem parte da questão
-				$query3 = "SELECT Descricao FROM Alternativa WHERE Questao_Codigo = ".$questoes[$i][0];
-				$consulta = $GLOBALS['pdo']->query($query3);
-				$alternativas = array();
-				for ($j = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $j++) {
-					array_push($alternativas, $linha['Descricao']);
+				if ($questoes[$i][3] == 1) {
+					echo "<textarea class='materialize-textarea' disabled></textarea>";
+				} else {
+					if ($questoes[$i][3] == 2) { $tipo = 'radio'; }
+					else if ($questoes[$i][3] == 3) { $tipo = 'checkbox'; }
+
+					// consulta as alternativas que fazem parte da questão
+					$query3 = "SELECT Descricao FROM Alternativa WHERE Questao_Codigo = ".$questoes[$i][0];
+					$consulta = $GLOBALS['pdo']->query($query3);
+					$alternativas = array();
+					for ($j = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $j++) {
+						array_push($alternativas, $linha['Descricao']);
+					}
+
+					// gera o radio/checkbox de alternativas
+					for ($j=0; $j < count($alternativas); $j++) { 
+						echo "<p>
+							<label>
+								<input type=".$tipo." disabled/>
+								<span>".$alternativas[$j]."</span>
+							</label>
+						</p>";
+					}
 				}
-
-				// gera o radio/checkbox de alternativas
-				for ($j=0; $j < count($alternativas); $j++) { 
-					echo "<p>
-						<label>
-							<input type=".$tipo." disabled/>
-							<span>".$alternativas[$j]."</span>
-						</label>
-					</p>";
+				if($modo_view == 'professor')
+				{	
+					echo "<a class='btn red waves-effect waves-light' href='avaliacao_pdo.php?acao=deletar_questao&q=".$questoes[$i][0]."&a=".$cod_avaliacao."'><i class='material-icons left'>close</i>Remover</a>";
 				}
-			}
-		echo "</div>";
+			echo "</div>";
+		}
+	} else 
+	{
+		echo '<div><i>A avaliação ainda não tem questões.</i></div>';
 	}
 }
 

@@ -13,11 +13,35 @@ require_once "autoload.php";
 if (!$acao == '') {	
 	echo "Ação: ".$acao."<br>";
 	
+	if ($acao == 'Cadastrar')
+	{
+		$data_fim = $_POST['dataFinal'];
+		$data_fim = str_replace('/', '-', $data_fim);
+		$data_fim = date('Y-m-d', strtotime($data_fim));
+		$data_fim .= " ".$_POST['horarioFinal'].":00";
+
+		$data_inicio = $_POST['dataInicio'];
+		$data_inicio = str_replace('/', '-', $data_inicio);
+		$data_inicio = date('Y-m-d', strtotime($data_inicio));
+		$data_inicio .= " ".$_POST['horarioInicio'].":00";
+		
+	} else 
+	{
+		if(isset($_POST['dataFim']))
+		{
+			$data_fim = $_POST['dataFim'];
+		}		
+		if (isset($_POST['dataInicio']))
+		{
+			$data_inicio = $_POST['dataInicio'];	
+		} 
+	}
+
 	$avaliacao = new Avaliacao;
 	if(isset($_POST['Codigo_Avaliacao'])) $avaliacao->setCodigo($_POST['Codigo_Avaliacao']);
 	if(isset($_POST['conteudo'])) $avaliacao->setConteudo($_POST['conteudo']);
-	if(isset($_POST['dataInicio'])) $avaliacao->setDataInicio($_POST['dataInicio']);
-	if(isset($_POST['dataFim'])) $avaliacao->setDataFim($_POST['dataFim']);
+	if(isset($data_inicio)) $avaliacao->setDataInicio($data_inicio);
+	if(isset($data_fim)) $avaliacao->setDataFim($data_fim);
 	if(isset($_POST['peso'])) $avaliacao->setPeso($_POST['peso']);
 	if(isset($_POST['embaralhar'])) $avaliacao->setEmbaralhar($_POST['embaralhar']);
 	if(isset($_POST['Disciplina_Codigo_Disciplina'])) $disciplina = $_POST['Disciplina_Codigo_Disciplina'];
@@ -37,9 +61,11 @@ $pdo -> exec("SET CHARACTER SET utf8");
 try {
 	switch ($acao) {
 		case 'cadastrar':
+		case 'Cadastrar':
 			insertPDO_aval();
 			break;
 		case 'editar':
+		case 'Editar':
 			updatePDO_aval();
 			break;
 		case 'deletar':
@@ -47,6 +73,9 @@ try {
 			break;
 		case 'cadastrar_questao':
 			insertPDO_avalques();
+			break;
+		case 'deletar_questao':
+			deletePDO_avalques();
 			break;
 	}	
 } catch (PDOException $e) {
@@ -118,19 +147,20 @@ function selectPDO_aval_table ($registros) {
 }
 
 function insertPDO_aval() {
-	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Peso, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Peso, :Embaralhar, :Disciplina)");
+	$sql = "INSERT INTO ".$GLOBALS['tb_avaliacoes']." (Conteudo, Data_Inicio, Data_Fim, Embaralhar, Disciplina_Codigo_Disciplina) VALUES (:Conteudo, :Data_Inicio, :Data_Fim, :Embaralhar, :Disciplina)";
+	//var_dump ($sql);
+
+	$stmt = $GLOBALS['pdo']->prepare($sql);
 
 	$stmt->bindParam(':Conteudo', $conteudo);
 	$stmt->bindParam(':Data_Inicio', $data_inicio);
 	$stmt->bindParam(':Data_Fim', $data_fim);
-	$stmt->bindParam(':Peso', $peso);
 	$stmt->bindParam(':Embaralhar', $embaralhar);
 	$stmt->bindParam(':Disciplina', $disciplina);
 
 	$conteudo = $GLOBALS['avaliacao']->getConteudo();
 	$data_inicio = $GLOBALS['avaliacao']->getDataInicio();
 	$data_fim = $GLOBALS['avaliacao']->getDataFim();
-	$peso = $GLOBALS['avaliacao']->getPeso();
 	$embaralhar = $GLOBALS['avaliacao']->getEmbaralhar();
 	$disciplina = $_POST['Disciplina_Codigo_Disciplina'];
 
@@ -144,14 +174,13 @@ function insertPDO_aval() {
 }
 
 function updatePDO_aval() {
-	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Peso = :Peso, Embaralhar = :Embaralhar, Disciplina_Codigo_Disciplina = :Disciplina WHERE Codigo_Avaliacao = :Codigo");
-
+	$stmt = $GLOBALS['pdo']->prepare("UPDATE ".$GLOBALS['tb_avaliacoes']." SET Conteudo = :Conteudo, Data_Inicio = :Data_Inicio, Data_Fim = :Data_Fim, Embaralhar = :Embaralhar, Disciplina_Codigo_Disciplina = :Disciplina WHERE Codigo_Avaliacao = :Codigo");
 
 	$stmt->bindParam(':Codigo', $codigo);
 	$stmt->bindParam(':Conteudo', $conteudo);
 	$stmt->bindParam(':Data_Inicio', $data_inicio);
 	$stmt->bindParam(':Data_Fim', $data_fim);
-	$stmt->bindParam(':Peso', $peso);
+	//$stmt->bindParam(':Peso', $peso);
 	$stmt->bindParam(':Embaralhar', $embaralhar);
 	$stmt->bindParam(':Disciplina', $disciplina);
 	
@@ -259,35 +288,99 @@ function selectPDO_avalques_table ($registros) {
 }
 
 function insertPDO_avalques() {
-	$questoes = selectPDO_avalques('só_questão'); // Não faz o SELECT com a relação com a avaliação
-	if(count($questoes) > 0) {
-		$proxCodigo = $questoes[(count($questoes)-1)][2] + 1;
-	} else {
-		$proxCodigo = 1;
-	}
+	$cod_avaliacao = $_POST['cod_avaliacao'];
+	//echo $cod_avaliacao;
 
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_questoes']." (Enunciado, Texto, Tipo_Codigo) VALUES (:Enunciado, :Texto, :Tipo_Codigo)");
 
-	$stmt->bindParam(':Enunciado', $_POST['Enunciado']);
-	$stmt->bindParam(':Texto', $_POST['Texto']);
+	$stmt->bindParam(':Enunciado', $_POST['enunciado']);
+	$stmt->bindParam(':Texto', $_POST['texto']);
 	$stmt->bindParam(':Tipo_Codigo', $_POST['Tipo_Codigo']);
-		
+
 	$stmt->execute();
 
-	echo "Linhas afetadas: ".$stmt->rowCount();
+	echo "Linhas afetadas (questão criada): ".$stmt->rowCount();
 
 	//// Adicionar questão na avaliação
 
+	$sql = "SELECT Codigo_Questao FROM Questao ORDER BY Codigo_Questao";
+	$query = $GLOBALS['pdo']->query($sql);
+	while ($row = $query->fetch(PDO::FETCH_ASSOC))
+	{
+		$cod_questao = $row['Codigo_Questao']; // não fica num array, o valor atualiza a cada loop e no final fica com o código da última questão registrada
+	}
+
 	$stmt = $GLOBALS['pdo']->prepare("INSERT INTO ".$GLOBALS['tb_aval_ques']." (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES (:Questao, :Avaliacao)");
 
-	$stmt->bindParam(':Questao', $proxCodigo);
-	$stmt->bindParam(':Avaliacao', $_POST['Avaliacao_Codigo_Avaliacao']);
+	$stmt->bindParam(':Questao', $cod_questao);
+	$stmt->bindParam(':Avaliacao', $cod_avaliacao);
 		
 	$stmt->execute();
 
-	echo "Linhas afetadas: ".$stmt->rowCount();	
+	echo "Linhas afetadas (foi p/ prova): ".$stmt->rowCount();
 
-	//header("location:avaliacao.php?codigo=".$);
+	if($_POST['Tipo_Codigo'] == 1)
+	{
+		//header("location:avaliacao_cadastro.php?codigo=".$codigo);
+	} else 	if ($_POST['Tipo_Codigo'] == 2)
+	{
+		$qtd_alts = $_POST['qtdUnica'];
+
+		for ($i=1; $i <= $qtd_alts; $i++)
+		{ 
+			$index_desc = 'alternativaUnica-'.$i;
+			$descricao = $_POST[$index_desc];
+			$correta = $_POST['alternativaUnica-correta'];
+
+			if ($i == $correta)
+				$correta = 1;
+			else
+				$correta = 0;
+
+			$sql = "INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES (:Descricao, :Correta, :Questao_Codigo)";
+
+			$stmt = $GLOBALS['pdo']->prepare($sql);
+
+			$stmt->bindParam(':Descricao', $descricao);
+			$stmt->bindParam(':Correta', $correta);
+			$stmt->bindParam(':Questao_Codigo', $cod_questao);
+
+			$stmt->execute();
+
+			echo "Linhas afetadas (cadastro de alternativa): ".$stmt->rowCount()."<br/>";
+
+			header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
+		}
+	} else if ($_POST['Tipo_Codigo'] == 3)
+	{
+		$qtd_alts = $_POST['qtdMultipla'];
+
+		for ($i=1; $i <= $qtd_alts; $i++)
+		{ 
+			$index_desc = 'alternativaMultipla-'.$i;
+			$descricao = $_POST[$index_desc];
+			$correta = $_POST['alternativaMultipla-correta'];
+
+			if ($i == $correta)
+				$correta = 1;
+			else
+				$correta = 0;
+
+			$sql = "INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES (:Descricao, :Correta, :Questao_Codigo)";
+
+			$stmt = $GLOBALS['pdo']->prepare($sql);
+
+			$stmt->bindParam(':Descricao', $descricao);
+			$stmt->bindParam(':Correta', $correta);
+			$stmt->bindParam(':Questao_Codigo', $cod_questao);
+
+			$stmt->execute();
+
+			echo "Linhas afetadas (cadastro de alternativa): ".$stmt->rowCount()."<br/>";
+
+			header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
+		}
+	}
 }
 
 function selectPDO_avalques_all($codigo) {
@@ -340,6 +433,27 @@ function selectPDO_avalques_all($codigo) {
 
 	return $registros;
 
+}
+
+function deletePDO_avalques ()
+{
+	$cod_questao = $_GET['q'];
+	$cod_avaliacao = $_GET['a'];
+
+	$sql = "DELETE FROM Questoes_has_Avaliacoes WHERE Questoes_Codigo_Questao = :Q AND Avaliacoes_Codigo_Avaliacao = :A";
+
+	var_dump($sql);
+
+	$stmt = $GLOBALS['pdo']->prepare($sql);
+
+	$stmt->bindParam(":A",$cod_avaliacao);
+	$stmt->bindParam(":Q",$cod_questao);
+
+	$stmt->execute();
+
+	echo "linhas afetadas ".$stmt->rowCount();
+
+	header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
 }
 
 
