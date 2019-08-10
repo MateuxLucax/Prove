@@ -14,7 +14,7 @@
 ?>
     <div class="col s2" style="margin-top: 1.75rem;">
         <label>
-            <input type="checkbox" name="alternativaMultipla" value="<?php echo $i + 1?>" />
+            <input type="checkbox" name="alternativaMultipla-correta[]" value="<?php echo $i + 1?>" required/>
             <span></span>
         </label>
     </div>
@@ -22,7 +22,7 @@
     <div class="col s10">    
         <div class="input-field">
             <input name="alternativaMultipla-<?php echo $i + 1 ?>" id="alternativaMultipla-<?php echo $i + 1 ?>" type="text" class="validate">
-            <label for="alternativaMultipla[]">Alternativa <?php echo $i + 1 ?></label>
+            <label for="alternativaMultipla">Alternativa <?php echo $i + 1 ?></label>
         </div>
     </div>
 

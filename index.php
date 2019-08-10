@@ -79,10 +79,11 @@
 							for ($i=0; $i < $contador ; $i++) {
 								$cod = $disciplinas[$i][0];
 								$nome = $disciplinas[$i][1];
+								$serie = $disciplinas[$i][2];
 								echo "<div class='card-panel col s12 m4 center-align'>";
 									echo "<a class='teal-text' href='disciplina.php?codigo=".$cod."'>";
 										echo "<p><i class='material-icons large'>web</i></p>";
-										echo "<h5 class='truncate'>".$nome."</h5>";
+										echo "<h5 class='truncate'><small>".$serie." - </small>".$nome."</h5>";
 									echo "</a>";
 								echo "</div>";
 							}
@@ -111,23 +112,26 @@
 		function selectDisciplinas($matricula,$tipo) {
 			$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$pdo->exec("SET NAMES utf8");
 
 			try {
 				if($tipo == 'aluno') {
-					$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_alunos'].' A, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_alun'].' AD
+					$sql = 'select D.Codigo_Disciplina, D.Nome, S.Descricao FROM '.$GLOBALS['tb_alunos'].' A, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_alun'].' AD, Serie S
 					WHERE AD.Alunos_Matricula = A.Matricula
 					AND AD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
-					AND A.Matricula = \''.$matricula.'\' ';
+					AND A.Matricula = \''.$matricula.'\' 
+					AND S.Codigo_Serie = D.Serie_Codigo_Serie ORDER BY S.Codigo_Serie';
 				} else {
-					$sql = 'select D.Codigo_Disciplina, D.Nome FROM '.$GLOBALS['tb_professores'].' P, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_prof'].' PD
+					$sql = 'select D.Codigo_Disciplina, D.Nome, S.Descricao FROM '.$GLOBALS['tb_professores'].' P, '.$GLOBALS['tb_disciplinas'].' D, '.$GLOBALS['tb_disc_prof'].' PD, Serie S
 					WHERE PD.Professores_Matricula = P.Matricula
 					AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
-					AND P.Matricula = \''.$matricula.'\' ';
+					AND P.Matricula = \''.$matricula.'\' 
+					AND S.Codigo_Serie = D.Serie_Codigo_Serie ORDER BY S.Codigo_Serie';
 				}
 
 				//var_dump($sql); echo "<br>";
 		
-				$consulta = $GLOBALS['pdo']->query($sql);
+				$consulta = $pdo->query($sql);
 		
 				$registros = array();
 		
@@ -135,6 +139,7 @@
 					$registros[$i] = array();
 					array_push($registros[$i], $linha['Codigo_Disciplina']);
 					array_push($registros[$i], $linha['Nome']);
+					array_push($registros[$i], $linha['Descricao']);
 				}
 		
 				return $registros;

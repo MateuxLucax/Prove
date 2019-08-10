@@ -54,8 +54,16 @@ function gerarSelect($tabela, $selectName, $codigo, $value, $texto) {
 	echo "<select name='$selectName'>";
 	while ($row = mysqli_fetch_array($result)) {
 
-		echo "<option value=".$row["$value"].">".$row["$texto"]."</option>";
-		
+		if ($selectName == 'Disciplina_Codigo_Disciplina')
+		{
+			$sql2 = "SELECT Descricao FROM Serie WHERE Codigo_Serie = ".$row["Serie_Codigo_Serie"];
+			$result2 = mysqli_query($GLOBALS['conexao'], $sql2);
+			$row2 = mysqli_fetch_array($result2);
+			echo "<option value=".$row["$value"].">".$row2['Descricao']." - ".$row["$texto"]."</option>";	
+		} else 
+		{
+			echo "<option value=".$row["$value"].">".$row["$texto"]."</option>";
+		}				
 	}
 	echo "</select>";
 }

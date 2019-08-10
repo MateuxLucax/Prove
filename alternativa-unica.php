@@ -14,7 +14,7 @@
 ?>
     <div class="col s2" style="margin-top: 1.5rem;">
         <label>
-            <input name="alternativaUnica-correta" class="with-gap" type="radio" value=<?php echo $i + 1?> />
+            <input name="alternativaUnica-correta" class="with-gap" type="radio" value=<?php echo $i + 1?> required/>
             <span></span>
         </label>
     </div>

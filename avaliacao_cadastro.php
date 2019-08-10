@@ -75,7 +75,10 @@
 					<div class="col s12"> 
 						<h3 class="title prove-text"><?php echo $acao; ?> Prova</h3>
 					</div>
-					<a class="btn waves-light waves-effect" href="avaliacao.php?codigo=<?php echo $codigo ?>">Voltar para prova</a>
+					<?php if($acao == 'Editar')
+					{ ?>
+						<a class="btn waves-light waves-effect" href="avaliacao.php?codigo=<?php echo $codigo ?>">Voltar para prova</a>
+					<?php } ?>
 					<div class="col s12 container">
 						<form action="avaliacao_pdo.php" method="POST">
 							<input type="hidden" name="Codigo_Avaliacao" id="Codigo_Avaliacao" value="<?php echo $cod_avaliacao; ?>">
@@ -257,7 +260,12 @@
 				<?php } ?>
 				
 				<div>
-					<?php gerar_formulario_questoes_visualizar($codigo, 'professor'); ?>
+					<?php
+						if (isset($codigo))
+						{
+							gerar_formulario_questoes_visualizar($codigo, 'professor');
+						}
+					?>
 				</div>
 				
 			</div>

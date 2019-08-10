@@ -56,7 +56,7 @@ if (!$acao == '') {
 
 $pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo -> exec("SET CHARACTER SET utf8");
+$pdo -> exec("SET NAMES utf8");
 
 try {
 	switch ($acao) {
@@ -321,7 +321,7 @@ function insertPDO_avalques() {
 
 	if($_POST['Tipo_Codigo'] == 1)
 	{
-		//header("location:avaliacao_cadastro.php?codigo=".$codigo);
+		header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
 	} else 	if ($_POST['Tipo_Codigo'] == 2)
 	{
 		$qtd_alts = $_POST['qtdUnica'];
@@ -349,7 +349,7 @@ function insertPDO_avalques() {
 
 			echo "Linhas afetadas (cadastro de alternativa): ".$stmt->rowCount()."<br/>";
 
-			header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
+			//header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
 		}
 	} else if ($_POST['Tipo_Codigo'] == 3)
 	{
@@ -357,11 +357,12 @@ function insertPDO_avalques() {
 
 		for ($i=1; $i <= $qtd_alts; $i++)
 		{ 
+
 			$index_desc = 'alternativaMultipla-'.$i;
 			$descricao = $_POST[$index_desc];
 			$correta = $_POST['alternativaMultipla-correta'];
 
-			if ($i == $correta)
+			if (in_array($i, $correta))
 				$correta = 1;
 			else
 				$correta = 0;
@@ -451,6 +452,18 @@ function deletePDO_avalques ()
 
 	$stmt->execute();
 
+	echo "linhas afetadas ".$stmt->rowCount();
+
+	$sql = "DELETE FROM Alternativa WHERE Questao_Codigo = :Q";
+	$stmt = $GLOBALS['pdo']->prepare($sql);
+	$stmt->bindParam(":Q",$cod_questao);
+	$stmt->execute();
+	echo "linhas afetadas ".$stmt->rowCount();
+
+	$sql = "DELETE FROM Questao WHERE Codigo_Questao = :Q";
+	$stmt = $GLOBALS['pdo']->prepare($sql);
+	$stmt->bindParam(":Q",$cod_questao);
+	$stmt->execute();
 	echo "linhas afetadas ".$stmt->rowCount();
 
 	header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);

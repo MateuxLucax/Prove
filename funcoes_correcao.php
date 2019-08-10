@@ -243,6 +243,7 @@
 
 		// consulta se o aluno selecionou a alt_correta (a consulta retorna 1) ou se não selecionou (retorna 0) e a função já retorna isso
 		$query2 = "SELECT Resposta FROM Resposta_Alternativa WHERE Alternativa_Alternativa_Codigo = ".$alt_correta." AND Alunos_Matricula = '".$matricula."'";
+		var_dump($query2);
 		$consulta = $GLOBALS['pdo']->query($query2);
 		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
 		return $linha['Resposta'];

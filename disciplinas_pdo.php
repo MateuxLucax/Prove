@@ -26,6 +26,7 @@ if ($acao != '' && $acao != 'editar_disciplina') {
 
 $pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo->exec("SET NAMES utf8");
 
 try {
 	switch ($acao) {
@@ -498,6 +499,16 @@ function selectPDO_discaval_table ($registros) {
 }
 
 function deletePDO_discaval($avaliacao, $disciplina) {
+####////
+	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM Questoes_has_Avaliacoes WHERE Avaliacoes_Codigo_Avaliacao = :Avaliacao");
+
+	$stmt->bindParam(":Avaliacao", $avaliacao);
+
+	$stmt->execute();
+
+	echo "Linhas afetadas (remover questoes da avaliacao): ".$stmt->rowCount();
+
+####////
 	$stmt = $GLOBALS['pdo']->prepare("DELETE FROM ".$GLOBALS['tb_avaliacoes']." WHERE Codigo_Avaliacao = :Codigo_Avaliacao AND Disciplina_Codigo_Disciplina = :Disciplina_Codigo");
 
 	$stmt->bindParam(':Codigo_Avaliacao', $avaliacao);
