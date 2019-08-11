@@ -86,7 +86,7 @@
             <h3 class="title prove-text">Cadastrar Prova</h3>
           </div>
           <div class="col s12 container">
-            <form action="" method="POST">
+            <form action="" method="POST" class="card-panel">
               <div class="row">
                 <div class="input-field col s12 l6">
                   <input id="conteudo" name="conteudo" type="text" class="validate"/>
@@ -363,15 +363,15 @@
       var instances = M.FormSelect.init(elems);
       var tabs = document.querySelectorAll('.tabs');
       for (var i = 0; i < tabs.length; i++){
-        M.Tabs.init(tabs[i]);
+          M.Tabs.init(tabs[i]);
       }
       var elems = document.querySelectorAll('.datepicker');
       var data = new Date();
       var options = {
-        format: 'dd/mm/yyyy', 
-        yearRange: [data.getFullYear(), data.getFullYear() + 1],
-        minDate: data,
-        i18n: {
+          format: 'dd/mm/yyyy', 
+          yearRange: [data.getFullYear(), data.getFullYear() + 1],
+          minDate: data,
+          i18n: {
           cancel: 'Cancelar',
           clear: 'Limpar',
           months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -379,102 +379,12 @@
           weekdays: ['Domingo', 'Segunda Feira', 'Terça Feira', 'Quarta Feira', 'Quinta Feira', 'Sexta Feira', 'Sábado'],
           weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
           weekdaysAbbrev: ['D','S','T','Q','Q','S','S'] 
-        }
+          }
       };
       var instances = M.Datepicker.init(elems, options);
     });
-    function CriaRequest() {
-      try {
-        request = new XMLHttpRequest();        
-      } catch (IEAtual){    
-      try{
-        request = new ActiveXObject("Msxml2.XMLHTTP");       
-      } catch(IEAntigo){ 
-        try{
-         request = new ActiveXObject("Microsoft.XMLHTTP");          
-        } catch(falha){
-          request = false;
-        }
-      }
-    }  
-    if (!request) 
-      alert("Seu Navegador não suporta o Prove! Atualize ou mude de navegador");
-    else
-      return request;
-    }
-    function alternativaUnicaAdicionar () {  
-      var xmlreq = CriaRequest();
-      var qtdUnica = parseInt(document.getElementById('qtdUnica').value) + 1;
-      var unicaContainer = document.getElementById('unicaContainer');
-      unicaContainer.innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
-      xmlreq.open("GET", "alternativa-unica.php?qtdUnica=" + qtdUnica, true);
-      xmlreq.onreadystatechange = function(){
-        if (xmlreq.readyState == 4) {
-          if (xmlreq.status == 200) {
-            parseInt(document.getElementById('qtdUnica').value = qtdUnica);
-            unicaContainer.innerHTML = xmlreq.responseText;
-          } else{
-            unicaContainer.innerHTML = "Erro: " + xmlreq.statusText;
-          }
-        }
-      };
-      xmlreq.send(null);
-    }
-    function alternativaUnicaRemover () {  
-      var xmlreq = CriaRequest();
-      var qtdUnica = parseInt(document.getElementById('qtdUnica').value) - 1;
-      var unicaContainer = document.getElementById('unicaContainer');
-      unicaContainer.innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
-      xmlreq.open("GET", "alternativa-unica.php?qtdUnica=" + qtdUnica, true);
-      xmlreq.onreadystatechange = function(){
-        if (xmlreq.readyState == 4) {
-          if (xmlreq.status == 200) {
-            parseInt(document.getElementById('qtdUnica').value = qtdUnica);
-            unicaContainer.innerHTML = xmlreq.responseText;
-          } else{
-            unicaContainer.innerHTML = "Erro: " + xmlreq.statusText;
-          }
-        }
-      };
-      xmlreq.send(null);
-    }
-    function alternativaMultiplaAdicionar () {  
-      var xmlreq = CriaRequest();
-      var qtdMultipla = parseInt(document.getElementById('qtdMultipla').value) + 1;
-      var multiplaContainer = document.getElementById('multiplaContainer');
-      multiplaContainer.innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
-      xmlreq.open("GET", "alternativa-multipla.php?qtdMultipla=" + qtdMultipla, true);
-      xmlreq.onreadystatechange = function(){
-        if (xmlreq.readyState == 4) {
-          if (xmlreq.status == 200) {
-            parseInt(document.getElementById('qtdMultipla').value = qtdMultipla);
-            multiplaContainer.innerHTML = xmlreq.responseText;
-          } else{
-            multiplaContainer.innerHTML = "Erro: " + xmlreq.statusText;
-          }
-        }
-      };
-      xmlreq.send(null);
-    }
-    function alternativaMultiplaRemover () {  
-      var xmlreq = CriaRequest();
-      var qtdMultipla = parseInt(document.getElementById('qtdMultipla').value) - 1;
-      var multiplaContainer = document.getElementById('multiplaContainer');
-      multiplaContainer.innerHTML = '<div class="progress"><div class="indeterminate"></div></div>';
-      xmlreq.open("GET", "alternativa-multipla.php?qtdMultipla=" + qtdMultipla, true);
-      xmlreq.onreadystatechange = function(){
-        if (xmlreq.readyState == 4) {
-          if (xmlreq.status == 200) {
-            parseInt(document.getElementById('qtdMultipla').value = qtdMultipla);
-            multiplaContainer.innerHTML = xmlreq.responseText;
-          } else{
-            multiplaContainer.innerHTML = "Erro: " + xmlreq.statusText;
-          }
-        }
-      };
-      xmlreq.send(null);
-    }
   </script>
+  <script src="ajax.js"></script>
   <script src="../assets/js/init.js"></script>
 
   </body>
