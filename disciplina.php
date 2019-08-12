@@ -51,13 +51,6 @@
 			
 			discalun_table($reg_alun); ?> (Substituir essa tabela, gerada por uma função, por uma tabela na própria pagina)
 		
-		<div id="adicao_aluno" style="border:1px solid black; ">
-			<p>Segure o CTRL para selecionar vários alunos</p>
-			<form action="disciplinas_pdo.php" method="post">
-				<?php gerarSelectMultiple($tb_alunos, 'matriculas', 'Matricula', 'Nome'); ?>
-				<input type="hidden" name="disciplina" value="<?php echo $codigo ?>">
-			</form>
-		</div>
 	</div>
 	<br/><br/><br/><br/><hr/><br/><br/><br/><br/>
 	<div id="avaliacoes">
