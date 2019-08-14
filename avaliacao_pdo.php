@@ -349,7 +349,7 @@ function insertPDO_avalques() {
 
 			echo "Linhas afetadas (cadastro de alternativa): ".$stmt->rowCount()."<br/>";
 
-			//header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
+			header("location:avaliacao_cadastro.php?codigo=".$cod_avaliacao);
 		}
 	} else if ($_POST['Tipo_Codigo'] == 3)
 	{

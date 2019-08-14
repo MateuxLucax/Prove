@@ -80,7 +80,7 @@
 			</div>
 
 			<div id="avaliacao-correcao">
-				<?php notaTodasAvalProf_view($codigo) ?>
+				<?php notaTodasAvalProf_view($codigo); ?>
 			</div>
 
 			<?php
