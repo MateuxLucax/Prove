@@ -51,21 +51,21 @@
 						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="serie_cadastro.php">
 								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Série</h5>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Adicionar série</h5>
 							</a>
 						</div>
 
 						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="disciplina_cadastro.php">
 								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Disciplina</h5>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Adicionar disciplina</h5>
 							</a>
 						</div>
 
 						<div class="card-panel teal col s12 m4 center-align">
 							<a class="white-text" href="avaliacao_cadastro.php">
 								<p class="hide-on-small-only"><i class="material-icons white-text small">add</i></p>
-								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Avaliação</h5>
+								<h5 class="truncate"><i class="hide-on-med-and-up material-icons white-text left">add</i>Adicionar avaliação</h5>
 							</a>
 						</div>
 
