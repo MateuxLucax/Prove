@@ -269,7 +269,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-INSERT INTO professores VALUES ('admin','admin','nomail@mail.com','2002-03-17',null,'d033e22ae348aeb5660fc2140aec35850c4da997');
+INSERT INTO professores VALUES ('admin','admin','admin@mail.com','2002-03-17',null,'d033e22ae348aeb5660fc2140aec35850c4da997');
 -- senha: admin
 
 INSERT INTO serie VALUES (null, '1INFO');
@@ -295,11 +295,6 @@ INSERT INTO Questoes_has_Avaliacoes VALUES (5,1);
 INSERT INTO Questoes_has_Avaliacoes VALUES (6,1);
 
 ## Falta colocar as alternativas corretas
-
-SELECT * FROM Alternativa;
-SELECT * FROM Questao;
-
-INSERT INTO Alternativa VALUES (null, '', 0, 1);
 
 INSERT INTO Alternativa VALUES (null, 'Força e velocidade.', 0, 1);
 INSERT INTO Alternativa VALUES (null, 'Força e quantidade de movimento.', 0, 1);
