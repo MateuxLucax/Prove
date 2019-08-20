@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php
+	require_once "autoload.php";
+
 	include 'valida_secao.php';
 	include 'funcoes.php';
 	include 'disciplinas_pdo.php';
@@ -110,9 +112,7 @@
 
 	<?php
 		function selectDisciplinas($matricula,$tipo) {
-			$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$pdo->exec("SET NAMES utf8");
+			$pdo = Conexao::getInstance();
 
 			try {
 				if($tipo == 'aluno') {

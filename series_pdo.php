@@ -1,5 +1,7 @@
 <?php
 
+require_once "autoload.php";
+
 include 'conf.php';
 
 if (isset($_POST['acao'])) $acao = $_POST['acao'];
@@ -22,8 +24,7 @@ if (!$acao == '') {
 
 #### PDO ###########################################################################################
 
-$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo = Conexao::getInstance();
 
 try {
 	switch ($acao) {

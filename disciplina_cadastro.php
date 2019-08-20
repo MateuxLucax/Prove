@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <?php
+	require_once "autoload.php";
+
 	include 'conf.php';
 	include 'funcoes.php';
 	include 'valida_secao.php';

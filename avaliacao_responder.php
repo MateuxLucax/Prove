@@ -2,6 +2,8 @@
 <?php
 	session_start();
 
+	require_once "autoload.php";
+
 	include 'disciplinas_pdo.php';
 	include 'avaliacao_pdo.php';
 	include 'funcoes.php';

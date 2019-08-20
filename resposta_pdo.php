@@ -45,9 +45,7 @@ if(isset($avaliacao)){ echo "<a href='avaliacao_responder.php?codigo=".$avaliaca
 if ($acao == 'addCorrecaoDiscursiva') {
 	try {	
 		//UPDATE da Discursiva, mudando o campo 'Correta' para o valor informado pelo professor
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo -> exec("SET CHARACTER SET utf8");
+		$pdo = Conexao::getInstance();
 	
 		$query = "UPDATE Discursiva SET Correta = :Correta WHERE Codigo_Discursiva = :Codigo_Discursiva";
 
@@ -102,9 +100,7 @@ if ($acao == 'addResAlternativa') {
 
 #### PDO #######################################################################################
 
-$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo -> exec("SET CHARACTER SET utf8");
+$pdo = Conexao::getInstance();
 
 try {
 	switch ($acao) {

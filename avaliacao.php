@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <?php
+	
+	require_once "autoload.php";
+
 
 	if (isset($_POST['codigo'])) {
 		$codigo = $_POST['codigo'];
@@ -146,16 +149,14 @@
 
 	function prof_da_disciplina() {
 		//echo $_SESSION['matricula'];
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo -> exec("SET CHARACTER SET utf8");
+		$pdo = Conexao::getInstance();
 
 		try {
 			// Primeiro se consulta o código da disciplina da qual a avaliação faz parte...
 			$query1 = "SELECT Disciplina_Codigo_Disciplina FROM ".$GLOBALS['tb_avaliacoes']." WHERE Codigo_Avaliacao = ".$GLOBALS['codigo'];
 			//var_dump($query1);
 
-			$consulta = $GLOBALS['pdo']->query($query1);
+			$consulta = $pdo->query($query1);
 
 			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 				$cod_disciplina = $linha['Disciplina_Codigo_Disciplina'];
@@ -168,7 +169,7 @@
 			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
 			$query2 .= " AND D.Codigo_Disciplina = ".$cod_disciplina;
 			
-			$consulta = $GLOBALS['pdo']->query($query2);
+			$consulta = $pdo->query($query2);
 
 			$matriculas = array();
 			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {

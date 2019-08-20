@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
 
+	require_once "autoload.php";
+
 	if (isset($_POST['codigo'])) {
 		$codigo = $_POST['codigo'];
 	} else if (isset($_GET['codigo'])) {
@@ -118,9 +120,7 @@
 <?php
 
 	function select_avaliacoes($codigo) {
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo->exec("SET NAMES utf8");
+		$pdo = Conexao::getInstance();
 
 		$sql = "SELECT Conteudo, Data_Fim FROM ".$GLOBALS['tb_avaliacoes']." WHERE Disciplina_Codigo_Disciplina = ".$codigo." ORDER BY Codigo_Avaliacao";
 		//echo $sql;

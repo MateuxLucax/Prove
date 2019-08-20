@@ -1,4 +1,6 @@
 <?php
+	require_once "autoload.php";
+
 	include 'valida_secao.php';
 	include 'conf.php';
 	include 'funcoes.php';
@@ -49,9 +51,7 @@
 		<main>	
 			<div id="form_correcao_respostas" class="container">
 				<?php
-					$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-					$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-					$pdo -> exec("SET NAMES utf8"); 
+					$pdo = Conexao::getInstance();
 
 					// Seleciona as questões da avaliação, para depois selecionar as respostas de cada
 					$query1 = "SELECT Q.Codigo_Questao, Q.Texto, Q.Enunciado
@@ -138,9 +138,7 @@
 
 <?php
 	function prof_da_disciplina() {
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo -> exec("SET CHARACTER SET utf8");
+		$pdo = Conexao::getInstance();
 
 		try {
 			// Primeiro se consulta o código da disciplina da qual a avaliação faz parte...

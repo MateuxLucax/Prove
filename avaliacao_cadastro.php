@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <?php
+	
+	require_once "autoload.php";
+
 	include 'disciplinas_pdo.php';
 	include 'avaliacao_pdo.php';
 	include 'funcoes.php';

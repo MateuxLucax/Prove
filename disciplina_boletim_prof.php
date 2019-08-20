@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
 
+	require_once "autoload.php";
+
 	if (isset($_POST['codigo'])) {
 		$codigo = $_POST['codigo'];
 	} else if (isset($_GET['codigo'])) {
@@ -128,9 +130,7 @@
 <?php
 
 	function select_avaliacoes($codigo) {
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo->exec("SET NAMES utf8");
+		$pdo = Conexao::getInstance();
 
 		$sql = "SELECT Codigo_Avaliacao, Conteudo FROM ".$GLOBALS['tb_avaliacoes']." WHERE Disciplina_Codigo_Disciplina = ".$codigo." ORDER BY Codigo_Avaliacao";
 		//echo $sql;
@@ -146,9 +146,11 @@
 	}
 
 	function select_alunos($codigo) {
+		$pdo = Conexao::getInstance();
+
 		$sql = "SELECT DA.Alunos_Matricula, A.Nome FROM Disciplina_has_Alunos DA, Alunos A WHERE DA.Disciplina_Codigo_Disciplina = ".$codigo." AND DA.Alunos_Matricula = A.Matricula ORDER BY DA.Alunos_Matricula";
 		//echo $sql;
-		$query = $GLOBALS['pdo']->query($sql);
+		$query = $pdo->query($sql);
 		$matriculas = array();
 		for ($i=0; $row = $query->fetch(PDO::FETCH_ASSOC); $i++) { 
 			$matriculas[$i] = array();
@@ -177,16 +179,14 @@
 
 	function prof_da_disciplina() {
 		//echo $_SESSION['matricula'];
-		$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$pdo -> exec("SET NAMES utf8");
+		$pdo = Conexao::getInstance();
 
 		try {
 			// Primeiro se consulta o código da disciplina da qual a avaliação faz parte...
 			$query1 = "SELECT Disciplina_Codigo_Disciplina FROM ".$GLOBALS['tb_avaliacoes']." WHERE Codigo_Avaliacao = ".$GLOBALS['codigo'];
 			//var_dump($query1);
 
-			$consulta = $GLOBALS['pdo']->query($query1);
+			$consulta = $pdo->query($query1);
 
 			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {
 				$cod_disciplina = $linha['Disciplina_Codigo_Disciplina'];
@@ -199,7 +199,7 @@
 			$query2 .= " AND D.Codigo_Disciplina = DP.Disciplina_Codigo_Disciplina ";
 			$query2 .= " AND D.Codigo_Disciplina = ".$cod_disciplina;
 			
-			$consulta = $GLOBALS['pdo']->query($query2);
+			$consulta = $pdo->query($query2);
 
 			$matriculas = array();
 			for ($i = 0; $linha = $consulta->fetch(PDO::FETCH_ASSOC); $i++) {

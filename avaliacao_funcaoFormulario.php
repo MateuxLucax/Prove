@@ -1,8 +1,8 @@
 <?php
 	
-$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo -> exec("SET CHARACTER SET utf8");
+require_once "autoload.php";
+
+$pdo = Conexao::getInstance();
 
 function gerar_formulario_questoes($cod_avaliacao, $embaralhar, $matricula) {
 	$questoes = select_questoes_formulario($cod_avaliacao, $embaralhar);

@@ -1,7 +1,7 @@
 <?php
-	$pdo = new PDO('mysql:host=localhost;dbname=prove_sistema_avaliacao',"root","");
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$pdo -> exec("SET CHARACTER SET utf8");
+	require_once "autoload.php";
+
+	$pdo = Conexao::getInstance();
 
 	function notasDisciplinaTodos_view($cod_disciplina) {
 		$notas = notasDisciplinaTodos($cod_disciplina);
