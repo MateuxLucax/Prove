@@ -162,7 +162,7 @@ INSERT INTO Tipo VALUES (1, 'Discursiva'), (2, 'Única Escolha'), (3, 'Verdadeir
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Questao` (
   `Codigo_Questao` INT NOT NULL AUTO_INCREMENT,
-  `Enunciado` VARCHAR(100),
+  `Enunciado` TEXT,
   `Texto` TEXT NULL,
   `Tipo_Codigo` INT NOT NULL,
   PRIMARY KEY (`Codigo_Questao`),
@@ -202,7 +202,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Alternativa` (
   `Codigo_Alternativa` INT NOT NULL AUTO_INCREMENT,
-  `Descricao` VARCHAR(100) NOT NULL,
+  `Descricao` VARCHAR(255) NOT NULL,
   `Correta` TINYINT NOT NULL,
   `Questao_Codigo` INT NOT NULL,
   PRIMARY KEY (`Codigo_Alternativa`),
@@ -269,7 +269,74 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
+INSERT INTO professores VALUES ('admin','admin','nomail@mail.com','2002-03-17',null,'d033e22ae348aeb5660fc2140aec35850c4da997');
+-- senha: admin
 
+INSERT INTO serie VALUES (null, '1INFO');
+
+INSERT INTO disciplinas VALUES (null, 'Física', 1);
+
+INSERT INTO professores_has_disciplina VALUES ('admin', 1);
+
+INSERT INTO avaliacoes VALUES (null, 'Cinemática', 1, '2019-08-21 00:00:01', '2019-08-21 16:50:00', null, 0);
+
+INSERT INTO Questao VALUES (null, 'Quando uma bola de tênis é rebatida pelo adversário, quais grandezas trocam de sinal quando avaliadas antes e depois da batida?', null, 2);
+INSERT INTO Questao VALUES (null, 'Analise as afirmativas abaixo, considerando V caso a afirmativa seja verdadeira e F caso seja falsa, e assinale cada uma delas corretamente', null, 3);
+INSERT INTO Questao VALUES (null, 'Explique a primeira lei de Newton', null, 1);
+INSERT INTO Questao VALUES (null, 'Considerando que houve conservação da quantidade de movimento, a velocidade do corpo de massa m2 é:', 'Dois corpos, um de massa m1 = 5,0 kg e outro de massa m2 = 10,0 kg movem-se paralelamente um ao lado do outro, em contato, a uma velocidade constante de 12,0 m/s para a direita. Após uma pequena colisão o corpo de massa m1 passa a mover-se a 10,0 m/s para a direita.', 2);
+INSERT INTO Questao VALUES (null, 'Considerando a conservação da quantidade de movimento, se dois objetos estão em contato entre si e em repouso, sobre uma superfície lisa e praticamente sem atrito, e depois da ação de alguma força interna, um deles move-se para um lado, podemos afirmar que (assinale V caso a afirmativa seja verdadeira e F caso seja falsa)', null, 3);
+INSERT INTO Questao VALUES (null, 'Na sequência descrita acima, a velocidade final das massas é:', 'Um corpo de massa m = 6,0 kg está sobre outro de massa M = 12,0 kg e este encontra-se sobre uma superfície plana, horizontal e sem atrito. Ambos estão em repouso. Inicialmente empurramos o corpo de massa M (com o corpo de massa m sobre ele) com um impulso de 36,0 N.s, e ambos os corpos movem-se com a mesma velocidade. Em seguida, aplica-se o mesmo impulso apenas no corpo de massa M (também em repouso), e, por último, aplica-se novamente o mesmo impulso, mas apenas no corpo de massa m (também em repouso).', 2);
+
+INSERT INTO Questoes_has_Avaliacoes VALUES (1,1);
+INSERT INTO Questoes_has_Avaliacoes VALUES (2,1);
+INSERT INTO Questoes_has_Avaliacoes VALUES (3,1);
+INSERT INTO Questoes_has_Avaliacoes VALUES (4,1);
+INSERT INTO Questoes_has_Avaliacoes VALUES (5,1);
+INSERT INTO Questoes_has_Avaliacoes VALUES (6,1);
+
+## Falta colocar as alternativas corretas
+
+SELECT * FROM Alternativa;
+SELECT * FROM Questao;
+
+INSERT INTO Alternativa VALUES (null, '', 0, 1);
+
+INSERT INTO Alternativa VALUES (null, 'Força e velocidade.', 0, 1);
+INSERT INTO Alternativa VALUES (null, 'Força e quantidade de movimento.', 0, 1);
+INSERT INTO Alternativa VALUES (null, 'Impulso e força.', 0, 1);
+INSERT INTO Alternativa VALUES (null, 'Quantidade de movimento e velocidade.', 0, 1);
+INSERT INTO Alternativa VALUES (null, 'Velocidade e impulso.', 0, 1);
+
+INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento positiva e recebe um impulso positivo, sua velocidade aumenta.', 0, 2);
+INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento negativa e recebe um impulso positivo, sua velocidade diminui.', 0, 2);
+INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento positiva e recebe um impulso negativa, sua velocidade não muda.', 0, 2);
+INSERT INTO Alternativa VALUES (null, 'Quanto maior a velocidade de um corpo, maior é o impulso para aumentar sua quantidade de movimento.', 0, 2);
+
+# Questao_Codigo 3 - é discursiva
+
+INSERT INTO Alternativa VALUES (null, 'O corpo de maior massa terá menor quantidade.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'O impulso aplicado em ambos os corpos é o mesmo.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o mesmo lado que primeiro.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o outro lado em relação ao primeiro.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'Se ambos os corpos têm a mesma velocidade, em módulo, então ambas as massas dos corpos são iguais.', 0, 4);
+
+INSERT INTO Alternativa VALUES (null, '10,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, '12,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, '13,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, '14,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, '15,0 m/s.', 0, 5);
+
+INSERT INTO Alternativa VALUES (null, '3,0 m/s; 2,0 m/s; 1,0 m/s.', 0, 6);
+INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 4,0 m/s.', 0, 6);
+INSERT INTO Alternativa VALUES (null, '3,0 m/s; 2,0 m/s; 4,0 m/s.', 0, 6);
+INSERT INTO Alternativa VALUES (null, '4,0 m/s; 2,0 m/s; 6,0 m/s.', 0, 6);
+INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 6,0 m/s.', 0, 6);
+
+
+
+
+
+/*
 
 INSERT INTO `Alunos` (`Matricula`, `Email`, `Senha`, `Nome`, `Data_Nascimento`, `Ultimo_Login`) VALUES
 ('2017305998','e0f68134d29dc326d115de4c8fab8700a3c4b002','Teste 123','2002-03-17','2019-03-12 16:22:32');
@@ -293,7 +360,7 @@ INSERT INTO `Alunos` (`Matricula`, `Email`, `Senha`, `Nome`, `Data_Nascimento`, 
 ('0009', '', 'bd24767f376d72d0efa191538d094c6bd3a80eab','ÁRTHUR PAULO MATTEUSSI','2003-03-17','2019-03-12 16:22:32');# USER: 0009 // SENHA: matteussi
 
 SELECT * FROM professores_has_disciplina;
-/*
+
 BRUNA LUIZA CORREIA
 BRUNA MAISA SENEM
 CARLOS EDUARDO RIBEIRO DOS SANTOS
@@ -322,195 +389,3 @@ SABRINA LAISA MEES
 VICTÓRIA MEIRINHO
 VINÍCIUS KIGIS
 */
-
-SELECT * FROM avaliacoes;
-
-SELECT d.Codigo_Disciplina as 'ID Disciplina', d.Nome as 'Disciplina', a.Codigo_Avaliacao as 'ID Avaliação', a.Conteudo, a.Data_Inicio, a.Data_Fim, a.Peso, a.Embaralhar
-FROM avaliacoes a, disciplinas d
-WHERE d.Codigo_Disciplina = a.Disciplina_Codigo_Disciplina
-AND d.Codigo_Disciplina = 1;
-
-SELECT * FROM Tipo;
-SELECT * FROM Questao;
-SELECT * FROM Avaliacoes;
-SELECT * FROM Questoes_has_Avaliacoes;
-INSERT INTO `Questao` (`Enunciado`, `Tipo_Codigo`) VALUES ('Explique o que é PHP',1);
-INSERT INTO `Questoes_has_Avaliacoes` (`Questoes_Codigo_Questao`, `Avaliacoes_Codigo_Avaliacao`) VALUES (2,2);
-
-SELECT A.Codigo_Avaliacao, A.Conteudo, Q.Codigo_Questao, Q.Enunciado, Q.Texto, T.Descricao as 'Tipo'
-FROM Questao Q, Questoes_has_Avaliacoes QA, Avaliacoes A, Tipo T
-WHERE QA.Questoes_Codigo_Questao = Q.Codigo_Questao
-AND QA.Avaliacoes_Codigo_Avaliacao = A.Codigo_Avaliacao
-AND Q.Tipo_Codigo = T.Codigo_Tipo
-AND QA.Avaliacoes_Codigo_Avaliacao = 2;
-
-SELECT * FROM Disciplinas;
-
-SELECT D.Codigo_Disciplina, D.Nome
-FROM Professores P, Disciplinas D, Professores_has_Disciplina PD
-WHERE PD.Professores_Matricula = P.matricula
-AND PD.Disciplina_Codigo_Disciplina = D.Codigo_Disciplina
-AND P.Matricula = '2031';
-
-select * FROM Questao;
-
-SELECT * FROM Disciplinas;
-
-SELECT * FROM Avaliacoes WHERE Codigo_Avaliacao = 1; 
-
--- Inserção manual de questões para fazer a parte do aluno (respostas)
--- SELECT * FROM Avaliacoes;
--- SELECT * FROM Questao;
--- SELECT * FROM Alternativa;
--- SELECT * FROM Tipo;
--- SELECT * FROM Questoes_has_Avaliacoes;
-
--- OBS: Antes precisa ter uma avaliação registrada
-
-INSERT INTO Questao (`Enunciado`, `Tipo_Codigo`) VALUES
-('O que é PHP?',1)
-,('Onde PHP é mais usado?',1)
-,('Qual dos seguintes trechos de código são de PHP?',2)
-,('Marque a alternativa INCORRETA sobre o PHP.',2)
-,('Marque os trechos de código que NÃO são de PHP',3);
-
-SELECT * FROM Questao;
-
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('if num = 1: print("hello, your number is "+ num)',0,3)
-,('$var = 1; $var++; echo $var;',1,3)
-,('cout << "trust me am php code";',0,3);
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('O PHP é uma linguagem de programação',0,4)
-,('O PHP funciona do lado do cliente',1,4)
-,('No PHP as variáveis são declaradas com $',0,4);
-INSERT INTO Alternativa (`Descricao`,`Correta`,`Questao_Codigo`) VALUES
-('function return_number(num){ return self.num }',1,5)
-,('isphp = cin >> "is this a php code? >>; if (isphp) { cout << "yes, you are right"; }',1,5)
-,('object.attribute = self.itself(self.relation){self.relation(self.itself = self.self)}',1,5)
-,('um = leia("quanto é 1+1"); if(um != 2) { escreva("errou")}',1,5)
-,('$php = false;',0,5);
-
-INSERT INTO Questoes_has_Avaliacoes (`Questoes_Codigo_Questao`, `Avaliacoes_Codigo_Avaliacao`) VALUES
-(1,1)
-,(2,1)
-,(3,1)
-,(4,1)
-,(5,1);
-
--- Cadastro de várias questões, alternativas, disciplinas, avaliações etc. para testar as funções da página funcoes_correcao.php
-SELECT * FROM Serie;
-INSERT INTO Serie (Descricao) VALUES ('3INFO');
-
-SELECT * FROM Disciplinas;
-INSERT INTO Disciplinas (Nome, Serie_Codigo_Serie) VALUES ('Banco de Dados', 1), ('Redes de Computadores', 1);
-
-SELECT * FROM Avaliacoes;
-INSERT INTO Avaliacoes (Conteudo, Disciplina_Codigo_Disciplina, Data_Inicio, Data_Fim, Embaralhar) VALUES
-('MySQL Básico', 2, '2019-03-10 00:00:00', '2019-03-20 00:00:00', 0),
-('MySQL Intermediário', 2, '2019-05-10 00:00:00', '2019-05-20 00:00:00', 1),
-('MySQL Avançado', 2, '2019-07-10 00:00:00', '2019-07-20 00:00:00', 1);
-INSERT INTO Avaliacoes (Conteudo, Disciplina_Codigo_Disciplina, Data_Inicio, Data_Fim, Embaralhar) VALUES
-('O que são redes', 3, '2019-03-10 00:00:00', '2019-03-20 00:00:00', 1),
-('Modelo OSI', 3, '2019-05-10 00:00:00', '2019-05-20 00:00:00', 0),
-('IP e máscara de sub-rede', 3, '2019-07-10 00:00:00', '2019-07-20 00:00:00', 1);
-
-SELECT * FROM Tipo;
-SELECT * FROM Questao;
-SELECT * FROM Avaliacoes;
-SELECT * FROM Questoes_has_Avaliacoes;
-INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
-('O que é MySQL?', 1),
-('Quais dos seguintes comandos são de MySQL?', 3),
-('Assinale a alternativa falsa sobre o MySQL', 2);
-INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
-(6, 2),
-(7, 2),
-(8, 2);
-
-SELECT * FROM Questoes_has_Avaliacoes WHERE Avaliacoes_Codigo_Avaliacao = 2;
-SELECT * FROM Questao;
-
-SELECT * FROM Alternativa;
-INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
-('select.tabela("nome, campo, idade");',0,7),
-('INSERT INTO tabela (campo1, nome) VALUES (1), ("jondgr");',1,7),
-('SELECT * FROM tabela;',1,7),
-('tabela->SELECT(*) FROM WHERE value = 2;',0,7);
-INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
-('o MySQL é um sistema gerenciador de banco de dados',0,8),
-('no mySQL informações são armazenadas em tabelas',0,8),
-('o MySQL é utilizado por meio de um site',1,8);
-
-
-INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
-('Para que servem os comandos count() e avg()?', 1),
-('Marque os comandos SQL que não dariam certo', 3),
-('Qual o comando SQL usado para agrupar?', 2);
-SELECT * FROM Questao;
-SELECT * FROM Questoes_has_Avaliacoes;
-SELECT * FROM Avaliacoes;
-INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
-(9, 3),
-(10, 3),
-(11, 3);
-SELECT * FROM Alternativa;
-INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
-('SELECT (SELECT numero FROM numero) WHERE numero = 10;', 1, 10),
-('UPDATE numero = 5;', 1, 10),
-('SELECT nome, idade FROM tabela WHERE nome = "jonsnerg";', 0, 10),
-('INSERT numero = 5 INTO tabela;', 1, 10);
-INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
-('SET GROUP campo;', 0, 11),
-('GROUPY BY campo;', 1, 11),
-('ORDER BY GROUP grupo;', 0, 11),
-('SELECT GROUP FROM tabela;', 0, 11);
-
-INSERT INTO Questao (Enunciado, Tipo_Codigo) VALUES
-('O que são funções armazenadas?', 1),
-('Marque as respostas corretas para 2+2', 3);
-SELECT * FROM Questao;
-SELECT * FROM Questoes_has_Avaliacoes;
-SELECT * FROM Avaliacoes;
-INSERT INTO Questoes_has_Avaliacoes (Questoes_Codigo_Questao, Avaliacoes_Codigo_Avaliacao) VALUES
-(12, 4),
-(13, 4);
-INSERT INTO Alternativa (Descricao, Correta, Questao_Codigo) VALUES
-('(2+4-2)^2', 0, 13),
-('2^2', 1, 13),
-('4', 1, 13),
-('4-2+8-6', 1, 13);
-
-UPDATE Avaliacoes SET Data_Fim = '2028-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;
-SELECT * FROM Avaliacoes;
-
-INSERT INTO Professores_has_Disciplina (Professores_Matricula, Disciplina_Codigo_Disciplina) VALUES ('2017305998', 2), ('2017305998', 3);
-SELECT * FROM Disciplina_has_Alunos;
-SELECT * FROM Alunos;
-SELECT * FROM Disciplinas;
-INSERT INTO Disciplina_has_Alunos (Disciplina_Codigo_Disciplina, Alunos_Matricula) VALUES
-(2,201701),
-(2,201717),
-(2,201771),
-(3,201701),
-(3,201717),
-(3,201771);
-
-SELECT * FROM Questao;
-UPDATE Avaliacoes SET Data_Fim = '2018-03-20 00:00:00' WHERE Codigo_Avaliacao > 0;
-
-SELECT Conteudo, Data_Fim FROM Avaliacoes WHERE Disciplina_Codigo_Disciplina = 2 ORDER BY Codigo_Avaliacao;
-
-SELECT * FROM Alunos;
-
-SELECT DA.Alunos_Matricula, A.Nome FROM Disciplina_has_Alunos DA, Alunos A WHERE DA.Disciplina_Codigo_Disciplina = 1 AND DA.Alunos_Matricula = A.Matricula ORDER BY DA.Alunos_Matricula;
-
-SELECT * FROM Questao;
-INSERT INTO Questao VALUES (Enunciado, Texto) VALUES ();
-
-SELECT * FROM Avaliacoes;
-
-SELECT * FROM Questao;
-DELETE FROM Questao WHERE Codigo_Questao > 13;
-SELECT * FROM Questoes_has_Avaliacoes;
-DELETE FROM Questoes_has_Avaliacoes WHERE Questoes_Codigo_Questao = 33 AND Avaliacoes_Codigo_Avaliacao = 9;
