@@ -49,8 +49,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `prove_sistema_avaliacao`.`Alunos` (
   `Matricula` VARCHAR(15) NOT NULL,
   `Nome` VARCHAR(100) NOT NULL,
-  `Email` VARCHAR(100) NOT NULL,
-  `Data_Nascimento` DATE NOT NULL,
+  `Email` VARCHAR(100)  NULL,
+  `Data_Nascimento` DATE NULL,
   `Ultimo_Login` DATETIME NULL,
   `Senha` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`Matricula`))
@@ -277,6 +277,79 @@ INSERT INTO serie VALUES (null, '1INFO');
 INSERT INTO disciplinas VALUES (null, 'Física', 1);
 
 INSERT INTO professores_has_disciplina VALUES ('admin', 1);
+
+-- Senha de todos os alunos: último sobrenome (minúsculo, sem acentos) -> sha1
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('agueda', 'ÁGUEDA DIOVANA DE SOUZA NETTO', '65d8c8050a8218df8f057d826af01e332544045a');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('alana', 'ALANA ROEDER', 'b059d286d11b6128637d2efaddf4937e0c56d6b4');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('aline', 'ALINE CAROL STOCK', 'ed487e1e87c675af89db011b2903f20f99b11c7d');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('arthur', 'ARTHUR FUECHTER SCHWEDER', '0f1eed1bc1099b9f64c06bc806cbce430cf27969');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('arthur2', 'ÁRTHUR PAULO MATTEUSSI', 'bd24767f376d72d0efa191538d094c6bd3a80eab');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('augusto', 'AUGUSTO LEHMKUHL TEIXEIRA', '469bce584dc472defd76bca00d322dee386c222c');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('barbara', 'BARBARA ELLEN DE LARA', '19fdcfbf9c32357a98293bf863315962928d929a');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('bruna', 'BRUNA LUIZA CORREIA', 'c3b0ed7c797da1fb69ee7ff6ce71056345562fad');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('bruna2', 'BRUNA MAISA SENEM', '9d3b9d034f79049a43062904928e96cef28c118a');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('carlos', 'CARLOS EDUARDO RIBEIRO DOS SANTOS', '937bfaea6b875d17a48b0e4b499c346e56c4ca1c');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('eduarda', 'EDUARDA DUMES LAURETT', '2a44e5c410937df1e037ff54cc2db13f3b2a04c1');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('eduardo', 'EDUARDO SIMONI DE SOUZA', 'f72faf30d4024ec3f0937f1db15e35ddf8709ddb');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('elen', 'ELEN CRISTINA PEREIRA BATISTA', '555b37cf78182c416ccce5dc48d22e47a1f6457f');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('emanuel', 'EMANUEL ARY DE OLIVEIRA', 'a43f9fc96f67c191be1a430b30da0129bf1c98af');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('gabriel', 'GABRIEL NUNES FERREIRA', '62283808776ee974d7e7792ffa12eb90fe36556a');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('igor', 'IGOR VINICIUS DOS SANTOS', '937bfaea6b875d17a48b0e4b499c346e56c4ca1c');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('isabely', 'ISABELY LAIS RENGEL', '81fbb7d56036571822f266096df08c5473ef4811');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('jaedson', 'JAEDSON CORREIA DA COSTA', '4bf35f37a90e723b5f0a9024a7be0ec8a5176069');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('jessica', 'JÉSSICA GEOVANA DA SILVA BÖLL', '3e0d6c1790d4f77a605c654e6c57812774180e28');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('joao', 'JOÃO VÍTOR PETRY', '9b0b9b7c981be18516e7b4b9b1cd0ec1000cd1b6');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('julia', 'JULIA RENKEL DE OLIVEIRA', 'a43f9fc96f67c191be1a430b30da0129bf1c98af');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('kainan', 'KAINAN HENRIQUE CHIQUIO', 'ac5eebe25147c49d3dc13c825dae30287c413652');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('lucas', 'LUCAS ANDRIN', 'f59768e1898f48e756919162767a0cef3387f4fa');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('manuela', 'MANUELA CAMARGO', '23b186642f297c88f8fabd630c06a619a9981a47');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('marcelo', 'MARCELO FLAUSINO FILHO', 'b85520b6e5155364a969f7fce406a5102f459e1a');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('maria', 'MARIA EDUARDA MARINHEIRO DELINO', '7a7ad1ebfc54ad7ad0b416129351dd8c512f49fd');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('matheus', 'MATHEUS EYNG MÁXIMO', 'd2ecbaea97c9eebfb2339a019ef634f4a35815cb');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('matheus2', 'MATHEUS TRAVAGLIA GILI', '71b3d968556e8a507270f0ee92dce6299da525ef');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('pedro', 'PEDRO AIRAN CANALE', '29b2ca4d969edce556cabebafe89901c924d2a06');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('pedro2', 'PEDRO DANIEL DE OLIVEIRA HOELLER', '17bd6fd469df25946efd5dc936e24c62882773f9');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('pedro3', 'PEDRO HENRIQUE SILVA SANTOS', '937bfaea6b875d17a48b0e4b499c346e56c4ca1c');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('pedro4', 'PEDRO VIEIRA STEINBACH', '3244d640f25ee56bae77e90a26cce7dffd774450');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('sabrina', 'SABRINA LAISA MEES', '2d50e80195dda69c96bf7f95a91827000f13e2df');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('victoria', 'VICTÓRIA MEIRINHO', '953a40a30095ce22cf5ee0abbd6accb70443fedb');
+INSERT INTO Alunos (Matricula, Nome, Senha) VALUES ('vinicius', 'VINÍCIUS KIGIS', '7607647004b164bfa7b07f111f994c2ee4b6bced');
+
+INSERT INTO Disciplina_has_Alunos VALUES (1, 'agueda'),
+(1, 'alana'),
+(1, 'aline'),
+(1, 'arthur'),
+(1, 'arthur2'),
+(1, 'augusto'),
+(1, 'barbara'),
+(1, 'bruna'),
+(1, 'bruna2'),
+(1, 'carlos'),
+(1, 'eduarda'),
+(1, 'eduardo'),
+(1, 'elen'),
+(1, 'emanuel'),
+(1, 'gabriel'),
+(1, 'igor'),
+(1, 'isabely'),
+(1, 'jaedson'),
+(1, 'jessica'),
+(1, 'joao'),
+(1, 'julia'),
+(1, 'kainan'),
+(1, 'lucas'),
+(1, 'manuela'),
+(1, 'marcelo'),
+(1, 'maria'),
+(1, 'matheus'),
+(1, 'matheus2'),
+(1, 'pedro'),
+(1, 'pedro2'),
+(1, 'pedro3'),
+(1, 'pedro4'),
+(1, 'sabrina'),
+(1, 'victoria'),
+(1, 'vinicius');
 
 INSERT INTO avaliacoes VALUES (null, 'Cinemática', 1, '2019-08-21 00:00:01', '2019-08-21 16:50:00', null, 0);
 
