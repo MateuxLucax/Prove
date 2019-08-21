@@ -268,7 +268,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-
 INSERT INTO professores VALUES ('admin','admin','admin@mail.com','2002-03-17',null,'d033e22ae348aeb5660fc2140aec35850c4da997');
 -- senha: admin
 
@@ -372,25 +371,25 @@ INSERT INTO Questoes_has_Avaliacoes VALUES (6,1);
 INSERT INTO Alternativa VALUES (null, 'Força e velocidade.', 0, 1);
 INSERT INTO Alternativa VALUES (null, 'Força e quantidade de movimento.', 0, 1);
 INSERT INTO Alternativa VALUES (null, 'Impulso e força.', 0, 1);
-INSERT INTO Alternativa VALUES (null, 'Quantidade de movimento e velocidade.', 0, 1);
+INSERT INTO Alternativa VALUES (null, 'Quantidade de movimento e velocidade.', 1, 1);
 INSERT INTO Alternativa VALUES (null, 'Velocidade e impulso.', 0, 1);
 
-INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento positiva e recebe um impulso positivo, sua velocidade aumenta.', 0, 2);
-INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento negativa e recebe um impulso positivo, sua velocidade diminui.', 0, 2);
+INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento positiva e recebe um impulso positivo, sua velocidade aumenta.', 1, 2);
+INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento negativa e recebe um impulso positivo, sua velocidade diminui.', 1, 2);
 INSERT INTO Alternativa VALUES (null, 'Se um corpo tem uma quantidade de movimento positiva e recebe um impulso negativa, sua velocidade não muda.', 0, 2);
 INSERT INTO Alternativa VALUES (null, 'Quanto maior a velocidade de um corpo, maior é o impulso para aumentar sua quantidade de movimento.', 0, 2);
 
 # Questao_Codigo 3 - é discursiva
 
-INSERT INTO Alternativa VALUES (null, 'O corpo de maior massa terá menor quantidade.', 0, 4);
-INSERT INTO Alternativa VALUES (null, 'O impulso aplicado em ambos os corpos é o mesmo.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'O corpo de maior massa terá menor quantidade.', 1, 4);
+INSERT INTO Alternativa VALUES (null, 'O impulso aplicado em ambos os corpos é o mesmo.', 1, 4);
 INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o mesmo lado que primeiro.', 0, 4);
-INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o outro lado em relação ao primeiro.', 0, 4);
-INSERT INTO Alternativa VALUES (null, 'Se ambos os corpos têm a mesma velocidade, em módulo, então ambas as massas dos corpos são iguais.', 0, 4);
+INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o outro lado em relação ao primeiro.', 1, 4);
+INSERT INTO Alternativa VALUES (null, 'Se ambos os corpos têm a mesma velocidade, em módulo, então ambas as massas dos corpos são iguais.', 1, 4);
 
 INSERT INTO Alternativa VALUES (null, '10,0 m/s.', 0, 5);
 INSERT INTO Alternativa VALUES (null, '12,0 m/s.', 0, 5);
-INSERT INTO Alternativa VALUES (null, '13,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, '13,0 m/s.', 1, 5);
 INSERT INTO Alternativa VALUES (null, '14,0 m/s.', 0, 5);
 INSERT INTO Alternativa VALUES (null, '15,0 m/s.', 0, 5);
 
@@ -398,7 +397,7 @@ INSERT INTO Alternativa VALUES (null, '3,0 m/s; 2,0 m/s; 1,0 m/s.', 0, 6);
 INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 4,0 m/s.', 0, 6);
 INSERT INTO Alternativa VALUES (null, '3,0 m/s; 2,0 m/s; 4,0 m/s.', 0, 6);
 INSERT INTO Alternativa VALUES (null, '4,0 m/s; 2,0 m/s; 6,0 m/s.', 0, 6);
-INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 6,0 m/s.', 0, 6);
+INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 6,0 m/s.', 1, 6);
 
 
 
