@@ -12,7 +12,7 @@ class Conexao {
 	private function __construct ()
 	{
 		$db_host	=	"localhost";
-		$db_name	=	"websiteartes";
+		$db_name	=	"prove_sistema_avaliacao";
 		$db_user	=	"root";
 		$db_pass	=	"";
 		$db_driver	=	"mysql";
