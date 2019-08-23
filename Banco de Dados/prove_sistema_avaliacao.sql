@@ -381,17 +381,17 @@ INSERT INTO Alternativa VALUES (null, 'Quanto maior a velocidade de um corpo, ma
 
 # Questao_Codigo 3 - é discursiva
 
-INSERT INTO Alternativa VALUES (null, 'O corpo de maior massa terá menor quantidade.', 1, 4);
-INSERT INTO Alternativa VALUES (null, 'O impulso aplicado em ambos os corpos é o mesmo.', 1, 4);
-INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o mesmo lado que primeiro.', 0, 4);
-INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o outro lado em relação ao primeiro.', 1, 4);
-INSERT INTO Alternativa VALUES (null, 'Se ambos os corpos têm a mesma velocidade, em módulo, então ambas as massas dos corpos são iguais.', 1, 4);
+INSERT INTO Alternativa VALUES (null, '10,0 m/s.', 0, 4);
+INSERT INTO Alternativa VALUES (null, '12,0 m/s.', 0, 4);
+INSERT INTO Alternativa VALUES (null, '13,0 m/s.', 1, 4);
+INSERT INTO Alternativa VALUES (null, '14,0 m/s.', 0, 4);
+INSERT INTO Alternativa VALUES (null, '15,0 m/s.', 0, 4);
 
-INSERT INTO Alternativa VALUES (null, '10,0 m/s.', 0, 5);
-INSERT INTO Alternativa VALUES (null, '12,0 m/s.', 0, 5);
-INSERT INTO Alternativa VALUES (null, '13,0 m/s.', 1, 5);
-INSERT INTO Alternativa VALUES (null, '14,0 m/s.', 0, 5);
-INSERT INTO Alternativa VALUES (null, '15,0 m/s.', 0, 5);
+INSERT INTO Alternativa VALUES (null, 'O corpo de maior massa terá menor quantidade.', 1, 5);
+INSERT INTO Alternativa VALUES (null, 'O impulso aplicado em ambos os corpos é o mesmo.', 1, 5);
+INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o mesmo lado que primeiro.', 0, 5);
+INSERT INTO Alternativa VALUES (null, 'O outro corpo move-se para o outro lado em relação ao primeiro.', 1, 5);
+INSERT INTO Alternativa VALUES (null, 'Se ambos os corpos têm a mesma velocidade, em módulo, então ambas as massas dos corpos são iguais.', 1, 5);
 
 INSERT INTO Alternativa VALUES (null, '3,0 m/s; 2,0 m/s; 1,0 m/s.', 0, 6);
 INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 4,0 m/s.', 0, 6);
@@ -400,6 +400,9 @@ INSERT INTO Alternativa VALUES (null, '4,0 m/s; 2,0 m/s; 6,0 m/s.', 0, 6);
 INSERT INTO Alternativa VALUES (null, '2,0 m/s; 3,0 m/s; 6,0 m/s.', 1, 6);
 
 
+
+
+update Avaliacoes set Data_fim = '2020-01-01 00:00:01' where Codigo_avaliacao = 1;
 
 
 
