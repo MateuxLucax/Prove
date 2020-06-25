@@ -2,7 +2,7 @@
   <img height="96" src="https://raw.githubusercontent.com/MateuxLucax/prove/master/assets/img/logo.svg">
 </p>
 
-# MRT Produções
+# Prove
 
 Prove is a class management system, built for Programming II class on my technical degree.
 
